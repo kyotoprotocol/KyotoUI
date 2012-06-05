@@ -8,13 +8,15 @@
     <servlet-name>Admin</servlet-name>
     <servlet-class>org.example.JettyMavenWarApp.AdminServlet</servlet-class>
   </servlet>
+  <servlet-mapping>
+    <servlet-name>Admin</servlet-name>
+    <url-pattern>/admin/*</url-pattern>
+  </servlet-mapping>
   <servlet>
     <servlet-name>Analyse</servlet-name>
     <servlet-class>org.example.JettyMavenWarApp.AnalyseServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>Admin</servlet-name>
-    <url-pattern>/admin/*</url-pattern>
     <servlet-name>Analyse</servlet-name>
     <url-pattern>/analyse/*</url-pattern>
   </servlet-mapping>
