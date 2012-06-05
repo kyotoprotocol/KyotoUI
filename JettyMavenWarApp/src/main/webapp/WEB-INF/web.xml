@@ -5,11 +5,17 @@
    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" 
    version="2.5">
   <servlet>
-    <servlet-name>Hello</servlet-name>
-    <servlet-class>org.example.JettyMavenWarApp.HelloServlet</servlet-class>
+    <servlet-name>Admin</servlet-name>
+    <servlet-class>org.example.JettyMavenWarApp.AdminServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>Analyse</servlet-name>
+    <servlet-class>org.example.JettyMavenWarApp.AnalyseServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>Hello</servlet-name>
-    <url-pattern>/hello/*</url-pattern>
+    <servlet-name>Admin</servlet-name>
+    <url-pattern>/admin/*</url-pattern>
+    <servlet-name>Analyse</servlet-name>
+    <url-pattern>/analyse/*</url-pattern>
   </servlet-mapping>
 </web-app>
