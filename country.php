@@ -1,4 +1,10 @@
 <?php
+
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 include('head.php');
 include('admin/dbconfig.php');
 
@@ -6,18 +12,17 @@ include('admin/dbconfig.php');
 try {
 $m = new Mongo();
     $db = $m->selectDB(DB);
-    #echo 'david';
     
-    $list = $db->listCollections();
+    $CountryDefaults = $db->selectCollection("CountryDefaults");
+
         echo "<ul>";
             foreach ($list as $collection) {
                 echo "<li> $collection... </li>";
             }
         echo "</ul>";
     
-    // remove any previous defaults to be sure
-    $CountryDefaults = $db->selectCollection("CountryDefaults");
-    $CountryDefaults->drop();
+    // browse all countries
+
     
     $db->createCollection("CountryDefaults");
     $CountryDefaults = $db->selectCollection("CountryDefaults");
