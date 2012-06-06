@@ -46,8 +46,8 @@ try {
 </head>
 <body>
     <div id="visualization" style="width: 800px; height: 400px;"></div>
-</body>
-</html>
+
+
 <?php
     $m = new Mongo();
     $db = $m->selectDB(DB);
@@ -55,9 +55,6 @@ try {
     $CountryDefaults = $db->selectCollection("CountryDefaults");
 
     $cursor = $CountryDefaults->find();
-
-        // iterate through the results
-
 ?>
         <ul class="nav nav-pills">
         <li class="dropdown">

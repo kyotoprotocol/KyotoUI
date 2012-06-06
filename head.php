@@ -22,7 +22,6 @@
         <li><a href="initialise.php">Initialise</a></li>
         <li><a href="country.php">Country</a></li>
         <li class="divider"></li>
-        <li><a href="#">Separated link</a></li>
         </ul>
     </li>
 </ul>
