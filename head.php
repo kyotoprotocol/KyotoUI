@@ -13,7 +13,6 @@
         <a href="index.php">Home</a>
     </li>
     <li><a href="initialise.php">Initialise</a></li>
-    <li><a href="sdlkf">Link</a></li>
     </ul>
   </div>
 </div>
