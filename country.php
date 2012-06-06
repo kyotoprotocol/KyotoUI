@@ -87,8 +87,8 @@ try {
         </li>
         </ul>
     
-    <?php
- $cursor = $CountryDefaults->find();
+<?php
+    $cursor = $CountryDefaults->find();
     
     foreach($cursor as $c){
         $searchable[] = $c["ISO"];
@@ -99,7 +99,7 @@ try {
     
 ?>
 
-    <input type='text' data-provide='typeahead' items='5' data-source='<?php echo '["'.$searchable.'"]'; ?>'></input>
+<input type='text' data-provide='typeahead' items='5' data-source='<?php echo '["'.$searchable.'"]'; ?>'></input>
      
     
 </body>
