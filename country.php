@@ -15,6 +15,14 @@ $m = new Mongo();
     
     $CountryDefaults = $db->selectCollection("CountryDefaults");
 
+    $cursor = $CountryDefaults->find();
+
+        // iterate through the results
+        foreach ($cursor as $obj) {
+            echo "<li>". $obj["ISO"]. " ". $obj["name"]."</li>";
+        }
+
+    
         echo "<ul>";
             foreach ($list as $collection) {
                 echo "<li> $collection... </li>";
