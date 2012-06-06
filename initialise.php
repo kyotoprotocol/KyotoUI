@@ -10,7 +10,7 @@ $m = new Mongo();
     
     $list = $db->listCollections();
     foreach ($list as $collection) {
-        echo "> $collection... <br>";
+        echo "8==> $collection... <br>";
      //   $collection->drop();
      //   echo "gone\n";
     }
