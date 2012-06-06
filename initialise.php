@@ -9,10 +9,15 @@ $m = new Mongo();
     #echo 'david';
     
     $list = $db->listCollections();
-    foreach ($list as $collection) {
-        echo "8==> $collection... <br>";
-    }
+        echo "<ul>";
+            foreach ($list as $collection) {
+                echo "<li> $collection... </li>";
+            }
+        echo "</ul>";
     
+    // remove any previous defaults to be sure
+    $CountryDefaults = $db->selectCollection("CountryDefaults");
+    $CountryDefaults->drop();
     
     $db->createCollection("CountryDefaults");
     $CountryDefaults = $db->selectCollection("CountryDefaults");
