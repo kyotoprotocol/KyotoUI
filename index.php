@@ -2,9 +2,6 @@
 
 include('head.php');
 
-
-echo 'index page';    
-
 ?>
 
 <br>
@@ -16,7 +13,7 @@ echo 'index page';
       <b class="caret"></b>
     </a>
     <ul class="dropdown-menu">
-      ...
+        <li>brapbrap</li>
     </ul>
   </li>
 </ul>

@@ -8,7 +8,7 @@
     
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
-      <a class="brand" href="#">
+      <a class="brand" href="index.php">
         Kyoto Simulator
       </a>
       
@@ -19,9 +19,8 @@
             <b class="caret"></b>
         </a>
         <ul class="dropdown-menu">
-        <li><a href="initialise.php"">Initialise</a></li>
-        <li><a href="#">Another action</a></li>
-        <li><a href="#">Something else here</a></li>
+        <li><a href="initialise.php">Initialise</a></li>
+        <li><a href="country.php">Country</a></li>
         <li class="divider"></li>
         <li><a href="#">Separated link</a></li>
         </ul>
