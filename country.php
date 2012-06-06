@@ -7,7 +7,7 @@
 
 
 
-include('head.php');
+
 
 
 include('admin/dbconfig.php');
@@ -18,21 +18,42 @@ try {
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <title>Google Visualization API Sample</title>
+  <title></title>
   <script type="text/javascript" src="http://www.google.com/jsapi"></script>
-  <script type="text/javascript">
+  
+
+<?php
+    $m = new Mongo();
+    $db = $m->selectDB(DB);
+    
+    $CountryDefaults = $db->selectCollection("CountryDefaults");
+
+
+
+        // iterate through the results
+
+
+    // browse all countries
+
+    // Load specific country
+        
+        if (isset($_GET['country'])) {
+            $cursor = $CountryDefaults->findOne(array("ISO" => $_GET['country'])); //"ISO2": "UK" }
+            $country = $cursor['name'];
+
+        } else {
+            $cursor = $CountryDefaults->findOne();
+            $country = $cursor['name'];
+        }
+    $cursor = $CountryDefaults->find();
+?>
+   <script type="text/javascript">
     google.load('visualization', '1', {packages: ['geomap']});
 
     function drawVisualization() {
       var data = google.visualization.arrayToDataTable([
-        ['Country', 'Popularity'],
-        ['Germany', 200],
-        ['United States', 300],
-        ['Brazil', 400],
-        ['Canada', 500],
-        ['France', 600],
-        ['RU', 700]
+        ['Country', 'Selected'],
+        ['<?php echo $country; ?>', 1]
       ]);
     
       var geomap = new google.visualization.GeoMap(
@@ -45,17 +66,11 @@ try {
   </script>
 </head>
 <body>
-    <div id="visualization" style="width: 800px; height: 400px;"></div>
 
+<?php include('head.php');    ?>
+    <div id="visualization" style="width: 800px; height: 400px; margin-left: 50px;"></div>
+    <h1><?php echo $country; ?></h1>
 
-<?php
-    $m = new Mongo();
-    $db = $m->selectDB(DB);
-    
-    $CountryDefaults = $db->selectCollection("CountryDefaults");
-
-    $cursor = $CountryDefaults->find();
-?>
         <ul class="nav nav-pills">
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="path/to/page.html">
@@ -71,24 +86,24 @@ try {
             </ul>
         </li>
         </ul>
-<?php
-    // browse all countries
-        echo "<ul>";
-            foreach ($list as $collection) {
-                echo "<li> $collection... </li>";
-            }
-        echo "</ul>";
-    // Load specific country
-        
-        if (isset($_GET['country'])) {
-            $country = $_GET['country'];
-        } else {
-            $cursor = $CountryDefaults->findOne();
-            $country = $cursor['name'];
-        }
-
-?>
     
+    <?php
+ $cursor = $CountryDefaults->find();
+    
+    foreach($cursor as $c){
+        $searchable[] = $c["ISO"];
+    }
+    $searchable = implode('", "', $searchable);
+
+        // iterate through the results
+    
+?>
+
+    <input type='text' data-provide='typeahead' items='5' data-source='<?php echo '["'.$searchable.'"]'; ?>'></input>
+     
+    
+</body>
+</html>
  <?php 
  
     
