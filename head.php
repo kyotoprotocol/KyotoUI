@@ -1,4 +1,4 @@
-<html>
+
 
     <LINK REL=StyleSheet HREF="css/bootstrap.css" TYPE="text/css">    
     <script src="http://code.jquery.com/jquery-1.7.2.js"></script>
@@ -29,5 +29,4 @@
 
   </div>
 </div>
-    
-</html>
+ 
