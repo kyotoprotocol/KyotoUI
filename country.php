@@ -66,6 +66,7 @@ try {
   </script>
 </head>
 <body>
+
 <?php include('head.php');    ?>
     <div id="visualization" style="width: 800px; height: 400px; margin-left: 50px;"></div>
     <h1><?php echo $country; ?></h1>
@@ -85,7 +86,21 @@ try {
             </ul>
         </li>
         </ul>
- 
+    
+    <?php
+ $cursor = $CountryDefaults->find();
+    
+    foreach($cursor as $c){
+        $searchable[] = $c["ISO"];
+    }
+    $searchable = implode('", "', $searchable);
+
+        // iterate through the results
+    
+?>
+
+    <input type='text' data-provide='typeahead' items='5' data-source='<?php echo '["'.$searchable.'"]'; ?>'></input>
+     
     
 </body>
 </html>
