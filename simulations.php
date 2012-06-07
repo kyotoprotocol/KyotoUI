@@ -10,7 +10,7 @@ $db = startDB();
     
 $simulations = $db->selectCollection("simulations");
 
-var_dump($simulations);
+
 
 $smarty->assign('simulations', $simulations);
 $smarty->display('views/simulations.tpl');
