@@ -4,22 +4,18 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+require('libs/Smarty.class.php');
+$smarty = new Smarty;
+$smarty->assign('foo','bar');
 
 
-
-
-
-
-include('admin/dbconfig.php');
+include('admin/config.php');
 
 
 try {
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-  <title></title>
-  <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+
+
   
 
 <?php
@@ -28,15 +24,7 @@ try {
     
     $CountryDefaults = $db->selectCollection("CountryDefaults");
 
-
-
-        // iterate through the results
-
-
-    // browse all countries
-
     // Load specific country
-        
         if (isset($_GET['country'])) {
             $cursor = $CountryDefaults->findOne(array("ISO" => $_GET['country'])); //"ISO2": "UK" }
             $country = $cursor['name'];
@@ -45,52 +33,33 @@ try {
             $cursor = $CountryDefaults->findOne();
             $country = $cursor['name'];
         }
-    $cursor = $CountryDefaults->find();
-?>
-   <script type="text/javascript">
-    google.load('visualization', '1', {packages: ['geomap']});
+$script = <<<EOD
 
-    function drawVisualization() {
-      var data = google.visualization.arrayToDataTable([
-        ['Country', 'Selected'],
-        ['<?php echo $country; ?>', 1]
-      ]);
-    
-      var geomap = new google.visualization.GeoMap(
-          document.getElementById('visualization'));
-      geomap.draw(data, null);
+EOD;
+
+    $smarty->assign('scriptadditions',$script);                    
+    $cursor = $CountryDefaults->find();
+    // Provide array for dropdown links
+    foreach ($cursor as $obj) {
+        $line['ISO'] = $obj['ISO'];
+        $line['name'] = $obj['name']. '   '. $obj['ISO'];
+        $dave[] = $line;
     }
-    
+    $smarty->assign('dropdown',$dave);                    
+    $smarty->assign('country', $country);
+    $smarty->display('views/country.tpl');
 
-    google.setOnLoadCallback(drawVisualization);
-  </script>
-</head>
-<body>
-
-<?php include('head.php');    ?>
-    <div id="visualization" style="width: 800px; height: 400px; margin-left: 50px;"></div>
-    <h1><?php echo $country; ?></h1>
-
-        <ul class="nav nav-pills">
-        <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="path/to/page.html">
-            Dropdown
-            <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-<?php
-                foreach ($cursor as $obj) {
-                    echo "<li><a href='country.php?country=".$obj["ISO"]."' >" . $obj["ISO"]. " ". $obj["name"]."</a></li>";
-                }
 ?>
-            </ul>
-        </li>
-        </ul>
+  
+
+
+<?php //include('head.php');    ?>
+
     
 <?php
     $cursor = $CountryDefaults->find();
     
-    foreach($cursor as $c){
+ /*   foreach($cursor as $c){
         $searchable[] = $c["ISO"];
     }
     $searchable = implode('", "', $searchable);
@@ -100,10 +69,8 @@ try {
 ?>
 
 <input type='text' data-provide='typeahead' items='5' data-source='<?php echo '["'.$searchable.'"]'; ?>'></input>
-     
-    
-</body>
-</html>
+     */?>
+
  <?php 
  
     

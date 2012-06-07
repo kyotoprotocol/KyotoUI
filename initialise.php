@@ -1,20 +1,22 @@
 <?php
-include('head.php');
-include('admin/dbconfig.php');
+
+    require('libs/Smarty.class.php');
+    $smarty = new Smarty;
+
+    
+include('admin/config.php');
 
 
 try {
-$m = new Mongo();
+    $m = new Mongo();
     $db = $m->selectDB(DB);
-    #echo 'david';
-    
+       
     $list = $db->listCollections();
-        echo "<ul>";
-            foreach ($list as $collection) {
-                echo "<li> $collection... </li>";
-            }
-        echo "</ul>";
-    
+    $smarty->assign('collections',$list);
+    $smarty->assign('host',HOST);
+    $smarty->assign('db',DB);
+
+
     // remove any previous defaults to be sure
     $CountryDefaults = $db->selectCollection("CountryDefaults");
     $CountryDefaults->drop();
@@ -34,13 +36,17 @@ $m = new Mongo();
     }
     fclose($file);
 
- 
+    
+    $smarty->assign('status',"Success");
     
 } catch (MongoConnectionException $e)
 {
     echo $e;
+    $smarty->assign('status',$e);
+
 }
 
+    $smarty->display('views/initialise.tpl');
 
 
 ?>
