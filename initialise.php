@@ -104,7 +104,7 @@ try {
                                     'startedAt'            =>  '',
                                     'countries'         =>  $CountryArray
                                     ));        
-            $notices[] = 'inserted simulation';
+            $notices[] = 'inserted defaultsimulation';
 
     $smarty->assign('notices',$notices);
         
