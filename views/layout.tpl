@@ -22,7 +22,6 @@
                     <ul class="dropdown-menu">
                         <li><a href="initialise.php">Initialise</a></li>
                         <li><a href="country.php">Country</a></li>
-                        <li class="divider"></li>
                     </ul>
                 </li>
             </ul>
