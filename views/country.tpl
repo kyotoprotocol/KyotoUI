@@ -7,19 +7,25 @@
     google.load('visualization', '1', {packages: ['geomap']});
     {/literal}
     function drawVisualization() {
-    var data = google.visualization.arrayToDataTable([
-        ['Country', 'Selected'],
-        ['{$country}', 1]
-    ]);
+        var data = google.visualization.arrayToDataTable([
+            ['Country', 'Selected'],
+            ['{$country}', 1]
+        ]);
 
-    var geomap = new google.visualization.GeoMap(
-        document.getElementById('visualization'));
-    geomap.draw(data, null);
+        var geomap = new google.visualization.GeoMap(
+            document.getElementById('visualization'));
+   //     google.visualization.events.addListener(geomap, 'regionClick', function(e){
+    //      console.log(e["region"]);
+     //     console.log("Type of value is: " + typeof(e["region"]));
+      //    console.log(data.getValue(Math.floor(e["region"]),1));
+       //     });
+        geomap.draw(data, null);
     }
-
-
+    
     google.setOnLoadCallback(drawVisualization);
+    
 </script>  
+
 {/block}
 {block name=body}
 

@@ -9,8 +9,7 @@ include('admin/config.php');
 
 try {
     $db = startDB();
-    $updated = false;
-    $CountryDefaults = $db->selectCollection("CountryDefaults");
+    $SimDefaults = $db->selectCollection('Simulations');
 
         if (isset($_POST['_id'])){                       //check post data set
             foreach(array_keys($_POST) as $key){
@@ -23,7 +22,13 @@ try {
             $smarty->assign('updated', true);
         }  
     
-    // Load specific country
+        // Load specific simulation
+        if (isset($_GET['simid'])) {
+            $simCursor = $SimDefaults->findOne(array("_id" => $_GET['simid']));
+            $simulation = $simCursor('name');
+        }
+        
+        // Load specific country
         if (isset($_GET['country'])) {
             $cursor = $CountryDefaults->findOne(array("ISO" => $_GET['country']));
             $country = $cursor['name'];
