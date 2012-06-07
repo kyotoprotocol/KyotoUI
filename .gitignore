@@ -5,3 +5,5 @@ target/
 /nbproject/private/	
 nbproject/
 /rockmongo
+/demo
+/templates_c
