@@ -12,6 +12,16 @@ try {
     
     $CountryDefaults = $db->selectCollection("CountryDefaults");
 
+        if (isset($_POST)){                             //check post data set
+            foreach(array_keys($_POST) as $key){
+                if($key != '_id'){                      //remove _id from array to be updated
+                    $countryData[$key] = $_POST[$key];
+                }
+            }
+            $mongoId = new MongoID($_POST['_id']);      //ensure proper Mongo ID
+            $CountryDefaults->update(array('_id' => $mongoId), $countryData);
+        }  
+    
     // Load specific country
         if (isset($_GET['country'])) {
             $cursor = $CountryDefaults->findOne(array("ISO" => $_GET['country']));
@@ -22,13 +32,14 @@ try {
         }
         $smarty->assign('countrydata', $cursor);
 
-        $cursor = $CountryDefaults->find();
+        $cursor = $CountryDefaults->find()->sort(array('name' => 1));
         // Provide array for dropdown links
         foreach ($cursor as $obj) {
             $line['ISO'] = $obj['ISO'];
             $line['name'] = $obj['name']. '   '. $obj['ISO'];
             $dave[] = $line;
         }
+        
         $smarty->assign('dropdown',$dave);                    
         $smarty->assign('country', $country);
         $smarty->display('views/country.tpl');

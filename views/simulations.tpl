@@ -6,26 +6,43 @@
 
 {block name=body}
 <div class="row">
-    <div class="span4">
-         
+    <div class="span8">
+        <h1>View and Edit Simulations</h1> 
     </div>
-    <div class="span8"> <div id="visualization" style="width: 800px; height: 400px; margin-left: 50px;"></div></div>
  </div>
+
 <div class="row">
-    <div class="span12">
-        <table class="table table-striped">
-             <tbody>
-                {foreach $simulation as $s}
+    <div class="span4">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Number</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {foreach $simulations as $s}
                 <tr>
                     <td>{$s}</td>
-                    <td>{$s}</td>
+                    <td><span class="label">Default</span></td>
+                    <td>
+                        <div class="btn-group">
+                            <a class="btn btn-primary" href="#"><i class="icon-cog"></i> Options</a>
+                            <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#"><i class="icon-edit"></i> Edit</a></li>
+                                <li><a href="#"><i class="icon-plus"></i> Duplicate</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#"><i class="icon-trash"></i> Remove</a></li>
+                            </ul>
+                        </div>
+                    </td>
                 <tr>
                 {/foreach}
              </tbody>
         </table>
     </div>
  </div>
-
 
     
 {/block}

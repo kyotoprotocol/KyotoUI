@@ -39,18 +39,23 @@
     </div>
     <div class="span8"> <div id="visualization" style="width: 800px; height: 400px; margin-left: 50px;"></div></div>
  </div>
+                
 <div class="row">
     <div class="span12">
+        <form class="well" action="country.php?country={$countrydata['ISO']}" method="post">
         <table class="table table-striped">
              <tbody>
                 {foreach $countrydata as $c}
                 <tr>
-                    <td>{$c@key}</td>
-                    <td>{$c}</td>
+                        <td>{$c@key}</td>
+                        <td><input type="text" name="{$c@key}" value="{$c}"></td>
                 <tr>
                 {/foreach}
+                <tr>
+                    <td><button type="submit" class="btn btn-primary"> Save Changes</button></td>
              </tbody>
         </table>
+        </form>
     </div>
  </div>
 
