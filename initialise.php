@@ -46,7 +46,7 @@ try {
     
 } catch (MongoConnectionException $e)
 {
-    echo $e;
+    //echo $e;
     $smarty->assign('status',$e);
 
 }
