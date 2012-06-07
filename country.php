@@ -9,17 +9,7 @@ include('admin/config.php');
 
 try {
     $db = startDB();
-    $simsDB = $db->selectCollection('simulations');
-    
-    $simsCountryCursor = $simsDB->find(array(), array('countries' => 1));
-    
-    foreach($simsCountryCursor as $cc){
-        foreach($cc['countries'] as $c){
-            $countries[] = $c;
-        }
-    }
-    
-    var_dump($countries);
+    $simsDB = $db->selectCollection('simulations');    
     
 /*    foreach($simsCursor as $sims){
         $simulations[] = $sims;
@@ -31,12 +21,16 @@ try {
 
         // Load specific simulation
         if (isset($_GET['simid'])) {
-            $simsCursor = $simsDB->findOne(array("_id" => $_GET['simid']));
-            $simulation = $simsCursor('name');
+            $sim = $simsDB->findOne(array("_id" => $_GET['simid']));
         } else {
-            $simsCursor = $simsDB->findOne();
-            $simulation = $simsCursor['name'];
+            $sim = $simsDB->findOne();
         }
+    
+        foreach($sim['countries'] as $country){
+            $dropdown[] = ($country['ISO'] . '     ' . $country['name']);
+        }
+        
+    die();
     
         //Grab updated country data - SORT LATER
             if (isset($_POST['_id'])){                       //check post data set
@@ -52,7 +46,7 @@ try {
         
         // Load specific country from within simulation
         if (isset($_GET['country'])) {
-            $cursor = $simsCursor->findOne(array('countries.ISO' => $_GET['country']));
+            $country = array_search($_GET['country'], $sim['countries']);  //match get country ISO with sim['countries']['iso'] 
             $simsCursor->findOne(10);
             $country = $cursor['name'];
         } else {
@@ -60,14 +54,6 @@ try {
             $country = $cursor['name'];
         }
         $smarty->assign('countrydata', $cursor);
-
-        $cursor = $countryDefaults->find()->sort(array('name' => 1));
-        // Provide array for dropdown links
-        foreach ($cursor as $obj) {
-            $line['ISO'] = $obj['ISO'];
-            $line['name'] = $obj['name']. '   '. $obj['ISO'];
-            $dropdown[] = $line;
-        }
         
         $smarty->assign('dropdown',$dropdown);                    
         $smarty->assign('country', $country);
