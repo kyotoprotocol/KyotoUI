@@ -32,7 +32,7 @@ try {
             $i = 0;
             foreach ($csvheaders as $header) {
                 $country[$header] = $line[$i];
-                echo $header . " " . $line[$i];
+//debug                echo $header . " " . $line[$i];
             $i++;
         }
         //add each country as a new object in mongo
