@@ -1,9 +1,12 @@
 <?php
-
-    require('libs/Smarty.class.php');
-    $smarty = new Smarty;
-
-    
+/*
+ *  $notices[] serve as alerts to the user and also as comments
+ *  $smarty is the template file
+ *  
+ *  by JW
+ */
+require('libs/Smarty.class.php');
+$smarty = new Smarty;
 include('admin/config.php');
 
 
@@ -40,14 +43,25 @@ try {
         if ($result == NULL){
             $notices[] = 'not found default simulation';
             $notices[] = 'create new default simulation';
-            $val = $simulation->find(array(), array('_id' => 1))->sort(array('_id' => -1))->limit(1);
-            $simitem = $val->getNext();
-            $notices[] = 'find maximum ID';
-            if (is_null($simitem)) {
+            
+            
+            //$val = $simulation->find()->sort(array('_id'=> -1 ))->limit(1);
+            //$simitem = $val->getNext();
+            //I know this looks stupid but couldnt get the  above to work so
+            //I iterate all simulation entries searching for largest ID.
+            $simcursor = $simulation->find();
+            $maxid= 0;
+            foreach ($simcursor as $doc) {
+                if ($doc['_id'] > $maxid) {
+                    $maxid = $doc['_id'];
+                }
+            }           
+            $notices[] = 'find maximum ID, current ID is '.$maxid;
+            if ($maxid==0) {
             $notices[] = 'No simulations found';
                 $nextid = 1;
             } else {
-                $nextid = $simitem['_id']+1;
+                $nextid = $maxid+1;
             }
             $notices[] = 'ID: '.$nextid;
         } else {
@@ -56,22 +70,12 @@ try {
             $simulation->remove(array('name' => DEFAULTSIM));
             $notices[] = 'dropped default simulation';
             $notices[] = 'create new default simulation with ID'.$keepid;
-            $nextid = $keepid+1;
+            $nextid = $keepid;
         }
         
-        $simulation->insert(array(  '_id'               =>  $nextid,
-                                    'countries'  =>  'dave'
-                                    ));        
-            $notices[] = 'inserted simulation';
-
-        
-//       $db->createCollection("CountryDefaults");
- //       $CountryDefaults = $db->selectCollection("CountryDefaults");
-
-
-
-/*        $file = fopen('admin/data.csv', 'r');
-        // grab the first line - for headers possibly useful later
+        $notices[] = 'loading CSV data';
+        $file = fopen('admin/data.csv', 'r');
+        // grab the first line - as headers
         $csvheaders = fgetcsv($file);
 
         while (($line = fgetcsv($file)) !== FALSE) {
@@ -81,10 +85,27 @@ try {
                 $i++;
             }
             //add each country as a new object in mongo
-            $CountryDefaults->insert($country);
+            $CountryArray[] = $country;
+            //$CountryDefaults->insert($country);
             unset($country); //Empty country variable.
         }
-        fclose($file);*/
+        fclose($file);
+        
+        $parameters = array("test" => "dave");
+        $simulation->insert(array(  '_id'               =>  $nextid,
+                                    'name'              =>  DEFAULTSIM,
+                                    'classname'         =>  DEFAULTCLASS,
+                                    'state'             =>  DEFAULTSTATE,
+                                    'createdAt'         =>  time(),
+                                    'finishedAt'        =>  '',
+                                    'parameters'        =>  $parameters,
+                                    'parent'            =>  '0',
+                                    'children'            =>  '',
+                                    'startedAt'            =>  '',
+                                    'countries'         =>  $CountryArray
+                                    ));        
+            $notices[] = 'inserted simulation';
+
     $smarty->assign('notices',$notices);
         
     $smarty->assign('status',"Success");

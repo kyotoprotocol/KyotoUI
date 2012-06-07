@@ -3,8 +3,15 @@
 // Database options
 define ("HOST", "127.0.0.1:27017");
 define ("DB", "presage");
-define ("SIMTREE", "simulations2");
+define ("SIMTREE", "simulations");
+
+
+//Kyoto Simulation Defaults
 define ("DEFAULTSIM", "defaultsimulation");
+define ("DEFAULTCLASS", "SimulateKyoto");
+define ("DEFAULTSTATE", "NOTSTARTED");
+define ("DEFAULTCURRENTTIME", "0");
+
 
         
 // Template options (smarty)
