@@ -91,17 +91,19 @@ try {
         }
         fclose($file);
         
-        $parameters = array("test" => "dave");
+        $parameters = array("finishTime" => DEFAULTFINISHTIME);
         $simulation->insert(array(  '_id'               =>  $nextid,
                                     'name'              =>  DEFAULTSIM,
                                     'classname'         =>  DEFAULTCLASS,
                                     'state'             =>  DEFAULTSTATE,
-                                    'createdAt'         =>  time(),
-                                    'finishedAt'        =>  '',
+                                    'finishTime'        =>  1,
+                                    'createdAt'         =>  (int) time()*1000,
+                                    'currentTime'       =>  0,
+                                    'finishedAt'        =>  0,
                                     'parameters'        =>  $parameters,
-                                    'parent'            =>  '0',
-                                    'children'          =>  '',
-                                    'startedAt'         =>  '',
+                                    'parent'            =>  0,
+                                    'children'          =>  array(),
+           //                         'startedAt'         =>  '',
                                     'countries'         =>  $CountryArray
                                     ));        
             $notices[] = 'inserted defaultsimulation';

@@ -9,8 +9,9 @@ define ("SIMTREE", "simulations");
 //Kyoto Simulation Defaults
 define ("DEFAULTSIM", "defaultsimulation");
 define ("DEFAULTCLASS", "SimulateKyoto");
-define ("DEFAULTSTATE", "NOTSTARTED");
+define ("DEFAULTSTATE", "NOT STARTED");
 define ("DEFAULTCURRENTTIME", "0");
+define ("DEFAULTFINISHTIME", "10");
 
 
         
