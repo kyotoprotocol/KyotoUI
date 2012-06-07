@@ -5,9 +5,18 @@
 
 <h1>Initialise MongoDB using data.csv</h1>
 
+<hr>
+{if isset($go)}
+        <a href="/initialise.php?init=true" class="btn btn-primary">
+    Create Default Simulation
+    </a>
+{else}
 Wiped old CountryDefault table.<br><br>
 Writing new table using data.csv into CountryDefaults<br><br>
+{/if}
 Result: <span class="label label-important">{$status}</span> <br><br>
+
+<hr>
 
 <h1>Tables in MongoDB </h1>
 For Host:{$host} using Database:{$db}
@@ -16,5 +25,7 @@ For Host:{$host} using Database:{$db}
         <li>{$item}</li>
     {/foreach}
     </ul>
-
+    
+ 
+    
 {/block}
