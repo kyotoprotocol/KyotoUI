@@ -22,6 +22,13 @@
 </script>  
 {/block}
 {block name=body}
+
+{if ($updated)}
+    <div class="alert alert-success">
+        <strong>Success!</strong> {$country} updated.
+    </div>
+{/if} 
+
 <div class="row">
     <div class="span4">
         <h1>{$country}</h1>

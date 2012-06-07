@@ -9,10 +9,10 @@ include('admin/config.php');
 
 try {
     $db = startDB();
-    
+    $updated = false;
     $CountryDefaults = $db->selectCollection("CountryDefaults");
 
-        if (isset($_POST)){                             //check post data set
+        if (isset($_POST['_id'])){                       //check post data set
             foreach(array_keys($_POST) as $key){
                 if($key != '_id'){                      //remove _id from array to be updated
                     $countryData[$key] = $_POST[$key];
@@ -20,6 +20,7 @@ try {
             }
             $mongoId = new MongoID($_POST['_id']);      //ensure proper Mongo ID
             $CountryDefaults->update(array('_id' => $mongoId), $countryData);
+            $smarty->assign('updated', true);
         }  
     
     // Load specific country
