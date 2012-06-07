@@ -6,4 +6,4 @@ target/
 nbproject/
 /rockmongo
 /demo
-/templates_c
+templates_c/*
