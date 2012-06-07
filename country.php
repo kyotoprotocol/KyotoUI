@@ -8,8 +8,7 @@ include('admin/config.php');
 
 
 try {
-    $m = new Mongo();
-    $db = $m->selectDB(DB);
+    $db = startDB();
     
     $CountryDefaults = $db->selectCollection("CountryDefaults");
 
