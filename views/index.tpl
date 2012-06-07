@@ -6,7 +6,7 @@
     <h1>Welcome Howard!</h1>
     <p>This is the kyoto web interface. </p>
     <p>
-    <a href="/initialise.php" class="btn btn-primary btn-large">
+    <a href="initialise.php" class="btn btn-primary btn-large">
     Enjoy
     </a>
     </p>

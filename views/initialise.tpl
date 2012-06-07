@@ -7,7 +7,7 @@
 
 <hr>
 {if isset($showbtn)}
-        <a href="/initialise.php?init=true" class="btn btn-primary">
+        <a href="initialise.php?init=true" class="btn btn-primary">
     Create Default Simulation
     </a>
 {else}

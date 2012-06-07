@@ -90,24 +90,58 @@ try {
             unset($country); //Empty country variable.
         }
         fclose($file);
-        
-        $parameters = array("finishTime" => DEFAULTFINISHTIME);
-        $simulation->insert(array(  '_id'               =>  $nextid,
+        unset($file);
+        $notices[] = 'loading CSV parameters';
+        $file = fopen('admin/params.csv', 'r');
+        // cut out the first line of row headers
+        $crap = fgetcsv($file);
+        // init finishTime into parameters, if exists in CSV, CSV will overwrite.
+            $parameters["finishTime"] = DEFAULTFINISHTIME;
+        while (($line = fgetcsv($file)) !== FALSE) {
+                $parameters[$line[0]] = $line[1];
+            }
+        fclose($file);  
+        unset($file);
+        /*
+         * Sam's WEB UI simulation mongo tree uses explicitly declared variables for java
+         * Therefore MongoInt64 is used. Most helpful post in the world ever - 2nd answer.
+         * http://stackoverflow.com/questions/9006077/mongodb-php-integers-with-decimals
+         * 
+         */
+
+        $simulation->insert(array(  '_id'               =>  new MongoInt64($nextid),
                                     'name'              =>  DEFAULTSIM,
                                     'classname'         =>  DEFAULTCLASS,
                                     'state'             =>  DEFAULTSTATE,
-                                    'finishTime'        =>  1,
-                                    'createdAt'         =>  (int) time()*1000,
-                                    'currentTime'       =>  0,
-                                    'finishedAt'        =>  0,
+                                    'finishTime'        =>  new MongoInt64($parameters["finishTime"]),
+                                    'createdAt'         =>  new MongoInt64(time()*1000) ,
+                                    'currentTime'       =>  new MongoInt64(0),
+                                    'finishedAt'        =>  new MongoInt64(0),
                                     'parameters'        =>  $parameters,
-                                    'parent'            =>  0,
+                                    'parent'            =>  new MongoInt64(0),
                                     'children'          =>  array(),
            //                         'startedAt'         =>  '',
                                     'countries'         =>  $CountryArray
                                     ));        
             $notices[] = 'inserted defaultsimulation';
 
+        if (in_array(DB."."."environmentState", $list)) {
+            $notices[] = 'environmentState tree found';
+        } else {
+            $notices[] = 'environmentState tree not found';
+            $db->createCollection("environmentState");
+            $notices[] = 'environmentState tree created';
+        }
+         $environmentState = $db->selectCollection("environmentState");
+         if (is_null($environmentState->find(array("simId" => $nextid)))){
+         $environmentState->insert(array("simId" => new MongoInt64($nextid)));
+         $notices[] = 'environmentState simId inserted';
+         } else {
+         $notices[] = 'environmentState simId exists already';
+         }
+
+   
+         
     $smarty->assign('notices',$notices);
         
     $smarty->assign('status',"Success");
