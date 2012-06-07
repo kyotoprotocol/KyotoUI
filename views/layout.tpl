@@ -14,8 +14,6 @@
             Kyoto Simulator
             </a>
             <ul class="nav nav-pills">
-                <li><a href="simulations.php">Simulations</a></li>
-                
                 <li class="dropdown" id="menu1">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">
                     Pre-Simulation
@@ -26,6 +24,7 @@
                         <li><a href="country.php">Country</a></li>
                     </ul>
                 </li>
+                <li><a href="simulations.php">Simulations</a></li>
                 </ul>
         </div>
     </div>

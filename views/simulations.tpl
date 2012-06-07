@@ -17,7 +17,7 @@
              <tbody>
                 {foreach $simulation as $s}
                 <tr>
-                    <td>{$s@key}</td>
+                    <td>{$s}</td>
                     <td>{$s}</td>
                 <tr>
                 {/foreach}
