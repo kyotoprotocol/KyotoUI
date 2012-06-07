@@ -3,17 +3,22 @@
 
 {block name=body}
 
-<h1>Initialise MongoDB using data.csv</h1>
+<h1>Create starter simulation in MongoDB using admin/data.csv</h1>
 
 <hr>
-{if isset($go)}
+{if isset($showbtn)}
         <a href="/initialise.php?init=true" class="btn btn-primary">
     Create Default Simulation
     </a>
 {else}
-Wiped old CountryDefault table.<br><br>
-Writing new table using data.csv into CountryDefaults<br><br>
 {/if}
+    {if isset($notices)}
+        <ul>
+            {foreach $notices as $item}
+                <li>{$item}</li>
+            {/foreach}
+        </ul>
+    {/if}
 Result: <span class="label label-important">{$status}</span> <br><br>
 
 <hr>
