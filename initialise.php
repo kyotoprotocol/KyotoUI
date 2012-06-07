@@ -100,8 +100,8 @@ try {
                                     'finishedAt'        =>  '',
                                     'parameters'        =>  $parameters,
                                     'parent'            =>  '0',
-                                    'children'            =>  '',
-                                    'startedAt'            =>  '',
+                                    'children'          =>  '',
+                                    'startedAt'         =>  '',
                                     'countries'         =>  $CountryArray
                                     ));        
             $notices[] = 'inserted defaultsimulation';
