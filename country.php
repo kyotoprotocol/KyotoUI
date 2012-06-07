@@ -1,24 +1,13 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 require('libs/Smarty.class.php');
 $smarty = new Smarty;
 $smarty->assign('foo','bar');
-
 
 include('admin/config.php');
 
 
 try {
-?>
-
-
-  
-
-<?php
     $m = new Mongo();
     $db = $m->selectDB(DB);
     
