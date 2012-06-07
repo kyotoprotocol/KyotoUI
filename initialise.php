@@ -8,8 +8,8 @@ include('admin/config.php');
 
 
 try {
-    $m = new Mongo();
-    $db = $m->selectDB(DB);
+    
+    $db = startDB();
        
     $list = $db->listCollections();
     $smarty->assign('collections',$list);
