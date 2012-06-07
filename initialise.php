@@ -26,12 +26,18 @@ try {
     
     $file = fopen('admin/data.csv', 'r');
     // grab the first line - for headers possibly useful later
-     $line = fgetcsv($file);
+     $csvheaders = fgetcsv($file);
+     
     while (($line = fgetcsv($file)) !== FALSE) {
+            $i = 0;
+            foreach ($csvheaders as $header) {
+                $country[$header] = $line[$i];
+                echo $header . " " . $line[$i];
+            $i++;
+        }
         //add each country as a new object in mongo
-        $country = array ("ISO" => $line[2], "name" => $line[1], "type" => $line[0], "totalArea" => $line[5], "landArea" => $line[6], "waterArea"  => $line[7], "arableLand" => $line[8], "ISO2" => $line[9]);
         $CountryDefaults->insert($country);
-
+        unset($country); //Empty country variable.
     }
     fclose($file);
 
