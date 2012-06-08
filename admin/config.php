@@ -19,9 +19,15 @@ define ("DEFAULTDESCRIPTION", "This is a default class. Ideally all countries ar
 // Template options (smarty)
 
 function startDB(){
-    $m = new Mongo(HOST);
-    $db = $m->selectDB(DB);
-    return $db;
+    try {
+        $m = new Mongo(HOST);
+        $db = $m->selectDB(DB);
+        return $db;
+    } catch(MongoConnectionException $e) {
+        echo $e;
+        echo "DB FAIL";
+        die();
+    }
 }
 
 ?>

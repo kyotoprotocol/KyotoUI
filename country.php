@@ -23,7 +23,7 @@ include('admin/config.php');
 
             $sim = $simsDB->findOne(array(), array("countries" => 1));
         }
-        
+            
         //Bit crude I guess but I haven't got a better idea and you shouldn't be on this page without a simId
         //if (!in_array($sim, "country")){
         //   echo "Cannot find a default country class in a default simulation";
@@ -53,6 +53,7 @@ include('admin/config.php');
         
         $country['ISO2'] = toISO2($country['ISO']); 
         
+        $smarty->assign('simulationname', $sim["name"]);
         $smarty->assign('country', $country);
         $smarty->assign('cDrop', $cDrop);                    
         $smarty->display('views/country.tpl');
