@@ -112,6 +112,7 @@ try {
         $simulation->insert(array(  '_id'               =>  new MongoInt64($nextid),
                                     'name'              =>  DEFAULTSIM,
                                     'classname'         =>  DEFAULTCLASS,
+                                    'description'       =>  DEFAULTDESCRIPTION,
                                     'state'             =>  DEFAULTSTATE,
                                     'finishTime'        =>  new MongoInt64($parameters["finishTime"]),
                                     'createdAt'         =>  new MongoInt64(time()*1000) ,

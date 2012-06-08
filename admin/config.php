@@ -12,6 +12,7 @@ define ("DEFAULTCLASS", "SimulateKyoto");
 define ("DEFAULTSTATE", "NOT STARTED");
 define ("DEFAULTCURRENTTIME", "0");
 define ("DEFAULTFINISHTIME", "10");
+define ("DEFAULTDESCRIPTION", "This is a default class. Ideally all countries are included and it is designed to demonstrate how beautiful the economic models are that we have created.");
 
 
         

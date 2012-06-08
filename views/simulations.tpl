@@ -16,26 +16,77 @@
         <table class="table table-bordered table-striped">
             <colgroup>
                 <col class="span1">
-                <col class="span7">
-                <col class="span3">
+                <col class="span2">
+                <col class="span4">
+                <col class="span4">
+                <col class="span2">
             </colgroup>
             <thead>
                 <tr>
-                    <th>Number</th>
+                    <th>_id</th>
+                    <th>Description</th>
                     <th>Status</th>
-                    <th>Status</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 {foreach $simulations as $s}
                 <tr>
-                    <td>{$s["name"]}</td>
-                    <td><span class="label">Default</span></td>
                     <td>
+                        {$s["_id"]}
+                    </td>
+                    <td>
+                        <h3>{$s["name"]}</h3>
+                        <hr>
+                        {if $s["state"] == "NOT STARTED" }
+                        <span class="label label-inverse">{$s["state"]}</span>
+                        {else if $s["state"] == "AUTO START" }
+                        <span class="label label-important">{$s["state"]}</span>
+                        {else}
+                        <span class="label">{$s["state"]}</span>
+                        {/if}
+                    </td>
+                    <td>
+                        {if isset($s["description"]) }
+                            {$s["description"]}
+                        {else}
+                            Missing Description
+                        {/if}    
+                    </td>
+                    <td>
+                        <dl class="dl-horizontal">
+                        {foreach $s as $param}
+                           {if ($param@key == "description") }
+                           {elseif ($param@key == "state") }
+                           {elseif ($param@key == "id") }
+                           {elseif ($param@key == "countries") }
+                           {elseif ($param@key == "children") }
+                           {elseif ($param@key == "classname") }
+                           {elseif ($param@key == "parent") }
+                           {elseif ($param@key == "name") }
+                           {elseif ($param@key == "parameters") }
+                                <dt>{$param@key}</dt>
+                                {foreach $param as $subparam}
+                                    <dd>{$subparam@key} : {$subparam}</dd>
+                                {/foreach}
+                           {elseif (is_array($param)) }
+                                <dt>{$param@key}</dt>
+                                <dd>array</dd>
+                           {else}
+                                <dt>{$param@key}</dt>
+                                <dd>{$param}</dd>
+                           {/if}
+                        
+                        {/foreach}
+                        </dl>
+                    </td>
+                    <td>
+                        <center>
                         <div class="btn-group">          
-                            <button class="btn btn-primary" href="simulations.php?hello" >Action</button>
-                            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+                            <a class="btn btn-primary" href="simulations.php?hello" >Edit</a>
+                            <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
                             <ul class="dropdown-menu">
+                                <li><a href="#">View Countries</a></li>
                                 <li><a href="#">Edit</a></li>
                                 <li><a href="#">Duplicate</a></li>
                                 <li><a href="#">Remove</a></li>
@@ -43,6 +94,7 @@
                                 <li><a href="#">Separated link</a></li>-->
                             </ul>
                         </div><!-- /btn-group -->
+                        </center>
                     </td>
                 <tr>
                 {/foreach}
