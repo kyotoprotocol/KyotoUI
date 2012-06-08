@@ -25,7 +25,7 @@ include('admin/config.php');
         } 
         
         //Grab updated country data - SORT LATER
-        if (isset($_POST['_id'])){                      //check post data set
+        if (isset($_POST['ISO'])){                      //check post data set
             foreach(array_keys($_POST) as $key){        //tell this to ignore iso2 in the tpl file
                 $country[$key] = $_POST[$key];          //update country
             }
@@ -40,8 +40,6 @@ include('admin/config.php');
         //    die();
         //}
 
-        var_dump($sim['name']);
-        
         foreach(array_keys($sim['countries']) as $key){
             $cDrop[] = array('ISO' => $key, 'name' => $sim['countries'][$key]['name']);
         }

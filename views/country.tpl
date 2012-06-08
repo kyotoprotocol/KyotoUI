@@ -59,7 +59,7 @@
                     {if $c@key == 'ISO' or $c@key == 'ISO2' or $c@key == 'name'}
                         <tr>
                             <td>{$c@key}</td>
-                            <td>{$c}</td>
+                            <td><input type="text" name="{$c@key}" value="{$c}" readonly="readonly"></td>
                         <tr>
                     {else}
                         <tr>
