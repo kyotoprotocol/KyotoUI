@@ -29,9 +29,9 @@
                 </li>
                 <li><a href="simulations.php">Simulations</a></li>
                 </ul>
-            {if isset($simulationname)}
+            {if isset($simName)}
                 <a class="brand" href="index.php" style="float: right;font-weight: bold; color: rgb(ad,ad,ad); text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.1), 0px 0px 30px rgba(255, 255, 255, 0.125);">
-                {$simulationname}
+                {$simName}
                 </a>
             {/if}
         </div>
