@@ -1,5 +1,8 @@
 <?php
 include('functions.php');
+include('libs/mongorecord/BaseMongoRecord.php');
+include('models/SimulationModel.php');
+
 // Database options
 define ("HOST", "127.0.0.1:27017");
 define ("DB", "presage");
@@ -15,8 +18,8 @@ define ("DEFAULTFINISHTIME", "10");
 define ("DEFAULTDESCRIPTION", "This is a default class. Ideally all countries are included and it is designed to demonstrate how beautiful the economic models are that we have created.");
 
 
-        
-// Template options (smarty)
+BaseMongoRecord::$connection = new Mongo(HOST);
+BaseMongoRecord::$database = 'presage';
 
 function startDB(){
     try {

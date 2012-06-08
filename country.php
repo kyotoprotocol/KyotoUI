@@ -8,31 +8,39 @@ include('admin/config.php');
 
 
     try {
-        $db = startDB();
-        $simsDB = $db->selectCollection('simulations'); 
+        $simulation = new SimulationModel();
+        //$hello = $simulation->findOne(array(), array('countries' => 1));
+        //$hello->setCountries(array('ALB' => array('name' => 'Albania', 'wank' => 'cunt')));
+      // $cunt= $hello->getCountries('ALB');
+        //var_dump($cunt);
+        //die();
             
         // Load specific simulation
         if (isset($_GET['simid'])) {
-            $sim = $simsDB->findOne(array("_id" => (int)$_GET['simid']));
+            $sim = $simulation->findOne(array("_id" => (int)$_GET['simid']));
         } else {
-            $sim = $simsDB->findOne();
+            $sim = $simulation->findOne(array(), array('countries' => 1));
         }
         
+        $countries = $sim->getCountries();
+        $simID = new MongoInt64($sim->getID());
+        
+        
         if(isset($_GET['country'])){
-            $country = $sim['countries'][toISO3($_GET['country'])];
+            $country = $countries[toISO3($_GET['country'])];
         } else {
-            $country = $sim['countries']['ALB'];
+            $country = $countries['ALB'];
         } 
+        
+        $ISO2 = toISO2($country['ISO']);
         
         //Grab updated country data - SORT LATER
         if (isset($_POST['ISO'])){                      //check post data set
             foreach(array_keys($_POST) as $key){        //tell this to ignore iso2 in the tpl file
                 $country[$key] = $_POST[$key];          //update country
             }
-            $simID = new MongoInt64($sim['_id']);
-            $simsDB->update(array('countries'.$country['ISO'] => 1, ), array('$set' => array(countries.$country['ISO'] => $country)));
-            //db.objects.update({'items.2': {$exists:true} }, {'$set': {'items.2.blocks.0.txt': 'hi'}})
-                //, array('countries'=> array($country['ISO'] => $country))));
+            $sim->setCountries(array($country['ISO'] => $country));
+            $sim->save();
             $smarty->assign('updated', true);
         }
             
@@ -42,15 +50,16 @@ include('admin/config.php');
         //    die();
         //}
 
-        foreach(array_keys($sim['countries']) as $key){
-            $cDrop[] = array('ISO' => $key, 'name' => $sim['countries'][$key]['name']);
-        }
+        //foreach(array_keys($sim['countries']) as $key){
+        //    $cDrop[] = array('ISO' => $key, 'name' => $sim['countries'][$key]['name']);
+        //}
+        $cDrop = $countries;
         
-        $country['ISO2'] = toISO2($country['ISO']); 
         
-        $smarty->assign('simid', $sim['_id']);
-        $smarty->assign('simulationname', $sim['name']);
+        $smarty->assign('simName', $sim->getName());
         $smarty->assign('country', $country);
+        $smarty->assign('ISO2', $ISO2);
+        $smarty->assign('simID', $simID);
         $smarty->assign('cDrop', $cDrop);                    
         $smarty->display('views/country.tpl');
 

@@ -9,12 +9,12 @@
     function drawVisualization() {
         var data = google.visualization.arrayToDataTable([
             ['Country', 'Selected'],
-            ['{$country['ISO2']}', 1]
+            ['{$ISO2}', 1]
         ]);
         var geomap = new google.visualization.GeoMap(
             document.getElementById('visualization'));
         google.visualization.events.addListener(geomap, 'regionClick', function(e){
-        window.location = "country.php?country="+e["region"]+"&simid="+{$simid};
+        window.location = "country.php?country="+e["region"]+"&simid="+{$simID};
         });
         geomap.draw(data, null);
     }
@@ -40,7 +40,7 @@
                 <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="path/to/page.html">Dropdown<b class="caret"></b></a>
                 <ul class="dropdown-menu">
                 {foreach $cDrop as $c}
-                    <li><a href='country.php?country={$c['ISO']}&simid={$simid}' >{$c['name']}</a></li>
+                    <li><a href='country.php?country={$c['ISO']}&simid={$simID}' >{$c['name']}</a></li>
                 {/foreach}
 
                 </ul>
@@ -52,7 +52,7 @@
                 
 <div class="row">
     <div class="span12">
-        <form class="well" action="country.php?country={$country['ISO']}&simid={$simid}" method="post">
+        <form class="well" action="country.php?country={$country['ISO']}&simid={$simID}" method="post">
         <table class="table table-striped">
              <tbody>
                 {foreach $country as $c}
