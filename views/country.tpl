@@ -9,16 +9,14 @@
     function drawVisualization() {
         var data = google.visualization.arrayToDataTable([
             ['Country', 'Selected'],
-            ['{$country['name']}', 1]
+            ['{$country['ISO2']}', 1]
         ]);
-
         var geomap = new google.visualization.GeoMap(
             document.getElementById('visualization'));
-   //     google.visualization.events.addListener(geomap, 'regionClick', function(e){
-    //      console.log(e["region"]);
-     //     console.log("Type of value is: " + typeof(e["region"]));
-      //    console.log(data.getValue(Math.floor(e["region"]),1));
-       //     });
+        google.visualization.events.addListener(geomap, 'regionClick', function(e){
+        console.log(e["region"]);
+        window.location = "country.php?country="+e["region"];
+        });
         geomap.draw(data, null);
     }
     
