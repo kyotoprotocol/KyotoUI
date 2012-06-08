@@ -14,14 +14,15 @@ include('admin/config.php');
         // Load specific simulation
         if (isset($_GET['simid'])) {
             $sim = $simsDB->findOne(array("_id" => (int)$_GET['simid']));
-            if(isset($_GET['country'])){
-                $country = $sim['countries'][toISO3($_GET['country'])];
-            } else {
-                $country = $sim['countries']['ALB'];
-            } 
         } else {
             $sim = $simsDB->findOne(array(), array("countries" => 1));
         }
+        
+        if(isset($_GET['country'])){
+            $country = $sim['countries'][toISO3($_GET['country'])];
+        } else {
+            $country = $sim['countries']['ALB'];
+        } 
         
         //Grab updated country data - SORT LATER
         if (isset($_POST['_id'])){                      //check post data set
@@ -38,22 +39,17 @@ include('admin/config.php');
         //   echo "Cannot find a default country class in a default simulation";
         //    die();
         //}
-        
-        if(isset($_GET['country'])){
-                $country = $sim['countries'][toISO3($_GET['country'])];
-            } else {
-                $country = $sim['countries']['ALB'];
-            }  
 
-    
+        var_dump($sim['name']);
+        
         foreach(array_keys($sim['countries']) as $key){
             $cDrop[] = array('ISO' => $key, 'name' => $sim['countries'][$key]['name']);
         }
         
         $country['ISO2'] = toISO2($country['ISO']); 
         
-        $smarty->assign('simid', $sim["_id"]);
-        $smarty->assign('simulationname', $sim["name"]);
+        $smarty->assign('simid', $sim['_id']);
+        $smarty->assign('simulationname', $sim['name']);
         $smarty->assign('country', $country);
         $smarty->assign('cDrop', $cDrop);                    
         $smarty->display('views/country.tpl');
