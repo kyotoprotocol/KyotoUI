@@ -30,7 +30,7 @@ include('admin/config.php');
                 $country[$key] = $_POST[$key];          //update country
             }
             $simID = new MongoInt64($sim['_id']);
-            $simsDB->update(array('_id' => $simID, 'countries' => $country['ISO']), $country);
+            $simsDB->update(array('_id' => $simID), array('simulations' => $sim, 'countries'=> array($country['ISO'] => $country)));
             $smarty->assign('updated', true);
         }
             
