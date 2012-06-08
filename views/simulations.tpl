@@ -83,7 +83,7 @@
                     <td>
                         <center>
                         <div class="btn-group">          
-                            <a class="btn btn-primary" href="simulations.php?hello" >Edit</a>
+                            <a class="btn btn-primary" href="simulation.php?simid={$s["_id"]}" >View</a>
                             <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="#">View Countries</a></li>

@@ -38,6 +38,11 @@
     </div>
 </div>
     <div class="container" style="margin-top: 55px">
+        {if isset($error)}
+            <div class="alert alert-error">
+                {$error}
+            </div>
+        {/if}
         {block name=body}{/block}
     </div>
 </body>

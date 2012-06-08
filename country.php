@@ -30,7 +30,49 @@ include('admin/config.php');
                 $country[$key] = $_POST[$key];          //update country
             }
             $simID = new MongoInt64($sim['_id']);
-            $simsDB->update(array('_id' => $simID, 'countries' => $country['ISO']), $country);
+          //     var_dump($country);
+         //   $simsDB->update(array('_id' => $simID, 'countries' => $country['ISO']), array('$set' => array("countries" => $country)));
+          //  var_dump($sim);
+            //find 'systems.score' : { '$gte' : 15 } 
+            //find 'systems.score' : { '$gte' : 15 } 
+            //UPDATE users SET a=1 WHERE b='q'
+            //	$db->users->update(array("b" => "q"), array('$set' => array("a" => 1)));
+            
+                            /* 
+                            * _id:     "4f44af6a024342300e000001",
+                    title:   "A book", 
+                    created: "2012-02-22T14:12:51.305Z"
+                    authors: [{"_id":"4f44af6a024342300e000002"}] 
+                             * 
+             * update _id field of first matched by _id author    
+                    collection.update({'_id': "4f44af6a024342300e000001",
+                    //you should specify query for embedded document
+                    'authors._id' : "4f44af6a024342300e000002" }, 
+                    // you can update only one nested document matched by query                   
+                    {$set: { 'authors.$._id': "1" }} )
+                             * 
+             db.objects.update(
+                              {'items.2':
+                                          {$exists:
+                                                   true
+                                           } 
+                              }, 
+                              {'$set': 
+                                       {'items.2.blocks.0.txt': 
+                                                               'hi'
+                                        }
+                              }
+                              )
+                              
+             */
+
+            
+
+            $db->simulations->update(array($simID.'countries.ALB' => array("exists"=>"true")), array($set => array($simID.'countries.ALB' => $country)));
+           // var_dump($simsDB->find(array('_id' => $simID, array("countries"=>"ALB"))));
+            //
+            //
+            //$simsDB->update(array('_id' => $simID, 'countries' => $country['ISO']), $country);
             $smarty->assign('updated', true);
         }
             
