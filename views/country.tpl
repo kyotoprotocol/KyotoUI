@@ -52,7 +52,7 @@
                 
 <div class="row">
     <div class="span12">
-        <form class="well" action="country.php?country={$country['ISO']}" method="post">
+        <form class="well" action="country.php?country={$country['ISO']}&simid={$simid}" method="post">
         <table class="table table-striped">
              <tbody>
                 {foreach $country as $c}
