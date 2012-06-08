@@ -22,12 +22,13 @@ include('admin/config.php');
         } else {
 
             $sim = $simsDB->findOne(array(), array("countries" => 1));
-       //Bit crude I guess but I haven't got a better idea and you shouldn't be on this page without a simId
-        if (!in_array($sim, "country")){
-            echo "Cannot find a default country class in a default simulation";
-            die();
         }
-        }
+        
+        //Bit crude I guess but I haven't got a better idea and you shouldn't be on this page without a simId
+        //if (!in_array($sim, "country")){
+        //   echo "Cannot find a default country class in a default simulation";
+        //    die();
+        //}
         
         if(isset($_GET['country'])){
                 $country = $sim['countries'][toISO3($_GET['country'])];
