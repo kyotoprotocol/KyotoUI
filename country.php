@@ -7,50 +7,47 @@ $smarty->assign('foo','bar');
 include('admin/config.php');
 
 
-try {
-    $db = startDB();
-    $updated = false;
-    $CountryDefaults = $db->selectCollection("CountryDefaults");
-
-        if (isset($_POST['_id'])){                       //check post data set
-            foreach(array_keys($_POST) as $key){
-                if($key != '_id'){                      //remove _id from array to be updated
-                    $countryData[$key] = $_POST[$key];
-                }
-            }
-            $mongoId = new MongoID($_POST['_id']);      //ensure proper Mongo ID
-            $CountryDefaults->update(array('_id' => $mongoId), $countryData);
-            $smarty->assign('updated', true);
-        }  
+    try {
+        $db = startDB();
+        $simsDB = $db->selectCollection('simulations');    
     
-    // Load specific country
-        if (isset($_GET['country'])) {
-            $cursor = $CountryDefaults->findOne(array("ISO" => $_GET['country']));
-            $country = $cursor['name'];
+        // Load specific simulation
+        if (isset($_GET['simid'])) {
+            $sim = $simsDB->findOne(array("_id" => (int)$_GET['simid']));
+            if(isset($_GET['country'])){
+                $country = $sim['countries'][$_GET['country']];
+            } else {
+                $country = $sim['countries']['ALB'];
+            } 
         } else {
-            $cursor = $CountryDefaults->findOne();
-            $country = $cursor['name'];
+            $sim = $simsDB->findOne();
+            if(isset($_GET['country'])){
+                $country = $sim['countries'][$_GET['country']];
+            } else {
+                $country = $sim['countries']['ALB'];
+            }  
         }
-        $smarty->assign('countrydata', $cursor);
-
-        $cursor = $CountryDefaults->find()->sort(array('name' => 1));
-        // Provide array for dropdown links
-        foreach ($cursor as $obj) {
-            $line['ISO'] = $obj['ISO'];
-            $line['name'] = $obj['name']. '   '. $obj['ISO'];
-            $dave[] = $line;
+    
+        foreach(array_keys($sim['countries']) as $key){
+            $cDrop[] = array('ISO' => $key, 'name' => $sim['countries'][$key]['name']);
         }
         
-        $smarty->assign('dropdown',$dave);                    
+        //Grab updated country data - SORT LATER
+            if (isset($_POST['_id'])){                       //check post data set
+            foreach(array_keys($_POST) as $key){
+                //$country = $sim['countries'][$_POST[$key]];
+            }
+            //$mongoId = new MongoID($_POST['_id']);          //ensure proper Mongo ID
+            //$CountryDefaults->update(array('_id' => $mongoId), $countryData);
+            //$smarty->assign('updated', true);
+        }
+        
         $smarty->assign('country', $country);
+        $smarty->assign('cDrop',$cDrop);                    
         $smarty->display('views/country.tpl');
 
-        $cursor = $CountryDefaults->find();
- 
 } catch (MongoConnectionException $e) {
     echo $e;
 }
-
-
 
 ?>
