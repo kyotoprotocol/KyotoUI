@@ -46,7 +46,8 @@ include('admin/config.php');
             foreach(array_keys($_POST) as $key){        //tell this to ignore iso2 in the tpl file
                 $country[$key] = $_POST[$key];          //update country
             }
-            $simDB->update(array('_id' => (int)$sim['_id'], 'countries' => $country['ISO']), $country);
+            $simID = new MongoInt64($sim['_id']);
+            $simDB->update(array('_id' => $simID, 'countries' => $country['ISO']), $country);
             $smarty->assign('updated', true);
         }
         
