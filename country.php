@@ -9,8 +9,8 @@ include('admin/config.php');
 
     try {
         $db = startDB();
-        $simsDB = $db->selectCollection('simulations');    
-    
+        $simsDB = $db->selectCollection('simulations'); 
+            
         // Load specific simulation
         if (isset($_GET['simid'])) {
             $sim = $simsDB->findOne(array("_id" => (int)$_GET['simid']));
@@ -20,8 +20,17 @@ include('admin/config.php');
                 $country = $sim['countries']['ALB'];
             } 
         } else {
-
             $sim = $simsDB->findOne(array(), array("countries" => 1));
+        }
+        
+        //Grab updated country data - SORT LATER
+        if (isset($_POST['_id'])){                      //check post data set
+            foreach(array_keys($_POST) as $key){        //tell this to ignore iso2 in the tpl file
+                $country[$key] = $_POST[$key];          //update country
+            }
+            $simID = new MongoInt64($sim['_id']);
+            $simsDB->update(array('_id' => $simID, 'countries' => $country['ISO']), $country);
+            $smarty->assign('updated', true);
         }
             
         //Bit crude I guess but I haven't got a better idea and you shouldn't be on this page without a simId
@@ -39,16 +48,6 @@ include('admin/config.php');
     
         foreach(array_keys($sim['countries']) as $key){
             $cDrop[] = array('ISO' => $key, 'name' => $sim['countries'][$key]['name']);
-        }
-        
-        //Grab updated country data - SORT LATER
-        if (isset($_POST['_id'])){                      //check post data set
-            foreach(array_keys($_POST) as $key){        //tell this to ignore iso2 in the tpl file
-                $country[$key] = $_POST[$key];          //update country
-            }
-            $simID = new MongoInt64($sim['_id']);
-            $simDB->update(array('_id' => $simID, 'countries' => $country['ISO']), $country);
-            $smarty->assign('updated', true);
         }
         
         $country['ISO2'] = toISO2($country['ISO']); 
