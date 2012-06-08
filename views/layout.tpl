@@ -1,9 +1,9 @@
 <html>
 <head>
   <title>{block name=title}Kyoto Web App{/block}</title>
-  </html><LINK REL=StyleSheet HREF="css/bootstrap.css" TYPE="text/css">
+  </html><LINK REL=StyleSheet HREF="includes/css/bootstrap.css" TYPE="text/css">
     <script src="http://code.jquery.com/jquery-1.7.2.js"></script>
-    <script src="js/bootstrap.js"></script>
+    <script src="includes/js/bootstrap.js"></script>
     {block name=head}{/block}
 </head>
 <body>

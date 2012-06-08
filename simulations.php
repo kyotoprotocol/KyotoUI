@@ -8,10 +8,14 @@ include('admin/config.php');
     
 $db = startDB();
     
-$simulations = $db->selectCollection("simulations");
+$simulations = $db->selectCollection(SIMTREE);
+$cursor = $simulations->find();
+$simulationList = iterator_to_array($cursor);
+
+//var_dump($simulationList);
 
 
-$smarty->assign('simulations', $simulations);
+$smarty->assign('simulations', $simulationList);
 $smarty->display('views/simulations.tpl');
 
 ?>

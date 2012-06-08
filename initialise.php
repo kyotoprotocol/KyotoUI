@@ -85,7 +85,7 @@ try {
                 $i++;
             }
             //add each country as a new object in mongo
-            $CountryArray[] = $country;
+            $CountryArray[$country["ISO"]] = $country;
             //$CountryDefaults->insert($country);
             unset($country); //Empty country variable.
         }
