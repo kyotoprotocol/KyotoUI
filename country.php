@@ -9,11 +9,6 @@ include('admin/config.php');
 
     try {
         $simulation = new SimulationModel();
-        //$hello = $simulation->findOne(array(), array('countries' => 1));
-        //$hello->setCountries(array('ALB' => array('name' => 'Albania', 'wank' => 'cunt')));
-      // $cunt= $hello->getCountries('ALB');
-        //var_dump($cunt);
-        //die();
             
         // Load specific simulation
         if (isset($_GET['simid'])) {
@@ -43,24 +38,13 @@ include('admin/config.php');
             $sim->save();
             $smarty->assign('updated', true);
         }
-            
-        //Bit crude I guess but I haven't got a better idea and you shouldn't be on this page without a simId
-        //if (!in_array($sim, "country")){
-        //   echo "Cannot find a default country class in a default simulation";
-        //    die();
-        //}
 
-        //foreach(array_keys($sim['countries']) as $key){
-        //    $cDrop[] = array('ISO' => $key, 'name' => $sim['countries'][$key]['name']);
-        //}
-        $cDrop = $countries;
-        
         
         $smarty->assign('simName', $sim->getName());
         $smarty->assign('country', $country);
         $smarty->assign('ISO2', $ISO2);
         $smarty->assign('simID', $simID);
-        $smarty->assign('cDrop', $cDrop);                    
+        $smarty->assign('countries', $countries);                    
         $smarty->display('views/country.tpl');
 
 } catch (MongoConnectionException $e) {

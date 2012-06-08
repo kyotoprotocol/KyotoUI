@@ -39,7 +39,7 @@
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="path/to/page.html">Dropdown<b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                {foreach $cDrop as $c}
+                {foreach $countries as $c}
                     <li><a href='country.php?country={$c['ISO']}&simid={$simID}' >{$c['name']}</a></li>
                 {/foreach}
 
