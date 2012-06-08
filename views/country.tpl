@@ -40,7 +40,7 @@
                 <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="path/to/page.html">Dropdown<b class="caret"></b></a>
                 <ul class="dropdown-menu">
                 {foreach $cDrop as $c}
-                    <li><a href='country.php?country={$c['ISO']}' >{$c['name']}</a></li>
+                    <li><a href='country.php?country={$c['ISO']}&simid={$simid}' >{$c['name']}</a></li>
                 {/foreach}
 
                 </ul>
