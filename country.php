@@ -53,6 +53,7 @@ include('admin/config.php');
         
         $country['ISO2'] = toISO2($country['ISO']); 
         
+        $smarty->assign('simid', $sim["_id"]);
         $smarty->assign('simulationname', $sim["name"]);
         $smarty->assign('country', $country);
         $smarty->assign('cDrop', $cDrop);                    

@@ -14,7 +14,7 @@
         var geomap = new google.visualization.GeoMap(
             document.getElementById('visualization'));
         google.visualization.events.addListener(geomap, 'regionClick', function(e){
-        window.location = "country.php?country="+e["region"];
+        window.location = "country.php?country="+e["region"]+"&simid="+{$simid};
         });
         geomap.draw(data, null);
     }
