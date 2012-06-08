@@ -34,7 +34,8 @@ include('admin/config.php');
             foreach(array_keys($_POST) as $key){        //tell this to ignore iso2 in the tpl file
                 $country[$key] = $_POST[$key];          //update country
             }
-            $sim->setCountries(array($country['ISO'] => $country));
+            $countries[$country['ISO']] = $country;
+            $sim->setCountries($countries);
             $sim->save();
             $smarty->assign('updated', true);
         }
