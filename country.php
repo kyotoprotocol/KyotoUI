@@ -15,7 +15,7 @@ include('admin/config.php');
         if (isset($_GET['simid'])) {
             $sim = $simsDB->findOne(array("_id" => (int)$_GET['simid']));
         } else {
-            $sim = $simsDB->findOne(array(), array("countries" => 1));
+            $sim = $simsDB->findOne();
         }
         
         if(isset($_GET['country'])){
