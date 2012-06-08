@@ -20,7 +20,7 @@ include('admin/config.php');
                 $country = $sim['countries']['ALB'];
             } 
         } else {
-            $sim = $simsDB->findOne(array(), array("countries" => 1));
+            $sim = $simsDB->findOne();
             if(isset($_GET['country'])){
                 $country = $sim['countries'][toISO3($_GET['country'])];
             } else {
@@ -34,13 +34,12 @@ include('admin/config.php');
         }
         
         //Grab updated country data - SORT LATER
-            if (isset($_POST['_id'])){                       //check post data set
-            foreach(array_keys($_POST) as $key){
-                //$country = $sim['countries'][$_POST[$key]];
+        if (isset($_POST['_id'])){                      //check post data set
+            foreach(array_keys($_POST) as $key){        //tell this to ignore iso2 in the tpl file
+                $country[$key] = $_POST[$key];          //update country
             }
-            //$mongoId = new MongoID($_POST['_id']);          //ensure proper Mongo ID
-            //$CountryDefaults->update(array('_id' => $mongoId), $countryData);
-            //$smarty->assign('updated', true);
+            $simDB->update(array('_id' => (int)$sim['_id'], 'countries' => $country['ISO']), $country);
+            $smarty->assign('updated', true);
         }
         
         $country['ISO2'] = toISO2($country['ISO']); 

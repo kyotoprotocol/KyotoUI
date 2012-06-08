@@ -26,7 +26,7 @@
 {/block}
 {block name=body}
 
-{if ($updated)}
+{if isset($updated)}
     <div class="alert alert-success">
         <strong>Success!</strong> {$country['name']} updated.
     </div>
@@ -52,7 +52,7 @@
                 
 <div class="row">
     <div class="span12">
-        <form class="well" action="country.php?country={$countrydata['ISO']}" method="post">
+        <form class="well" action="country.php?country={$country['ISO']}" method="post">
         <table class="table table-striped">
              <tbody>
                 {foreach $country as $c}
