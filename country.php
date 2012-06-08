@@ -20,7 +20,7 @@ include('admin/config.php');
                 $country = $sim['countries']['ALB'];
             } 
         } else {
-            $sim = $simsDB->findOne(array("countries" => 1));
+            $sim = $simsDB->findOne(array(), array("countries" => 1));
             if(isset($_GET['country'])){
                 $country = $sim['countries'][toISO3($_GET['country'])];
             } else {
