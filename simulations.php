@@ -12,7 +12,8 @@ $simulations = $db->selectCollection(SIMTREE);
 $cursor = $simulations->find();
 $simulationList = iterator_to_array($cursor);
 
-//var_dump($simulationList);
+
+//$search = $simulations->findOne(array("_id" => 6), array("countries" => 1));
 
 
 $smarty->assign('simulations', $simulationList);

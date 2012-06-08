@@ -1,7 +1,10 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+  <meta charset="utf-8">   
   <title>{block name=title}Kyoto Web App{/block}</title>
-  </html><LINK REL=StyleSheet HREF="includes/css/bootstrap.css" TYPE="text/css">
+  </html><link rel=StyleSheet href="includes/css/bootstrap.css" type="text/css">
+  
     <script src="http://code.jquery.com/jquery-1.7.2.js"></script>
     <script src="includes/js/bootstrap.js"></script>
     {block name=head}{/block}
