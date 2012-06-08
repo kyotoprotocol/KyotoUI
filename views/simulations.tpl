@@ -12,30 +12,37 @@
  </div>
 
 <div class="row">
-    <div class="span4">
+    <div class="span12">
         <table class="table table-bordered table-striped">
+            <colgroup>
+                <col class="span1">
+                <col class="span7">
+                <col class="span3">
+            </colgroup>
             <thead>
                 <tr>
                     <th>Number</th>
+                    <th>Status</th>
                     <th>Status</th>
                 </tr>
             </thead>
             <tbody>
                 {foreach $simulations as $s}
                 <tr>
-                    <td>{$s}</td>
+                    <td>{$s["name"]}</td>
                     <td><span class="label">Default</span></td>
                     <td>
-                        <div class="btn-group">
-                            <a class="btn btn-primary" href="#"><i class="icon-cog"></i> Options</a>
-                            <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+                        <div class="btn-group">          
+                            <button class="btn btn-primary" href="simulations.php?hello" >Action</button>
+                            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
                             <ul class="dropdown-menu">
-                                <li><a href="#"><i class="icon-edit"></i> Edit</a></li>
-                                <li><a href="#"><i class="icon-plus"></i> Duplicate</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#"><i class="icon-trash"></i> Remove</a></li>
+                                <li><a href="#">Edit</a></li>
+                                <li><a href="#">Duplicate</a></li>
+                                <li><a href="#">Remove</a></li>
+                                <!--            <li class="divider"></li>
+                                <li><a href="#">Separated link</a></li>-->
                             </ul>
-                        </div>
+                        </div><!-- /btn-group -->
                     </td>
                 <tr>
                 {/foreach}
