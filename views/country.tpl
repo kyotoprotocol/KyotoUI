@@ -56,10 +56,17 @@
         <table class="table table-striped">
              <tbody>
                 {foreach $country as $c}
-                <tr>
-                        <td>{$c@key}</td>
-                        <td><input type="text" name="{$c@key}" value="{$c}"></td>
-                <tr>
+                    {if $c@key == 'ISO' or $c@key == 'ISO2' or $c@key == 'name'}
+                        <tr>
+                            <td>{$c@key}</td>
+                            <td>{$c}</td>
+                        <tr>
+                    {else}
+                        <tr>
+                                <td>{$c@key}</td>
+                                <td><input type="text" name="{$c@key}" value="{$c}"></td>
+                        <tr>
+                    {/if}
                 {/foreach}
                 <tr>
                     <td><button type="submit" class="btn btn-primary"> Save Changes</button></td>
