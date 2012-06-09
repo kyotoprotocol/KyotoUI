@@ -98,8 +98,9 @@
     <div class="span8"></div>
  </div> 
                 
-{foreach from=(end($countries)) key=k item=c}  
-    {if is_numeric($c[$k])}
+{foreach from=(end($countries)) key=k item=c}
+    {if $k == 'Ratified'}
+    {else if is_numeric($c[$k])}
         <button class="btn params" id="{$k}">{$k}</button>
     {/if}
 {/foreach}
