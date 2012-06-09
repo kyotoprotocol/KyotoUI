@@ -85,7 +85,7 @@
         <h1>{$simulationname}</h1>
         <ul class="nav nav-pills">
             <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="path/to/page.html">Dropdown<b class="caret"></b></a>
+                <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="path/to/page.html">Attributes<b class="caret"></b></a>
                 <ul class="dropdown-menu">
                 {foreach from=(end($countries)) key=k item=c}
                     {if $k == 'Ratified'}
