@@ -3,12 +3,22 @@
 {block name=head}
 {literal}
 
- <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
  <script>
-     $(function() {
+    $(function() {
+        $(document).ready(function() { 
+            {/literal}
+                window.bigtime = {$countries|@json_encode};
+            {literal};
+        });
         $(".params").click(function() {
-            console.log(this.id);
-            show('totalArea');
+            var newarray = [];
+            var self = this;
+            newarray.push(['Country', $(this).attr('id')]);
+            $.each(bigtime, function(index, country) {
+                newarray.push([country['ISO2'], country[$(self).attr('id')]]);
+            });
+            show(newarray);
             return false;
          });
       });
@@ -47,14 +57,9 @@
         if(geochart) {
             geochart.clearChart();
         }
-        var data = google.visualization.arrayToDataTable([
-            ['Country', parameter],
-            {/literal}
-                {foreach $countries as $c}
-                    ['{$c['ISO2']}', {$c[parameter]}],
-                {/foreach}
-            {literal}
-        ]);
+        var data = google.visualization.arrayToDataTable(
+            parameter
+        );
         var chart = new google.visualization.GeoChart(document.getElementById('visualization'));
         chart.draw(data, options);
     }        
