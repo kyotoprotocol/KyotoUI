@@ -186,6 +186,20 @@ try {
      $smarty->assign('status',"Not Started");
      $smarty->assign('showbtn', 'true');
     }
+
+   
+    
+     $sQ = new SimulationModel();
+
+     $babysimQ = $sQ->findOne(array("name" => DEFAULT_BABY_SIM));
+     if ($babysimQ != NULL){
+        
+        $smarty->assign('babysim', $babysimQ->getID());
+     }
+     $defsimQ = $sQ->findOne(array("name" => DEFAULT_SIM));
+     if ($defsimQ != NULL){
+        $smarty->assign('defsim', $defsimQ->getID());
+     }
     
 } catch (MongoConnectionException $e)
 {
