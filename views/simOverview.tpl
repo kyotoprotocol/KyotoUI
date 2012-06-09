@@ -97,8 +97,11 @@
     </div>
     <div class="span8"></div>
  </div> 
-    <button class="btn params" id="totalArea">Total Area</button>
-    <button class="btn params" id="waterArea">Water Area</button>
+                
+{foreach from=(end($countries)) key=k item=c}  
+    <button class="btn params" id="{$k}">{$k}</button>
+{/foreach}
+
 <div class="row">
     <div class="span12">
         <div id="visualization"></div>
