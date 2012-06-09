@@ -2,6 +2,7 @@
 include('functions.php');
 include('libs/mongorecord/BaseMongoRecord.php');
 include('models/SimulationModel.php');
+include('models/EnvironmentStateModel.php');
 
 // Database options
 define ("HOST", "127.0.0.1:27017");
