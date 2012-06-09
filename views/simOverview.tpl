@@ -17,7 +17,7 @@
                 console.log($(this).attr('id'));
             newarray.push(['Country', $(this).attr('id')]);
             $.each(bigtime, function(index, country) {
-                newarray.push([country['ISO2'], country[$(self).attr('id')]]);
+                newarray.push([country['ISO2'], parseInt(country[$(self).attr('id')])]);
             });
                 console.log(newarray);
             show(newarray);
@@ -60,6 +60,13 @@
             geochart.clearChart();
         }
         var data = google.visualization.arrayToDataTable(parameters);
+        window.options = {
+            colorAxis: { colors: ['#c5e5c5', '#2c662c']},
+            datalessRegionColor: ['#da4f49'],
+            width: 960,
+            height: 500,
+            magnifyingGlass: {enable: true, zoomFactor: 100.0}
+        };
         var chart = new google.visualization.GeoChart(document.getElementById('visualization'));
         chart.draw(data, options);
     }        
