@@ -10,7 +10,7 @@
     <script type="text/javascript">
     $(document).ready(function() {
         $('.alert').delay(500).slideDown('slow');
-        $('.alert').delay(2000).slideUp('slow');
+        $('.alert-success').delay(2000).slideUp('slow');
     });
 </script>
     {block name=head}{/block}

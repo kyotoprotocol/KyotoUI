@@ -106,31 +106,6 @@
         <div id="visualization"></div>
     </div>
 </div>
-<div class="row">
-    <div class="span12">
-        <form class="well" action="country.php?country={*$country['ISO']}&simid={$simid*}" method="post">
-        <table class="table table-striped">
-             <tbody>
-                {* $country as $c}
-                    {if $c@key == 'ISO' or $c@key == 'ISO2' or $c@key == 'name'}
-                        <tr>
-                            <td>{$c@key}</td>
-                            <td><input type="text" name="{$c@key}" value="{$c}" readonly="readonly"></td>
-                        <tr>
-                    {else}
-                        <tr>
-                                <td>{$c@key}</td>
-                                <td><input type="text" name="{$c@key}" value="{$c}"></td>
-                        <tr>
-                    {/if}
-                {/foreach*}
-                <tr>
-                    <td><button type="submit" class="btn btn-primary"> Save Changes</button></td>
-             </tbody>
-        </table>
-        </form>
-    </div>
- </div>
 
 
     
