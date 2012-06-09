@@ -7,6 +7,12 @@
   
     <script src="http://code.jquery.com/jquery-1.7.2.js"></script>
     <script src="includes/js/bootstrap.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $('.alert').delay(500).slideDown('slow');
+        $('.alert').delay(2000).slideUp('slow');
+    });
+</script>
     {block name=head}{/block}
 </head>
 <body>

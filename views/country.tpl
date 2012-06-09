@@ -1,7 +1,7 @@
 {extends file="views/layout.tpl"}
 {block name=title}Country View - {$country['name']}{/block}
 {block name=head}
-  <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
 <script type="text/javascript">
     {literal}
     google.load('visualization', '1', {packages: ['geomap']});
