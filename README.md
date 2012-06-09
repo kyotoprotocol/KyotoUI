@@ -38,5 +38,6 @@
 
 - `admin/config.php` : DB connection & Defaults
 - `new MongoInt64(0)` : use to cast NumberLong() for java with mongo php
-- uses smarty template engine http://www.smarty.net/
-- uses bootstrap javascript/css base http://twitter.github.com/bootstrap/
+- Template Engine: http://www.smarty.net/
+- CSS & Javascript Template: http://twitter.github.com/bootstrap/
+- Mongo DB ORM https://github.com/lunaru/MongoRecord

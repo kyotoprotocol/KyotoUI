@@ -49,7 +49,7 @@ include('admin/config.php');
         }
         $smarty->assign('countries',$countriesDisplay);
         $smarty->assign('cDrop', $cDrop);                    
-        $smarty->display('views/simulation.tpl');
+        $smarty->display('views/simOverview.tpl');
 
 } catch (MongoConnectionException $e) {
     echo $e;
