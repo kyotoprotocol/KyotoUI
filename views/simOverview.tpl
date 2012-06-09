@@ -99,7 +99,9 @@
  </div> 
                 
 {foreach from=(end($countries)) key=k item=c}  
-    <button class="btn params" id="{$k}">{$k}</button>
+    {if is_numeric($c[$k])}
+        <button class="btn params" id="{$k}">{$k}</button>
+    {/if}
 {/foreach}
 
 <div class="row">
