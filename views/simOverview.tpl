@@ -6,10 +6,10 @@
  <script type="text/javascript" src="http://www.google.com/jsapi"></script>
  <script>
      $(function() {
-        $('#totalArea').click(function() {
-            console.log('\''+this.id+'\'');
-         show('\''+this.id+'\'');
-             return false;
+        $(".params").click(function() {
+            console.log(this.id);
+            show('totalArea');
+            return false;
          });
       });
  </script>
@@ -87,7 +87,7 @@
     </div>
     <div class="span8"></div>
  </div> 
-    <button class="btn" id="totalArea">Country GDP</button>
+    <button class="btn params" id="totalArea">Country GDP</button>
 <div class="row">
     <div class="span12">
         <div id="visualization"></div>
