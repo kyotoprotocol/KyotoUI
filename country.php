@@ -6,8 +6,6 @@ $smarty->assign('foo','bar');
 
 include('admin/config.php');
 
-
-    try {
         $simulation = new SimulationModel();
             
         // Load specific simulation
@@ -48,7 +46,4 @@ include('admin/config.php');
         $smarty->assign('countries', $countries);                    
         $smarty->display('views/country.tpl');
 
-} catch (MongoConnectionException $e) {
-    echo $e;
-}
 ?>

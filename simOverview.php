@@ -6,52 +6,26 @@ $smarty->assign('foo','bar');
 
 include('admin/config.php');
 
-
-    try {
-        $db = startDB();
-        $simsDB = $db->selectCollection('simulations'); 
+        $simulation = new SimulationModel();
             
         // Load specific simulation
         if (isset($_GET['simid'])) {
-            $sim = $simsDB->findOne(array("_id" => (int)$_GET['simid']));
+            $sim = $simulation->findOne(array("_id" => (int)$_GET['simid']));
         } else {
-            $sim = $simsDB->findOne();
-        }
-        $smarty->assign('simulationname', $sim['name']);
-        
-        //Grab updated country data - SORT LATER
-        if (isset($_POST['ISO'])){                      //check post data set
-            foreach(array_keys($_POST) as $key){        //tell this to ignore iso2 in the tpl file
-                $country[$key] = $_POST[$key];          //update country
-            }
-            $simID = new MongoInt64($sim['_id']);
-       
-            
-
-            $db->simulations->update(array($simID.'countries.ALB' => array("exists"=>"true")), array($set => array($simID.'countries.ALB' => $country)));
-
-            $smarty->assign('updated', true);
-        }
-
-        foreach(array_keys($sim['countries']) as $key){
-            $cDrop[] = array('ISO' => $key, 'name' => $sim['countries'][$key]['name']);
+            $sim = $simulation->findOne(array(), array('countries' => 1));
         }
         
-       // $country['ISO2'] = toISO2($country['ISO']); 
+        $countries = $sim->getCountries();
+        $simID = new MongoInt64($sim->getID());
         
-    //    $smarty->assign('simid', $sim['_id']);
-
-      //  $smarty->assign('country', $country);
-        foreach ($sim['countries'] as $c) {
+        foreach ($countries as $c) {
             $countriesDisplay[$c['ISO']] = $c;
             $countriesDisplay[$c['ISO']]['arableLandAreaPC'] = (int)(($c['arableLandArea']/$c['landArea'])*100) ;
             $countriesDisplay[$c['ISO']]['ISO2'] = toISO2($c['ISO']);
         }
+        
         $smarty->assign('countries',$countriesDisplay);
-        $smarty->assign('cDrop', $cDrop);                    
+        $smarty->assign('simulationname', $sim->getName());
+        $smarty->assign('simID', $simID);
         $smarty->display('views/simOverview.tpl');
-
-} catch (MongoConnectionException $e) {
-    echo $e;
-}
 ?>
