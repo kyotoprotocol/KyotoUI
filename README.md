@@ -28,10 +28,13 @@
 	- apache2
 	- https://help.ubuntu.com/community/ApacheMySQLPHP
 
+- OSX
+	- mamp?
+
 
 - Windows
 	- WAMP - http://www.wampserver.com/en/
-	- Convenient if install to - C:\wamp\www\KyotoInterface\
+	- Convenient if installed to - C:\wamp\www\KyotoInterface\
 
 
 ## Useful ##

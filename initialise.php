@@ -20,74 +20,87 @@ try {
     $smarty->assign('db',DB);
 
 
-    // remove any previous defaults to be sure
-    if (isset($_GET['init'])) {    
-        //$CountryDefaults = $db->selectCollection("CountryDefaults");
-        //$CountryDefaults->drop();
-        if (in_array(DB.".".SIMTREE, $list)) {
-            $notices[] = 'simulation tree found';
-        } else {
-            $notices[] = 'simulation tree not found';
-            $db->createCollection(SIMTREE);
-            $notices[] = 'simulation tree created';
+    // V rough implementation of making a full default simulation, or a baby one
+    if (isset($_GET['size'])) {    
+        if ($_GET['size']=='baby') {    
+            $notices[] = 'Making a baby sim';
+            define ("DEFAULTSIMCSV", DEFAULT_BABY_SIMCSV);
+            define ("DEFAULTSIM", DEFAULT_BABY_SIM);
+            define ("DEFAULTCLASS", DEFAULT_BABY_CLASS);
+            define ("DEFAULTSTATE", DEFAULT_BABY_STATE);
+            define ("DEFAULTCURRENTTIME", DEFAULT_BABY_CURRENTTIME);
+            define ("DEFAULTFINISHTIME", DEFAULT_BABY_FINISHTIME);
+            define ("DEFAULTDESCRIPTION", DEFAULT_BABY_DESCRIPTION);
         }
-        $simulation = $db->selectCollection(SIMTREE);
-        $notices[] = 'looking for defaultsimulation';
-        $result = $simulation->findOne(array("name" => DEFAULTSIM));;
+   }else{
+            $notices[] = 'Making a default sim';
+            define ("DEFAULTSIMCSV", DEFAULT_SIMCSV);
+            define ("DEFAULTSIM", DEFAULT_SIM);
+            define ("DEFAULTCLASS", DEFAULT_CLASS);
+            define ("DEFAULTSTATE", DEFAULT_STATE);
+            define ("DEFAULTCURRENTTIME", DEFAULT_CURRENTTIME);
+            define ("DEFAULTFINISHTIME", DEFAULT_FINISHTIME);
+            define ("DEFAULTDESCRIPTION", DEFAULT_DESCRIPTION);
+    }
+
+    if (isset($_GET['init'])) {    
+        $simulation = new SimulationModel();
+
+        $notices[] = 'looking for '.DEFAULTSIM;
+        $defaultsim = $simulation->findOne(array("name" => DEFAULTSIM));
+
         /*
          * Here we need to put a simulation in with the name 'defaultsimulation' 
          * and let it correspond to Sam's simulation ID structure.
          * If defaultsimulation previously existed, it will keep the ID name but be overwritten
          * If it doesnt exist then it will be given an autoincremented ID
          */
-        if ($result == NULL){
-            $notices[] = 'not found default simulation';
-            $notices[] = 'create new default simulation';
+        if ($defaultsim == NULL){
+            $notices[] = 'not found '.DEFAULTSIM;
+            $notices[] = 'create new '.DEFAULTSIM;
             
-            
-            //$val = $simulation->find()->sort(array('_id'=> -1 ))->limit(1);
-            //$simitem = $val->getNext();
-            //I know this looks stupid but couldnt get the  above to work so
-            //I iterate all simulation entries searching for largest ID.
-            $simcursor = $simulation->find();
-            $maxid= 0;
-            foreach ($simcursor as $doc) {
-                if ($doc['_id'] > $maxid) {
-                    $maxid = $doc['_id'];
-                }
-            }           
-            $notices[] = 'find maximum ID, current ID is '.$maxid;
-            if ($maxid==0) {
-            $notices[] = 'No simulations found';
-                $nextid = 1;
+            // find insert id
+            $counter = new CountersModel();
+            $id = $counter->findOne(array("_id" => "simulations"));
+
+            if ($counter->count() < 1){
+                //counters doesnt exist so make it
+                $notices[] = 'Counters table doesnt exist (likely a new mongo db)';
+                $counter->setID('simulations');
+                $counter->setNext(new MongoInt64(2));
+                $counter->save();
+                $useid = 1;
+                $notices[] = 'Created counters branch in mongo, using simid:'.$useid;
             } else {
-                $nextid = $maxid+1;
+                $notices[] = 'Found counters table (likely used Presage WEB UI)';
+                $useid = $id->getNext();
+                $id->setNext(new MongoInt64($useid+1));
+                $id->save();
+                $notices[] = 'Using simid:'.$useid;
             }
-            $notices[] = 'ID: '.$nextid;
+            
         } else {
-            $notices[] = 'found default simulation';
-            $keepid = $result['_id'];
-            $simulation->remove(array('name' => DEFAULTSIM));
-            $notices[] = 'dropped default simulation';
-            $notices[] = 'create new default simulation with ID'.$keepid;
-            $nextid = $keepid;
+            $useid = $defaultsim->getID();
+            $notices[] = 'found '.DEFAULTSIM.$useid;
+            $defaultsim->destroy();
+            $notices[] = 'dropped '.DEFAULTSIM.$useid;
+            $defaultsim->save();
+            unset ($defaultsim);
+            $notices[] = 'create new '.DEFAULTSIM.' with ID'.$useid;
         }
-        
         $notices[] = 'loading CSV data';
-        $file = fopen('admin/data.csv', 'r');
+        $file = fopen('admin/'.DEFAULTSIMCSV, 'r');
         // grab the first line - as headers
         $csvheaders = fgetcsv($file);
-
         while (($line = fgetcsv($file)) !== FALSE) {
                 $i = 0;
                 foreach ($csvheaders as $header) {
                     $country[$header] = $line[$i];
                 $i++;
             }
-            //add each country as a new object in mongo
+            //add each country as a new object in array, indexed by ISO code
             $CountryArray[$country["ISO"]] = $country;
-            //$CountryDefaults->insert($country);
-            unset($country); //Empty country variable.
+            unset($country); //Empty each country variable.
         }
         fclose($file);
         unset($file);
@@ -108,40 +121,63 @@ try {
          * http://stackoverflow.com/questions/9006077/mongodb-php-integers-with-decimals
          * 
          */
+//            $defaultsim = new SimulationModel();
+//            $defaultsim->setID(new MongoInt64($useid));
+//            $defaultsim->save();
 
-        $simulation->insert(array(  '_id'               =>  new MongoInt64($nextid),
-                                    'name'              =>  DEFAULTSIM,
-                                    'classname'         =>  DEFAULTCLASS,
-                                    'description'       =>  DEFAULTDESCRIPTION,
-                                    'state'             =>  DEFAULTSTATE,
-                                    'finishTime'        =>  new MongoInt64($parameters["finishTime"]),
-                                    'createdAt'         =>  new MongoInt64(time()*1000) ,
-                                    'currentTime'       =>  new MongoInt64(0),
-                                    'finishedAt'        =>  new MongoInt64(0),
-                                    'parameters'        =>  $parameters,
-                                    'parent'            =>  new MongoInt64(0),
-                                    'children'          =>  array(),
-           //                         'startedAt'         =>  '',
-                                    'countries'         =>  $CountryArray
-                                    ));        
-            $notices[] = 'inserted defaultsimulation';
+            //Uses fancy ORM constructors but CamelCase introduces underscores: camel_case.
+            //Instead use the constructor as array.
+            /*
+                $defaultsim->setName(DEFAULTSIM);
+                $defaultsim->setClassname(DEFAULTCLASS);
+                $defaultsim->setDescription(DEFAULTDESCRIPTION);
+                $defaultsim->setState(DEFAULTSTATE);
+                $defaultsim->setFinishTime(new MongoInt64($parameters["finishTime"]));
+                $defaultsim->setCreatedAt(new MongoInt64(time()*1000));
+                $defaultsim->setCurrentTime(new MongoInt64(0));
+                $defaultsim->setFinishedAt(new MongoInt64(0));
+                $defaultsim->setParameters($parameters);
+                $defaultsim->setParent(new MongoInt64(0));
+                $defaultsim->setChildren(array());
+                $defaultsim->setCountries($CountryArray);
+                $defaultsim->save();
+                */
+            
+        // old array method. 
+            $defaultsim = new SimulationModel(
+                                            array(  '_id'               =>  new MongoInt64($useid),
+                                                    'name'              =>  DEFAULTSIM,
+                                                    'classname'         =>  DEFAULTCLASS,
+                                                    'description'       =>  DEFAULTDESCRIPTION,
+                                                    'state'             =>  DEFAULTSTATE,
+                                                    'finishTime'        =>  new MongoInt64($parameters["finishTime"]),
+                                                    'createdAt'         =>  new MongoInt64(time()*1000) ,
+                                                    'currentTime'       =>  new MongoInt64(0),
+                                                    'finishedAt'        =>  new MongoInt64(0),
+                                                    'parameters'        =>  $parameters,
+                                                    'parent'            =>  new MongoInt64(0),
+                                                    'children'          =>  array(),
+                        //                         'startedAt'         =>  '',
+                                                    'countries'         =>  $CountryArray
+                                                    )        
+                                    );
+                $defaultsim->save();
 
-        if (in_array(DB."."."environmentState", $list)) {
-            $notices[] = 'environmentState tree found';
-        } else {
+         
+            $notices[] = 'inserted '.DEFAULTSIM;
+
+            $environmentState = new EnvironmentStateModel();
+       
+            $environmentStateItem = $environmentState->findOne(array("simId" => $useid));
+            if ($environmentStateItem == NULL) {
             $notices[] = 'environmentState tree not found';
-            $db->createCollection("environmentState");
-            $notices[] = 'environmentState tree created';
-        }
-         $environmentState = $db->selectCollection("environmentState");
-         if (is_null($environmentState->find(array("simId" => $nextid)))){
-         $environmentState->insert(array("simId" => new MongoInt64($nextid)));
-         $notices[] = 'environmentState simId inserted';
-         } else {
-         $notices[] = 'environmentState simId exists already';
-         }
-
-   
+            $environmentState = new EnvironmentStateModel(array("simId" => new MongoInt64($useid)));
+            $environmentState->save();
+            $notices[] = 'environmentState tree item made';
+            } else {
+            $notices[] = 'environmentState tree item found';
+            }
+  
          
     $smarty->assign('notices',$notices);
         
@@ -149,7 +185,6 @@ try {
     } else {
      $smarty->assign('status',"Not Started");
      $smarty->assign('showbtn', 'true');
-        
     }
     
 } catch (MongoConnectionException $e)
