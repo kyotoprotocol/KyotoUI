@@ -4,36 +4,62 @@
 {literal}
 
  <script type="text/javascript" src="http://www.google.com/jsapi"></script>
-  <script type="text/javascript">
+ <script>
+     $(function() {
+        $('#totalArea').click(function() {
+            console.log('\''+this.id+'\'');
+         show('\''+this.id+'\'');
+             return false;
+         });
+      });
+ </script>
+<script type="text/javascript">
+    window.geochart = {};
+    window.options = {};
     google.load('visualization', '1', {packages: ['geochart']});
 
     function drawVisualization() {
-      var data = google.visualization.arrayToDataTable([
-        ['Country', 'arableLandArea %'],
-        {/literal}
-            {foreach $countries as $c}
-['{$c['ISO2']}', {$c['arableLandAreaPC']}],
-            {/foreach}
-        {literal}
-
-      ]);
+        var data = google.visualization.arrayToDataTable([
+            ['Country', 'arableLandArea %'],
+            {/literal}
+                {foreach $countries as $c}
+                    ['{$c['ISO2']}', {$c['arableLandAreaPC']}],
+                {/foreach}
+            {literal}
+        ]);
             
-      var options = {
-        colorAxis: { minValue: 0, maxValue: 100,  colors: ['#c5e5c5', '#2c662c']},
-        datalessRegionColor: ['#da4f49'],
-        width: 960,
-        height: 500,
-        magnifyingGlass: {enable: true, zoomFactor: 100.0}
+        window.options = {
+            colorAxis: { minValue: 0, maxValue: 100,  colors: ['#c5e5c5', '#2c662c']},
+            datalessRegionColor: ['#da4f49'],
+            width: 960,
+            height: 500,
+            magnifyingGlass: {enable: true, zoomFactor: 100.0}
         };
-            
-      var geochart = new google.visualization.GeoChart(
-          document.getElementById('visualization'));
-      geochart.draw(data, options);
+
+        window.geochart = new google.visualization.GeoChart(
+            document.getElementById('visualization'));
+        geochart.draw(data, options);
     }
-    
 
     google.setOnLoadCallback(drawVisualization);
-  </script>
+        
+    function show(parameter){
+        if(geochart) {
+            geochart.clearChart();
+        }
+        var data = google.visualization.arrayToDataTable([
+            ['Country', parameter],
+            {/literal}
+                {foreach $countries as $c}
+                    ['{$c['ISO2']}', {$c[parameter]}],
+                {/foreach}
+            {literal}
+        ]);
+        var chart = new google.visualization.GeoChart(document.getElementById('visualization'));
+        chart.draw(data, options);
+    }        
+    
+</script>
 {/literal}
 {/block}
 {block name=body}
@@ -60,7 +86,8 @@
         </ul>            
     </div>
     <div class="span8"></div>
- </div>
+ </div> 
+    <button class="btn" id="totalArea">Country GDP</button>
 <div class="row">
     <div class="span12">
         <div id="visualization"></div>
