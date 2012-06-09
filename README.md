@@ -17,6 +17,7 @@
 	- `extension=php_mongo.dll`
 	- `mongo.native_long = 1`  (only required if having trouble with NumberLong/LongInt type)
 - MongoDB plugin for PHP http://www.php.net/manual/en/mongo.installation.php OR https://github.com/mongodb/mongo-php-driver/downloads
+- Permissions on folder /templates_c must be writeable for smarty.
 - Be warned - some google visualisations require flash
 
 

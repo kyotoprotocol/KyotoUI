@@ -42,6 +42,12 @@ include('admin/config.php');
     //    $smarty->assign('simid', $sim['_id']);
 
       //  $smarty->assign('country', $country);
+        foreach ($sim['countries'] as $c) {
+            $countriesDisplay[$c['ISO']] = $c;
+            $countriesDisplay[$c['ISO']]['arableLandAreaPC'] = (int)(($c['arableLandArea']/$c['landArea'])*100) ;
+            $countriesDisplay[$c['ISO']]['ISO2'] = toISO2($c['ISO']);
+        }
+        $smarty->assign('countries',$countriesDisplay);
         $smarty->assign('cDrop', $cDrop);                    
         $smarty->display('views/simulation.tpl');
 
