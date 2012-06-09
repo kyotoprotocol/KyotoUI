@@ -14,12 +14,10 @@
         $(".params").click(function() {
             var newarray = [];
             var self = this;
-                console.log($(this).attr('id'));
             newarray.push(['Country', $(this).attr('id')]);
             $.each(bigtime, function(index, country) {
                 newarray.push([country['ISO2'], parseInt(country[$(self).attr('id')])]);
             });
-                console.log(newarray);
             show(newarray);
             return false;
          });
@@ -100,6 +98,7 @@
     <div class="span8"></div>
  </div> 
     <button class="btn params" id="totalArea">Total Area</button>
+    <button class="btn params" id="waterArea">Water Area</button>
 <div class="row">
     <div class="span12">
         <div id="visualization"></div>
