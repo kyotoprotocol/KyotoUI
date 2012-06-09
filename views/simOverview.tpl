@@ -87,23 +87,19 @@
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="path/to/page.html">Dropdown<b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                {*foreach $cDrop as $c}
-                    <li><a href='country.php?country={$c['ISO']}&simid={$simid}' >{$c['name']}</a></li>
-                {/foreach*}
-
+                {foreach from=(end($countries)) key=k item=c}
+                    {if $k == 'Ratified'}
+                    {else if is_numeric($c[$k])}
+                        <li><a href='#' class="params" id="{$k}">{$k}</a></li>
+                    {/if}
+                {/foreach}
                 </ul>
             </li>
         </ul>            
     </div>
     <div class="span8"></div>
  </div> 
-                
-{foreach from=(end($countries)) key=k item=c}
-    {if $k == 'Ratified'}
-    {else if is_numeric($c[$k])}
-        <button class="btn params" id="{$k}">{$k}</button>
-    {/if}
-{/foreach}
+
 
 <div class="row">
     <div class="span12">
