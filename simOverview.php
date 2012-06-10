@@ -32,7 +32,8 @@ include('admin/config.php');
         $array = array_keys(end($countriesDisplay));
         foreach ($array as $item) {
             // Take care of non number examples.
-            if (is_numeric(end($countriesDisplay)[$item])) {
+            $countryd = end($countriesDisplay);
+            if (is_numeric($countryd[$item])) {
                 $dropdownarray[] = $item;
             }
         }
