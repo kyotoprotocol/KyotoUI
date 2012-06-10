@@ -24,8 +24,9 @@
             <thead>
                 <tr>
                     <th>_id</th>
+                    <th>Name</th>
                     <th>Description</th>
-                    <th>Status</th>
+                    <th>Parameters</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -81,20 +82,18 @@
                         </dl>
                     </td>
                     <td>
-                        <center>
                         <div class="btn-group">          
                             <a class="btn btn-primary" href="simOverview.php?simid={$s["_id"]}" >View</a>
                             <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="#">View Countries</a></li>
-                                <li><a href="#">Edit</a></li>
-                                <li><a href="#">Duplicate</a></li>
-                                <li><a href="#">Remove</a></li>
+                                <li><a href="export.php?simid={$s["_id"]}">Export to CSV</a></li>
+                                <li><a href="#">tbc</a></li>
+                                <li><a href="#">tbc</a></li>
                                 <!--            <li class="divider"></li>
                                 <li><a href="#">Separated link</a></li>-->
                             </ul>
                         </div><!-- /btn-group -->
-                        </center>
                     </td>
                 <tr>
                 {/foreach}

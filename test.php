@@ -10,6 +10,8 @@
 require('libs/Smarty.class.php');
 $smarty = new Smarty;
 include('admin/config.php');
+$smarty->assign('simList',simulationList());
+
 $smarty->display('views/test.tpl');
 
 

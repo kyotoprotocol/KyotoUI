@@ -33,6 +33,7 @@ define ("DEFAULT_BABY_DESCRIPTION", "This is a default baby class, has a smaller
 BaseMongoRecord::$connection = new Mongo(HOST);
 BaseMongoRecord::$database = 'presage';
 
+
 //some of the old code still uses this method of connecting. Instead use a MongoRecord model
 function startDB(){
     try {
@@ -44,6 +45,18 @@ function startDB(){
         echo "DB FAIL";
         die();
     }
+}
+
+
+function simulationList() {
+    $simquery = new SimulationModel();    // instantiate collection model
+    $results = $simquery->findAll();
+
+    foreach ($results as $sim) {
+        $s = $sim->getAttributes();
+        $simulations[$s["_id"]] = $s["name"];
+    }
+    return $simulations;
 }
 
 ?>

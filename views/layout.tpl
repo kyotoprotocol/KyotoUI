@@ -26,20 +26,41 @@
             <ul class="nav nav-pills">
                 <li class="dropdown" id="menu1">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">
-                    Pre-Simulation
+                    Admin
                     <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
                         <li><a href="initialise.php">Initialise</a></li>
-                        <li><a href="simEdit.php">Simulation Editor</a></li>
-                        <li><a href="country.php">Country Editor</a></li>
+                        <li><a href="export.php">CSV Export</a></li>
+                        <!--<li><a href="#">Export Editor</a></li>-->
                     </ul>
                 </li>
-                <li><a href="simulations.php">Simulations</a></li>
-                <li><a href="result.php">Results</a></li>
+                {if isset($simList)}
+                <li class="dropdown" id="menu2">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#menu2">
+                    Simulations
+                    <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                            <li><a href="simulations.php?">List all</a></li>
+                            <li class="divider"></li>
+                        {foreach $simList as $item}
+                            <li><a href="simOverview.php?simid={$item@key}">{$item}</a></li>
+                        {/foreach}
+                    </ul>
+                </li>
+                {else}
+                <li><a href="simulations.php">Simulations</a>
+                {/if}
+                </li>
+                <li><a href="#">Results</a></li>
                 </ul>
             {if isset($simName)}
-                <a class="brand" href="index.php" style="float: right;font-weight: bold; color: rgb(ad,ad,ad); text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.1), 0px 0px 30px rgba(255, 255, 255, 0.125);">
+                {if isset($simID)}
+                <a class="brand" href="simOverview.php?simid={$simID}" style="float: right;font-weight: bold; color: rgb(ad,ad,ad); text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.1), 0px 0px 30px rgba(255, 255, 255, 0.125);">
+                {else}
+                <a class="brand" href="simulations.php?" style="float: right;font-weight: bold; color: rgb(ad,ad,ad); text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.1), 0px 0px 30px rgba(255, 255, 255, 0.125);">
+                 {/if}
                 {$simName}
                 </a>
             {/if}

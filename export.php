@@ -8,6 +8,7 @@ require('libs/Smarty.class.php');
 $smarty = new Smarty;
 include('admin/config.php');
 $smarty->caching = false;
+$smarty->assign('simList',simulationList());
 
 //obtain list and (if any) selected sim
 

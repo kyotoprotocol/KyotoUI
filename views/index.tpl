@@ -1,5 +1,12 @@
 {extends file="views/layout.tpl"}
 {block name=title}Welcome{/block}
+{block name=head}
+<script>
+    $(function(){
+    $('a[rel="tooltip"]').tooltip();
+    });
+</script>
+{/block}
 {block name=body}
 
     <div class="hero-unit">
@@ -11,6 +18,6 @@
     </a>
     </p>
     </div>
-    <a style="float:right;" href="test.php"><i class="icon-thumbs-up"></i>Contributors</a>
+    <a id="dave" rel="tooltip" href="test.php" title="Contribute and we'll add you in!" style="float:right;" ><i class="icon-thumbs-up"></i>Contributors</a>
 
 {/block}

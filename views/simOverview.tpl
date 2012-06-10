@@ -76,26 +76,35 @@
 
 <div class="row">
     <div class="span12">
-        <ul class="nav nav-pills">
-            <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="path/to/page.html">Map view<b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                {foreach from=($dropdownlist) key=k item=c}
-                        <li><a href='#' class="params" id="{$c}">{$c}</a></li>
-                {/foreach}
-                </ul>
-            </li>
-            <li><a href="simEdit.php?simid={$simID}"><i class="icon-cog"></i>Edit Simulation</a></li>
-            <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="path/to/page.html"><i class="icon-cog"></i>Edit Countries<b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                {foreach $simData['countries'] as $cnt}
-                    <li><a href="country.php?country={$cnt['ISO']}&simid={$simID}">{$cnt['name']}</a></li>
-                {/foreach}
-                </ul>
-            </li>
-
-        </ul>            
+     <!--   <div class="btn-group">
+    <button class="btn">1</button>
+    <button class="btn">2</button>
+    <button class="btn">3</button>
+    </div>-->
+        <div class="btn-toolbar">
+            <div class="btn-group">
+                    <a id="c1" class="btn dropdown-toggle" data-toggle="dropdown" data-target="#" href="path/to/page.html">Map view<span class="caret"></span>
+                    </a>
+                        <ul class="dropdown-menu">
+                    {foreach from=($dropdownlist) key=k item=c}
+                            <li><a href='#' class="params" id="{$c}">{$c}</a></li>
+                    {/foreach}
+                
+                    </ul>
+            </div>
+              
+            <div class="btn-group">
+                    <a id="c2" class="btn dropdown-toggle" data-toggle="dropdown" href=""><i class="icon-cog"></i>Edit Countries<span class="caret"></span>
+                    </a>
+                        <ul class="dropdown-menu">
+                    {foreach $simData['countries'] as $cnt}
+                        <li><a href="country.php?country={$cnt['ISO']}&simid={$simID}">{$cnt['name']}</a></li>
+                    {/foreach}
+                    </ul>
+                <a class="btn" href="simEdit.php?simid={$simID}"><i class="icon-cog"></i>Edit Simulation</a>
+                <a class="btn" href="export.php?simid={$simID}"><i class="icon-download"></i> CSV export</a>
+            </div>   
+        </div>
     </div>
 </div> 
 

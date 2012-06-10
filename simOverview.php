@@ -2,9 +2,8 @@
 
 require('libs/Smarty.class.php');
 $smarty = new Smarty;
-
-
 include('admin/config.php');
+$smarty->assign('simList',simulationList());
 
         $simulation = new SimulationModel();    // instantiate collection model
             
@@ -12,7 +11,7 @@ include('admin/config.php');
         if (isset($_GET['simid'])) {
             $sim = $simulation->findOne(array("_id" => (int)$_GET['simid']));
         } else {
-            $sim = $simulation->findOne(array(), array('countries' => 1));
+        //    $sim = $simulation->findOne(array(), array('countries' => 1));
         }
         
         $countries = $sim->getCountries();      // populate countries array from collection
