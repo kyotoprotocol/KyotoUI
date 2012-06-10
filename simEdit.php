@@ -20,11 +20,11 @@ include('admin/config.php');
     
     $simID = new MongoInt64($sim->getID());
     
-    $dave = $sim->getAttributes();
+    $attributes = $sim->getAttributes();
 
     $smarty->assign('simulationname', $sim->getName());
     $smarty->assign('simid', $simID);
-    $smarty->assign('simulation', $dave);
+    $smarty->assign('attributes', $attributes);
     $smarty->assign('simulations',  $simulations);
     $smarty->display('views/simEdit.tpl');
         

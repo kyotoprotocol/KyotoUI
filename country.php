@@ -21,7 +21,7 @@ include('admin/config.php');
         if(isset($_GET['country'])){
             $country = $countries[toISO3($_GET['country'])];
         } else {
-            $country = $countries['ALB'];
+            $country = end($countries);
         } 
         
         $ISO2 = toISO2($country['ISO']);
