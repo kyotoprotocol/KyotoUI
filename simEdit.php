@@ -22,7 +22,9 @@ include('admin/config.php');
     if (isset($_POST['_id'])){                      //check post data set
         foreach(array_keys($_POST) as $key){
             //assemble output
-            var_dump($key);
+            if ($sim[$key] == $_POST[$key]) {
+                
+            }
         }
         $sim->setSimulation($editedSim);
         $sim->save();                               // save changes to database collection
