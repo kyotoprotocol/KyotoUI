@@ -18,14 +18,30 @@ include('admin/config.php');
         $countries = $sim->getCountries();      // populate countries array from collection
         $simID = new MongoInt64($sim->getID()); // ensure simID is of the correct type
         
+
+        //ADD comparison data for map here:
         foreach ($countries as $c) {            // package countries to contain all relevant data
             $countriesDisplay[$c['ISO']] = $c;
-            $countriesDisplay[$c['ISO']]['arableLandAreaPC'] = (int)(($c['arableLandArea']/$c['landArea'])*100) ;
+            $countriesDisplay[$c['ISO']]['arableLandAreaPercent'] = (int)(($c['arableLandArea']/$c['landArea'])*100) ;
             $countriesDisplay[$c['ISO']]['ISO2'] = toISO2($c['ISO']);
+            $countriesDisplay[$c['ISO']]['GDPperkm2'] = (int)(($c['GDP']/$c['landArea'])) ;
         }
         
+        
+        //Make list for dropdown + js
+        $array = array_keys(end($countriesDisplay));
+        foreach ($array as $item) {
+            // Take care of non number examples.
+            if (is_numeric(end($countriesDisplay)[$item])) {
+                $dropdownarray[] = $item;
+            }
+        }
+//        var_dump($dropdownarray);
+        $smarty->assign('dropdownlist',$dropdownarray);
         $smarty->assign('countries',$countriesDisplay);
-        $smarty->assign('simulationname', $sim->getName());
+        $smarty->assign('simName', $sim->getName());
+        $smarty->assign('simDescription', $sim->getDescription());
+        $smarty->assign('simData', $sim->getAttributes());
         $smarty->assign('simID', $simID);
         $smarty->display('views/simOverview.tpl');
 ?>

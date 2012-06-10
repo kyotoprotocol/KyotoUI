@@ -1,5 +1,5 @@
 {extends file="views/layout.tpl"}
-{block name=title}Simulation Overview - {$simulationname}{/block}
+{block name=title}Simulation Overview - {$simName}{/block}
 {block name=head}
 {literal}
 
@@ -33,7 +33,7 @@
             ['Country', 'arableLandArea %'],
             {/literal}
                 {foreach $countries as $c}
-                    ['{$c['ISO2']}', {$c['arableLandAreaPC']}], // default geochart data
+                    ['{$c['ISO2']}', {$c['arableLandAreaPercent']}], // default geochart data
                 {/foreach}
             {literal}
         ]);
@@ -74,38 +74,103 @@
 {/block}
 {block name=body}
 
-{if isset($updated)}
-    <div class="alert alert-success">
-        <strong>Success!</strong> {$country['name']} updated.
-    </div>
-{/if} 
-
 <div class="row">
-    <div class="span4">
-        <h1>{$simulationname}</h1>
+    <div class="span12">
         <ul class="nav nav-pills">
             <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="path/to/page.html">Attributes<b class="caret"></b></a>
+                <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="path/to/page.html">Map view<b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                {foreach from=(end($countries)) key=k item=c}
-                    {if $k == 'Ratified'}
-                    {else if is_numeric($c[$k])}
-                        <li><a href='#' class="params" id="{$k}">{$k}</a></li>
-                    {/if}
+                {foreach from=($dropdownlist) key=k item=c}
+                        <li><a href='#' class="params" id="{$c}">{$c}</a></li>
                 {/foreach}
                 </ul>
             </li>
+            <li><a href="simEdit.php?simid={$simID}"><i class="icon-cog"></i>Edit Simulation</a></li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="path/to/page.html"><i class="icon-cog"></i>Edit Countries<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                {foreach $simData['countries'] as $cnt}
+                    <li><a href="country.php?country={$cnt['ISO']}&simid={$simID}">{$cnt['name']}</a></li>
+                {/foreach}
+                </ul>
+            </li>
+
         </ul>            
     </div>
-    <div class="span8"></div>
- </div> 
-
+</div> 
 
 <div class="row">
     <div class="span12">
         <div id="visualization"></div>
     </div>
+</div> 
+       
+
+<div class="row">
+    <div class="span4">
+        <h1>{$simName}</h1>
+    </div>
+    <div class="span8"></div>
+</div> 
+<div class="row">
+    <div class="span12">
+        <blockquote>
+        {$simDescription}
+        </blockquote>
+    </div>
+</div>                
+<div class="row">
+     <div class="span12">
+        <table class="table table-condensed">
+             <tbody>
+                {foreach $simData as $c}
+                    {if $c@key == 'countries'}
+                        <tr>
+                            <td>{$c@key} [{$c|@count}]</td>
+                            <td>
+                                {if $c|@count > 20}
+                                <ul class="nav nav-pills">
+                                    <li class="dropdown">
+                                        <a class="dropdown-toggle" data-toggle="dropdown" href="path/to/page.html"><i class="icon-cog"></i>Edit Countries<b class="caret"></b></a>
+                                        <ul class="dropdown-menu">
+                                        {foreach $c as $cnt}
+                                            <li><a href="country.php?country={$cnt['ISO']}&simid={$simID}">{$cnt['name']}</a></li>
+                                        {/foreach}
+                                        </ul>
+                                    </li>
+                                </ul>
+                                {else}
+                                {foreach $c as $cnt}
+                                    <a class="btn-mini btn-info" href="country.php?country={$cnt['ISO']}&simid={$simID}">{$cnt['name']}</a>
+                                {/foreach}
+                                {/if}
+                            </td>
+                        <tr>
+                    {elseif $c@key == 'parameters'}
+                        <tr>
+                            <td>{$c@key}  [{$c|@count}]</td>
+                            <td>
+                                <dl class="dl-horizontal">
+                                    {foreach $c as $p}
+                                        <dt>{$p@key}</dt>
+                                        <dd>{$p}</dd>
+                                    {/foreach}
+                                </dl>
+                            </td>
+                        <tr>
+                    {elseif $c@key == 'children' or $c@key == 'parent' or  $c@key == 'description' or $c@key == 'name' }
+                    {else}
+                        <tr>
+                            <td>{$c@key}</td>
+                            <td>{$c}</td>
+                        <tr>
+                    {/if}
+                {/foreach}
+                <tr>
+             </tbody>
+        </table>
+
+     </div>
 </div>
 
-    
 {/block}

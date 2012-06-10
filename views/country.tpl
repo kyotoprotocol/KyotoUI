@@ -11,12 +11,17 @@
             ['Country', 'Selected'],
             ['{$ISO2}', 1]
         ]);
-        var geomap = new google.visualization.GeoMap(
+            {literal}
+        //var options = {};
+           {/literal}
+       //options['region'] = '{$ISO2}';
+       var geomap = new google.visualization.GeoMap(
             document.getElementById('visualization'));
         google.visualization.events.addListener(geomap, 'regionClick', function(e){
         window.location = "country.php?country="+e["region"]+"&simid="+{$simID};
         });
-        geomap.draw(data, null);
+
+        geomap.draw(data );
     }
     
     google.setOnLoadCallback(drawVisualization);
