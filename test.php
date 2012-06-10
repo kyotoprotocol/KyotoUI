@@ -10,7 +10,7 @@
 require('libs/Smarty.class.php');
 $smarty = new Smarty;
 include('admin/config.php');
-$smarty->display('views/result.tpl');
+$smarty->display('views/test.tpl');
 
 
 ?>

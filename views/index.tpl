@@ -11,6 +11,6 @@
     </a>
     </p>
     </div>
-
+    <a style="float:right;" href="test.php"><i class="icon-thumbs-up"></i>Contributors</a>
 
 {/block}
