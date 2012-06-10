@@ -34,10 +34,10 @@
     {literal}
 <script type="text/javascript">
 
-var w = 960,
-    h = 500,
-    n = 100,
-    m = 12,
+var w = 1920,
+    h = 800,
+    n = 2,
+    m = 10,
     degrees = 180 / Math.PI;
 
 var spermatozoa = d3.range(n).map(function() {
