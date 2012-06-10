@@ -88,7 +88,7 @@
                             <ul class="dropdown-menu">
                                 <li><a href="#">View Countries</a></li>
                                 <li><a href="export.php?simid={$s["_id"]}">Export to CSV</a></li>
-                                <li><a href="#">tbc</a></li>
+                                <li><a href="simEdit.php?simid={$s["_id"]}">Edit</a></li>
                                 <li><a href="#">tbc</a></li>
                                 <!--            <li class="divider"></li>
                                 <li><a href="#">Separated link</a></li>-->
