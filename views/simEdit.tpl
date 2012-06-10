@@ -41,14 +41,14 @@
                                 <td><strong>{$k}:</strong>
                                 <a class='btn' href='country.php?simid={$simid}'>Edit Countries</a></td>
                             </tr>
-                        {else}
+                        {else if $k == 'parameters'}
                             <tr><td><strong>{$k}:</strong><td></tr>
                             {foreach from=$s key=k2 item=s2}
                                 {if $k2 == 'finishTime'}
                                 {else}
                                     <tr>
                                         <td class='indented'>{$k2}</td>
-                                        <td class='indented'><input type="text" name="{$k2}" value="{$s2}"></td>
+                                        <td class='indented'><input type="text" name="param_{$k2}" value="{$s2}"></td>
                                     <tr>
                                 {/if}
                             {/foreach}
