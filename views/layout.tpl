@@ -31,6 +31,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a href="initialise.php">Initialise</a></li>
+                        <li><a href="simEdit.php">Simulation Editor</a></li>
                         <li><a href="country.php">Country Editor</a></li>
                     </ul>
                 </li>

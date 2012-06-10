@@ -1,5 +1,5 @@
 {extends file="views/layout.tpl"}
-{block name=title}Country View - {$country['name']}{/block}
+{block name=title}Country Editor - {$country['name']}{/block}
 {block name=head}
 <script type="text/javascript" src="http://www.google.com/jsapi"></script>
 <script type="text/javascript">
@@ -50,12 +50,12 @@
     </div>
     <div class="span8"> <div id="visualization" style="width: 800px; height: 400px; margin-left: 50px;"></div></div>
  </div>
-                
 <div class="row">
     <div class="span12">
         <form class="well" action="country.php?country={$country['ISO']}&simid={$simID}" method="post">
         <table class="table table-striped">
              <tbody>
+                 {$country|@var_dump}
                 {foreach $country as $c}
                     {if $c@key == 'ISO' or $c@key == 'ISO2' or $c@key == 'name'}
                         <tr>
