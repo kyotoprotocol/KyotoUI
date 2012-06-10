@@ -169,7 +169,7 @@ abstract class BaseMongoRecord
 
 		// What is the get/set class attribute
 		$inflector = Inflector::getInstance();
-		$property = $inflector->underscore(substr($method, 3));
+		$property = $inflector->variable(substr($method, 3));
 
 		if (empty($prefix) || empty($property))
 		{
