@@ -31,7 +31,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a href="initialise.php">Initialise</a></li>
-                        <li><a href="country.php">Country</a></li>
+                        <li><a href="country.php">Country Editor</a></li>
                     </ul>
                 </li>
                 <li><a href="simulations.php">Simulations</a></li>

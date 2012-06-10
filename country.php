@@ -5,7 +5,7 @@ $smarty = new Smarty;
 
 include('admin/config.php');
 
-        $simulation = new SimulationModel();
+        $simulation = new SimulationModel();    // instantiate collection model
             
         // Load specific simulation
         if (isset($_GET['simid'])) {
@@ -17,7 +17,7 @@ include('admin/config.php');
         $countries = $sim->getCountries();
         $simID = new MongoInt64($sim->getID());
         
-        
+        // Load specific country for editing
         if(isset($_GET['country'])){
             $country = $countries[toISO3($_GET['country'])];
         } else {
@@ -33,11 +33,12 @@ include('admin/config.php');
             }
             $countries[$country['ISO']] = $country;
             $sim->setCountries($countries);
-            $sim->save();
+            $sim->save();                               // save changes to database collection
             $smarty->assign('updated', true);
         }
 
         
+        // send all required variables to smarty view
         $smarty->assign('simName', $sim->getName());
         $smarty->assign('country', $country);
         $smarty->assign('ISO2', $ISO2);
