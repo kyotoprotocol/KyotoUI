@@ -2,7 +2,6 @@
 
 require('libs/Smarty.class.php');
 $smarty = new Smarty;
-$smarty->assign('foo','bar');
 
 include('admin/config.php');
 

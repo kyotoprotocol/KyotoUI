@@ -2,11 +2,11 @@
 
 require('libs/Smarty.class.php');
 $smarty = new Smarty;
-$smarty->assign('foo','bar');
+
 
 include('admin/config.php');
 
-        $simulation = new SimulationModel();
+        $simulation = new SimulationModel();    // instantiate collection model
             
         // Load specific simulation
         if (isset($_GET['simid'])) {
@@ -15,10 +15,10 @@ include('admin/config.php');
             $sim = $simulation->findOne(array(), array('countries' => 1));
         }
         
-        $countries = $sim->getCountries();
-        $simID = new MongoInt64($sim->getID());
+        $countries = $sim->getCountries();      // populate countries array from collection
+        $simID = new MongoInt64($sim->getID()); // ensure simID is of the correct type
         
-        foreach ($countries as $c) {
+        foreach ($countries as $c) {            // package countries to contain all relevant data
             $countriesDisplay[$c['ISO']] = $c;
             $countriesDisplay[$c['ISO']]['arableLandAreaPC'] = (int)(($c['arableLandArea']/$c['landArea'])*100) ;
             $countriesDisplay[$c['ISO']]['ISO2'] = toISO2($c['ISO']);

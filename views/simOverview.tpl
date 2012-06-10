@@ -8,17 +8,17 @@
     $(function() {
         $(document).ready(function() { 
             {/literal}
-                window.bigtime = {$countries|@json_encode};
+                window.bigtime = {$countries|@json_encode};     // convert array of countries to JSON
             {literal};
         });
-        $(".params").click(function() {
+        $(".params").click(function() {     // when a button is clicked
             var newarray = [];
             var self = this;
             newarray.push(['Country', $(this).attr('id')]);
-            $.each(bigtime, function(index, country) {
+            $.each(bigtime, function(index, country) {      // loop taking the relevant data
                 newarray.push([country['ISO2'], parseInt(country[$(self).attr('id')])]);
             });
-            show(newarray);
+            show(newarray); // pass to function in order to show updated geochart
             return false;
          });
       });
@@ -33,7 +33,7 @@
             ['Country', 'arableLandArea %'],
             {/literal}
                 {foreach $countries as $c}
-                    ['{$c['ISO2']}', {$c['arableLandAreaPC']}],
+                    ['{$c['ISO2']}', {$c['arableLandAreaPC']}], // default geochart data
                 {/foreach}
             {literal}
         ]);
@@ -55,9 +55,9 @@
         
     function show(parameters){
         if(geochart) {
-            geochart.clearChart();
+            geochart.clearChart();  // make chart ready for re-population
         }
-        var data = google.visualization.arrayToDataTable(parameters);
+        var data = google.visualization.arrayToDataTable(parameters); // set parameters as data
         window.options = {
             colorAxis: { colors: ['#c5e5c5', '#2c662c']},
             datalessRegionColor: ['#da4f49'],
@@ -106,7 +106,6 @@
         <div id="visualization"></div>
     </div>
 </div>
-
 
     
 {/block}

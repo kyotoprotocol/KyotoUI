@@ -3146,7 +3146,6 @@ input[type="submit"].btn.btn-mini {
 }
 
 .alert {
-  display: none;
   padding: 8px 35px 8px 14px;
   margin-bottom: 18px;
   color: #c09853;
