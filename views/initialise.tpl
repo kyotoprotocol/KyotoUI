@@ -17,15 +17,12 @@
             Useful for initialisation and resetting the database
         </blockquote>
         <hr>
-        {if isset($showbtn)}
                 <a href="initialise.php?init=true" class="btn btn-primary">
             Create Default Simulation
             </a>
                 <a href="initialise.php?init=true&size=baby" class="btn btn-primary">
             Create a baby Simulation
             </a>
-        {else}
-        {/if}
             {if isset($notices)}
                 <ul>
                     {foreach $notices as $item}
