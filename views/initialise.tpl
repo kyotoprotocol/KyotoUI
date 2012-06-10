@@ -44,28 +44,29 @@
             Identify what simulations you have initialised.
         </blockquote>
             {if isset($babysim)} 
-            <div class="alert alert-success">
+            <span class="label label-success">
                 Baby Default simulation found id: {$babysim}
-            </div>
+            </span>
             {else}
-            <div class="alert alert-error">
+            <span class="label label-important">
                 Baby Default simulation missing, press the create button!
             <a href="initialise.php?init=true&size=baby" class="btn btn-primary">
             Create a baby Simulation
             </a>
-            </div>                
+            </span>     
             {/if}
+             <br><br>
             {if isset($defsim)} 
-            <div class="alert alert-success">
+            <span class="label label-success">
                 Default simulation found id: {$defsim}
-            </div>
+            </span>
             {else}
-            <div class="alert alert-error">
+            <span class="label label-important">
                 Default simulation missing, press the create button!
             <a href="initialise.php?init=true" class="btn btn-primary">
             Create Default Simulation
             </a>
-            </div>                
+            </span>
             {/if}
     </div>
 </div>
