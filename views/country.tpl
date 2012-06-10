@@ -60,7 +60,6 @@
         <form class="well" action="country.php?country={$country['ISO']}&simid={$simID}" method="post">
         <table class="table table-striped">
              <tbody>
-                 {$country|@var_dump}
                 {foreach $country as $c}
                     {if $c@key == 'ISO' or $c@key == 'ISO2' or $c@key == 'name'}
                         <tr>
