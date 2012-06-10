@@ -1,5 +1,5 @@
 {extends file="views/layout.tpl"}
-{block name=title}Simulation Editor - {$simulationname}{/block}
+{block name=title}Simulation Editor - {$simName}{/block}
 {block name=head}
 {/block}
 
@@ -8,13 +8,13 @@
 {if isset($updated)}
     <div class="alert alert-success">
         <button type="button" class="close" data-dismiss="alert">×</button>
-        <strong>Success!</strong> {$simulationname} updated.
+        <strong>Success!</strong> {$simName} updated.
     </div>
 {/if} 
 
 <div class="row">
     <div class="span4">
-        <h1>{$simulationname}</h1>
+        <h1>{$simName}</h1>
         <ul class="nav nav-pills">
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="path/to/page.html">Simulations<b class="caret"></b></a>
@@ -35,30 +35,36 @@
              <tbody>
                 {foreach from=$attributes key=k item=s}
                     {if is_array($s)}
-                        {if $k == 'countries'}
+                        {if $k == 'parent' or $k == 'children'}
+                        {else if $k == 'countries'}
                             <tr>
-                                <td><strong>{$k}</strong>
+                                <td><strong>{$k}:</strong>
                                 <a class='btn' href='country.php?simid={$simid}'>Edit Countries</a></td>
                             </tr>
                         {else}
                             <tr><td><strong>{$k}:</strong><td></tr>
                             {foreach from=$s key=k2 item=s2}
-                                <tr>
-                                    <td class='indented'>{$k2}</td>
-                                    <td class='indented'><input type="text" name="{$k2}" value="{$s2}"></td>
-                                <tr>
+                                {if $k2 == 'finishTime'}
+                                {else}
+                                    <tr>
+                                        <td class='indented'>{$k2}</td>
+                                        <td class='indented'><input type="text" name="{$k2}" value="{$s2}"></td>
+                                    <tr>
+                                {/if}
                             {/foreach}
-                            <tr><td></td></tr>
                         {/if}
                     {else}
-                    <tr>
-                        <td>{$k}</td>
-                        {if strlen($s) > 50}
-                            <td><textarea cols="20" rows="4" name="{$k}">{$s}</textarea></td>
+                        {if $k == 'parent' or $k == 'children'}
                         {else}
-                            <td><input type="text" name="{$k}" value="{$s}"></td>
+                            <tr>
+                                <td>{$k}</td>
+                                {if strlen($s) > 50}
+                                    <td><textarea cols="30" rows="4" name="{$k}">{$s}</textarea></td>
+                                {else}
+                                    <td><input type="text" name="{$k}" value="{$s}"></td>
+                                {/if}
+                            <tr>
                         {/if}
-                    <tr>
                     {/if}
                 {/foreach}
                 <tr>
