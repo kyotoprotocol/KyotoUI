@@ -4,11 +4,7 @@
 {literal}
     <script type="text/javascript">
         $(document).ready(function() {
-            $("#addparameter").click(function() {
-                $(".newKey").show();
-                $(".newValue").show();
-                $("#addparameter").hide();
-            });
+            //javascript if required
         });
     </script>
 {/literal}

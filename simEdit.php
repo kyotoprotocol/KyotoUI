@@ -5,22 +5,16 @@ $smarty = new Smarty;
 include('admin/config.php');
 $smarty->assign('simList',simulationList());
 
-
     $simulation = new SimulationModel();    // instantiate collection model
-    
     $simulations = $simulation->findAll();
     
-
     // Load specific simulation
     if (isset($_GET['simid'])) {
         $sim = $simulation->findOne(array("_id" => (int)$_GET['simid']));
-    } else {
-        $sim = $simulation->findOne(array(), array('countries' => 1));
+        $postSim = $sim;
+        $simID = new MongoInt64($sim->getID());
     }
     
-    $attributes = $sim->getAttributes();
-    $simID = new MongoInt64($sim->getID());
-
     //Grab updated country data - SORT LATER
     if (isset($_POST['_id'])){                      //check post data set
         foreach(array_keys($_POST) as $key){
@@ -35,16 +29,22 @@ $smarty->assign('simList',simulationList());
                     // do nothing - already taken care of above
                 } else {
                     $function = 'set'. ucfirst($key);
-                    call_user_func($sim->$function($_POST[$key]));
+                    call_user_func($postSim->$function($_POST[$key]));
                 }
             } else {
-                $sim->setID($simID);
+                $postSim->setID($simID);
             }
         }
-        $sim->setParameters($params);
-        $sim->save();                               // save changes to database collection
+        $postSim->setParameters($params);
+        $postSim->save();                               // save changes to database collection
         $smarty->assign('updated', true);
     }
+    
+    if($postSim){
+        $sim = $postSim;
+    }
+    
+    $attributes = $sim->getAttributes();
     
     $smarty->assign('simName', $sim->getName());
     $smarty->assign('simid', $simID);
