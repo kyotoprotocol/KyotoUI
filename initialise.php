@@ -233,7 +233,7 @@ try {
 
     $smarty->display('views/initialise.tpl');
 
-    $version = fopen("http://github.com/api/v2/json/commits/list/kyotoprotocol/KyotoInterface/master", "rb");
+    $version = fopen("http://github.com/api/v2/json/commits/list/kyotoprotocol/KyotoUI/master", "rb");
     $contents = stream_get_contents($version);
     fclose($version);
     unset($version);
