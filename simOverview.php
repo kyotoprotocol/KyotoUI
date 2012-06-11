@@ -11,6 +11,7 @@ $smarty->assign('simList',simulationList());
         if (isset($_GET['simid'])) {
             $sim = $simulation->findOne(array("_id" => (int)$_GET['simid']));
         } else {
+        // Not the best idea to default load sim, no idea if an error occurs in linking simid!!
         //    $sim = $simulation->findOne(array(), array('countries' => 1));
         }
         

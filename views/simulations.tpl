@@ -10,6 +10,16 @@
         <h1>View and Edit Simulations</h1> 
     </div>
  </div>
+{if isset($success)}
+<div class="row">
+    <div class="span12">
+        <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>Success!</strong> {$success}
+        </div>
+    </div>
+ </div>
+{/if} 
 
 <div class="row">
     <div class="span12">
@@ -35,6 +45,29 @@
                 <tr>
                     <td>
                         {$s["_id"]}
+                        <!-- Hover box for copy simulation -->
+                        <div class="modal hide" id="sim{$s["_id"]}">
+                           <form class="well" name="input" action="simulations.php" method="post">
+
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">×</button>
+                                <h3>Create a copy of {$s["name"]}</h3>
+                            </div>
+                            <div class="modal-body">
+                                <div class="control-group">
+                                    <label>Name of new Simulation</label>
+                                    <input class="input-xlarge focused" name="simulationname" value="{$s["name"]}" type="text">
+                                    <input name="simulationcopy" value="{$s["_id"]}" type="hidden">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <a href="#" class="btn" data-dismiss="modal">Close</a>
+                                <button type="submit" class="btn btn-primary">Create a copy</button>
+                            </div>
+                           </form>
+                        </div>
+                        
+                        
                     </td>
                     <td>
                         <h3>{$s["name"]}</h3>
@@ -89,7 +122,7 @@
                                 <li><a href="#">View Countries</a></li>
                                 <li><a href="export.php?simid={$s["_id"]}">Export to CSV</a></li>
                                 <li><a href="simEdit.php?simid={$s["_id"]}">Edit</a></li>
-                                <li><a href="#">tbc</a></li>
+                                <li><a href="#"><a class="btn" data-toggle="modal" href="#sim{$s["_id"]}">Copy</a></li>
                                 <!--            <li class="divider"></li>
                                 <li><a href="#">Separated link</a></li>-->
                             </ul>
