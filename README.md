@@ -2,6 +2,12 @@
 
 > This is a web interface designed to manage large amounts of country data and provide simple steps to create a simulation profile in mongodb. The site will also be used to perform analysis with useful charts.
 
+## Important ##
+Currently won't start a simulation - we're working on the java code to do this, but at the moment it will simply fill your mongo db with a pretty simulation.
+
+**GIT:** We've spent quite some time making KyotoUI and would appreciate additions and fixes but would prefer it to be done through Pull Requests, so we can do thorough testing.
+
+
 ## Operation ##
 
 - admin/data.csv is loaded to show countries init data
