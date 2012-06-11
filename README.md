@@ -30,10 +30,9 @@ Currently won't start a simulation - we're working on the java code to do this, 
 ## Installation Suggestions ##
 
 - Linux
-
-        - [An Article about Choudhury](http://www.bbc.co.uk/news/science-environment-18370797)
-        - [Linux Setup Guide](https://github.com/kyotoprotocol/KyotoUI/wiki/Linux-Setup)
-	- https://help.ubuntu.com/community/ApacheMySQLPHP
+    - [An Article about Choudhury](http://www.bbc.co.uk/news/science-environment-18370797)
+    - [Linux Setup Guide](https://github.com/kyotoprotocol/KyotoUI/wiki/Linux-Setup)
+    - https://help.ubuntu.com/community/ApacheMySQLPHP
 
 - OSX
 	- mamp?
