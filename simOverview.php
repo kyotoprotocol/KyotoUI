@@ -24,6 +24,13 @@ $smarty->assign('simList',simulationList());
             $countriesDisplay[$c['ISO']]['arableLandAreaPercent'] = (int)(($c['arableLandArea']/$c['landArea'])*100) ;
             $countriesDisplay[$c['ISO']]['ISO2'] = toISO2($c['ISO']);
             $countriesDisplay[$c['ISO']]['GDPperkm2'] = (int)(($c['GDP']/$c['landArea'])) ;
+            foreach (agentList() as $agenttype){
+                if ($c['agentName'] == $agenttype) {
+                    $countriesDisplay[$c['ISO']]['Group'.$agenttype] = (int)1 ;
+                } else {
+                    $countriesDisplay[$c['ISO']]['Group'.$agenttype] = (int)0 ;
+                }
+            }
         }
         
         

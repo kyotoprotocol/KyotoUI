@@ -40,6 +40,7 @@ $smarty->assign('simList',simulationList());
 
         
         // send all required variables to smarty view
+        $smarty->assign('agentList', agentList());
         $smarty->assign('simName', $sim->getName());
         $smarty->assign('country', $country);
         $smarty->assign('ISO2', $ISO2);

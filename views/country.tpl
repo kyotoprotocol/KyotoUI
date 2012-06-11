@@ -66,6 +66,15 @@
                             <td>{$c@key}</td>
                             <td><input type="text" name="{$c@key}" value="{$c}" readonly="readonly"></td>
                         <tr>
+                    {elseif $c@key == 'agentName'}
+                        <tr>
+                            <td>{$c@key}</td>
+                            <td>
+                                <select name="agentName" size="{$agentList|@count}">
+                                {html_options values=$agentList output=$agentList selected=$c}
+                                </select>
+                            </td>
+                        <tr>
                     {else}
                         <tr>
                                 <td>{$c@key}</td>

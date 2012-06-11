@@ -29,6 +29,8 @@ define ("DEFAULT_BABY_CURRENTTIME", DEFAULT_CURRENTTIME);
 define ("DEFAULT_BABY_FINISHTIME", DEFAULT_FINISHTIME);
 define ("DEFAULT_BABY_DESCRIPTION", "This is a default baby class, has a smaller dataset to get going.");
 
+define ("AGENT_CLASS_LIST", "NonAnnex,AbstractPostCommunistCountry,EU,CanadaAgent,USAgent,NonParticipant");
+
 
 BaseMongoRecord::$connection = new Mongo(HOST);
 BaseMongoRecord::$database = 'presage';
@@ -57,6 +59,11 @@ function simulationList() {
         $simulations[$s["_id"]] = $s["name"];
     }
     return $simulations;
+}
+
+
+function agentList() {
+    return explode(',',AGENT_CLASS_LIST);
 }
 
 ?>
