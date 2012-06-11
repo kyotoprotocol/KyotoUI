@@ -1,6 +1,17 @@
 {extends file="views/layout.tpl"}
 {block name=title}Simulation Editor - {$simName}{/block}
 {block name=head}
+{literal}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#addparameter").click(function() {
+                $(".newKey").show();
+                $(".newValue").show();
+                $("#addparameter").hide();
+            });
+        });
+    </script>
+{/literal}
 {/block}
 
 {block name=body}
@@ -48,10 +59,16 @@
                                 {else}
                                     <tr>
                                         <td class='indented'>{$k2}</td>
-                                        <td class='indented'><input type="text" name="param_{$k2}" value="{$s2}"></td>
+                                        <td><input type="text" name="param_{$k2}" value="{$s2}"></td>
                                     <tr>
                                 {/if}
                             {/foreach}
+                            <tr><td><strong>Add New Parameter:</strong><td></tr>
+                            <tr>  
+                                <td class="indented"><input type="text" name="newKey" id="newKey" placeholder="New attribute name..."></td>
+                                </tr><tr>
+                                <td class="indented"><input type="text" name="newValue" id="newValue" placeholder="New attribute value..."></td>
+                            </tr>
                         {/if}
                     {else}
                         {if $k == 'parent' or $k == 'children'}

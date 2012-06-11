@@ -27,6 +27,12 @@ $smarty->assign('simList',simulationList());
             if($key != '_id'){
                 if(substr_count($key, 'param_')){
                     $params[str_replace('param_', '', $key)] = $_POST[$key];
+                } elseif($key == 'newKey') {
+                    if(strlen($_POST['newKey']) > 0){
+                        $params[$_POST['newKey']] = $_POST['newValue'];
+                    }
+                } elseif ($key == 'newValue'){
+                    // do nothing - already taken care of above
                 } else {
                     $function = 'set'. ucfirst($key);
                     call_user_func($sim->$function($_POST[$key]));
