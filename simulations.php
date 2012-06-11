@@ -46,7 +46,13 @@ if (isset($_POST['simulationcopy'])) {
         $smarty->assign('success', 'Created :'.$_POST['simulationname'].'!');
 
     }
+} elseif (isset($_POST['delete'])) {
+    $sims = new SimulationModel();
+    $dropitlikeitshot = $sims->findOne(array("_id" => (int)$_POST['simulationid']));
+    $dropitlikeitshot->destroy();
+        $smarty->assign('success', 'Deleted :'.$_POST['simulationid'].'!');
 }
+
 
     $simquery = new SimulationModel();    // instantiate collection model
  

@@ -71,6 +71,27 @@
                            </form>
                         </div>
                         <!-- END Hover box for copy simulation -->
+                        <!-- Hover box for copy simulation -->
+                        <div class="modal hide" id="simdel{$s["_id"]}">
+                           <form class="well" name="input" action="simulations.php" method="post">
+
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">×</button>
+                                <h3>Are you sure you want to delete: {$s["name"]}</h3>
+                            </div>
+                            <div class="modal-body">
+                                <div class="control-group">
+                                    <input name="simulationid" value="{$s["_id"]}" type="hidden">
+                                    <input name="delete" value="{$s["_id"]}" type="hidden">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <a href="#" class="btn" data-dismiss="modal">Close</a>
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </div>
+                           </form>
+                        </div>
+                        <!-- END Hover box for copy simulation -->
                     </td>
                     <td>
                         <h3>{$s["name"]}</h3>
@@ -126,6 +147,7 @@
                                 <li><a href="export.php?simid={$s["_id"]}">Export to CSV</a></li>
                                 <li><a href="simEdit.php?simid={$s["_id"]}">Edit</a></li>
                                 <li><a data-toggle="modal" href="#sim{$s["_id"]}">Copy</a></li>
+                                <li><a data-toggle="modal" href="#simdel{$s["_id"]}">Delete</a></li>
                                 <!--            <li class="divider"></li>
                                 <li><a href="#">Separated link</a></li>-->
                             </ul>
