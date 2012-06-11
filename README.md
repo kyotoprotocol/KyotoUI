@@ -30,8 +30,7 @@ Currently won't start a simulation - we're working on the java code to do this, 
 ## Installation Suggestions ##
 
 - Linux
-	- php5-cli
-	- apache2
+        - [Linux Setup Guide](wiki/Linux-Setup)
 	- https://help.ubuntu.com/community/ApacheMySQLPHP
 
 - OSX
