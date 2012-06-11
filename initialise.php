@@ -238,7 +238,7 @@ try {
     fclose($version);
     unset($version);
     $commitdata = json_decode($contents);
-    $webversion = trim($commitdata->commits[0]->parents[0]->id);
+    $webversion = trim($commitdata->commits[0]->id);
     
     $file = fopen('./.git/refs/heads/master', 'r');
     $dave = fgets($file);
