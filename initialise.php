@@ -14,7 +14,7 @@ include('admin/config.php');
 try {
     
     $db = startDB();
-       
+    //Still uses old database function startDB, not the way to do it.
     $list = $db->listCollections();
     $smarty->assign('collections',$list);
     $smarty->assign('host',HOST);
@@ -183,9 +183,27 @@ try {
     $smarty->assign('notices',$notices);
         
     $smarty->assign('status',"Success");
-    } else {
+    // End of the initialise script
+    // Start of drop script
+    } elseif (isset($_POST['drop'])) {    
+            $environmentState = new EnvironmentStateModel();
+            $dropitlikeitshot = $environmentState->findAll();
+            foreach ($dropitlikeitshot as $dog) {
+                $dog->destroy();
+            }
+            $sims = new SimulationModel();
+            $dropitlikeitshot = $sims->findAll();
+            foreach ($dropitlikeitshot as $dog) {
+                $dog->destroy();
+            }
+            $counter = new CountersModel();
+            $dropitlikeitshot = $counter->findAll();
+            foreach ($dropitlikeitshot as $dog) {
+                $dog->destroy();
+            }
+    } else { //Normal page work:
      $smarty->assign('status',"Not Started");
-     $smarty->assign('showbtn', 'true');
+     $smarty->assign('showbtn', 'true'); //Probably useless now.
     }
 
    

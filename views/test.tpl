@@ -34,8 +34,8 @@
     {literal}
 <script type="text/javascript">
 
-var w = 1920,
-    h = 800,
+var w = 1024,
+    h = 600,
     n = 2,
     m = 10,
     degrees = 180 / Math.PI;

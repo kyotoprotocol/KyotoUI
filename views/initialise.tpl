@@ -70,13 +70,26 @@
 <div class="row">
     <div class="span12">
         <h2>Tables in MongoDB </h2>
+        <blockquote>
         For Host:{$host} using Database:{$db}
+        </blockquote>
         <ul>
         {foreach $collections as $item}
             <li>{$item}</li>
         {/foreach}
         </ul>
 
+    </div>
+</div>
+<div class="row">
+    <div class="span6">
+        <h2>Empty the tables</h2>
+        
+            <form class="well" method="POST">
+                <span class="help-block">Will erase all simulations, counter and environmentstate</span>
+                <input type="hidden" name="drop" value="true">
+                <button type="submit" class="btn btn-danger">Submit</button>
+            </form>
     </div>
 </div>
 
