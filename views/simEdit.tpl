@@ -45,25 +45,30 @@
                         {if $k == 'parent' or $k == 'children'}
                         {else if $k == 'countries'}
                             <tr>
-                                <td><strong>{$k}:</strong>
-                                <a class='btn' href='country.php?simid={$simid}'>Edit Countries</a></td>
+                                <td><strong>{$k}:</strong></td>
+                                <td><a class='btn' href='country.php?simid={$simid}'>Edit Countries</a></td>
                             </tr>
                         {else if $k == 'parameters'}
-                            <tr><td><strong>{$k}:</strong><td></tr>
+                            <tr>
+                                <td><strong>{$k}:</strong></td>
+                                <td></td>
+                            </tr>
                             {foreach from=$s key=k2 item=s2}
                                 {if $k2 == 'finishTime'}
                                 {else}
                                     <tr>
                                         <td class='indented'>{$k2}</td>
                                         <td><input type="text" name="param_{$k2}" value="{$s2}"></td>
-                                    <tr>
+                                    </tr>
                                 {/if}
                             {/foreach}
-                            <tr><td><strong>Add New Parameter:</strong><td></tr>
-                            <tr>  
-                                <td class="indented"><input type="text" name="newKey" id="newKey" placeholder="New attribute name..."></td>
-                                </tr><tr>
-                                <td class="indented"><input type="text" name="newValue" id="newValue" placeholder="New attribute value..."></td>
+                            <tr>
+                                <td rowspan="2"><strong>Add New Parameter:</strong></td>
+                                <td><input type="text" name="newKey" id="newKey" placeholder="New attribute name..."></td>
+                            </tr>
+                            <tr> 
+                                <td><input type="text" name="newValue" id="newValue" placeholder="New attribute value..."></td>
+                                <td></td>
                             </tr>
                         {/if}
                     {else}
@@ -76,12 +81,13 @@
                                 {else}
                                     <td><input type="text" name="{$k}" value="{$s}"></td>
                                 {/if}
-                            <tr>
+                            </tr>
                         {/if}
                     {/if}
                 {/foreach}
                 <tr>
                     <td><button type="submit" class="btn btn-primary"> Save Changes</button></td>
+                    <td></td>
              </tbody>
         </table>
         </form>
