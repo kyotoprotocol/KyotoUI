@@ -6,14 +6,6 @@ $smarty->assign('foo','bar');
 
 include('admin/config.php');
 
-$simquery = new SimulationModel();    // instantiate collection model
-$results = $simquery->findAll();
-
-$s = array();
-foreach ($results as $sim) {
-    $s[] = $sim->getAttributes();
-}
-
 $simList = simulationList();
 //POST copy simulation?
 if (isset($_POST['simulationcopy'])) {
@@ -37,7 +29,7 @@ if (isset($_POST['simulationcopy'])) {
                                         array(  '_id'               =>  new MongoInt64($useid),
                                                 'name'              =>  $_POST['simulationname'],
                                                 'classname'         =>  $sim->getClassname(),
-                                                'description'       =>  $sim->getDescription(),
+                                                'description'       =>  $_POST['simulationdescription'],
                                                 'state'             =>  $sim->getState(),
                                                 'finishTime'        =>  new MongoInt64($sim->getFinishTime()),
                                                 'createdAt'         =>  new MongoInt64(time()*1000) ,
@@ -55,7 +47,17 @@ if (isset($_POST['simulationcopy'])) {
 
     }
 }
-    
+
+    $simquery = new SimulationModel();    // instantiate collection model
+ 
+    $results = $simquery->find(array(), array('sort'=>array("_id"=>1)));
+
+    $s = array();
+    foreach ($results as $sim) {
+        $s[] = $sim->getAttributes();
+    }
+
+
 $smarty->assign('simList',$simList);
 $smarty->assign('simulations', $s);
 $smarty->display('views/simulations.tpl');

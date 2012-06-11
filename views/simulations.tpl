@@ -57,6 +57,10 @@
                                 <div class="control-group">
                                     <label>Name of new Simulation</label>
                                     <input class="input-xlarge focused" name="simulationname" value="{$s["name"]}" type="text">
+                                    <label class="control-label" for="textarea">Description</label>
+                                    <div class="controls">
+                                    <textarea class="input-xlarge" name="simulationdescription" id="textarea" rows="6">{$s["description"]}</textarea>
+                                    </div>
                                     <input name="simulationcopy" value="{$s["_id"]}" type="hidden">
                                 </div>
                             </div>
@@ -66,8 +70,7 @@
                             </div>
                            </form>
                         </div>
-                        
-                        
+                        <!-- END Hover box for copy simulation -->
                     </td>
                     <td>
                         <h3>{$s["name"]}</h3>
@@ -119,10 +122,10 @@
                             <a class="btn btn-primary" href="simOverview.php?simid={$s["_id"]}" >View</a>
                             <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">View Countries</a></li>
+                                <!--<li><a href="#">View Countries</a></li>-->
                                 <li><a href="export.php?simid={$s["_id"]}">Export to CSV</a></li>
                                 <li><a href="simEdit.php?simid={$s["_id"]}">Edit</a></li>
-                                <li><a href="#"><a class="btn" data-toggle="modal" href="#sim{$s["_id"]}">Copy</a></li>
+                                <li><a data-toggle="modal" href="#sim{$s["_id"]}">Copy</a></li>
                                 <!--            <li class="divider"></li>
                                 <li><a href="#">Separated link</a></li>-->
                             </ul>

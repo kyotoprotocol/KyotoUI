@@ -83,7 +83,7 @@
     </div>-->
         <div class="btn-toolbar">
             <div class="btn-group">
-                    <a id="c1" class="btn dropdown-toggle" data-toggle="dropdown" data-target="#" href="path/to/page.html">Map view<span class="caret"></span>
+                    <a id="c1" class="btn dropdown-toggle" data-toggle="dropdown" data-target="#" href="path/to/page.html"><i class="icon-map-marker"></i>Map view<span class="caret"></span>
                     </a>
                         <ul class="dropdown-menu">
                     {foreach from=($dropdownlist) key=k item=c}
@@ -103,6 +103,7 @@
                     </ul>
                 <a class="btn" href="simEdit.php?simid={$simID}"><i class="icon-cog"></i>Edit Simulation</a>
                 <a class="btn" href="export.php?simid={$simID}"><i class="icon-download"></i> CSV export</a>
+                <a class="btn" href="export.php?simid={$simID}"><i class="icon-circle-arrow-right"></i> Copy</a>
             </div>   
         </div>
     </div>

@@ -52,7 +52,7 @@ function startDB(){
 
 function simulationList() {
     $simquery = new SimulationModel();    // instantiate collection model
-    $results = $simquery->findAll();
+    $results = $simquery->find(array(), array('sort'=>array("_id"=>1)));
 
     foreach ($results as $sim) {
         $s = $sim->getAttributes();
