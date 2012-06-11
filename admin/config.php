@@ -6,6 +6,7 @@ include('models/EnvironmentStateModel.php');
 include('models/CountersModel.php');
 
 // Database options
+// Remote host: 155.198.117.244
 define ("HOST", "127.0.0.1:27017");
 define ("DB", "presage");
 define ("SIMTREE", "simulations");
@@ -53,7 +54,7 @@ function startDB(){
 function simulationList() {
     $simquery = new SimulationModel();    // instantiate collection model
     $results = $simquery->find(array(), array('sort'=>array("_id"=>1)));
-
+$simulations = array();
     foreach ($results as $sim) {
         $s = $sim->getAttributes();
         $simulations[$s["_id"]] = $s["name"];
