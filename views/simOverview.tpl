@@ -76,11 +76,33 @@
 
 <div class="row">
     <div class="span12">
-     <!--   <div class="btn-group">
-    <button class="btn">1</button>
-    <button class="btn">2</button>
-    <button class="btn">3</button>
-    </div>-->
+                        <!-- Hover box for copy simulation -->
+                        <div class="modal hide" id="sim{$simID}">
+                           <form class="well" name="input" action="simulations.php" method="post">
+
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">×</button>
+                                <h3>Create a copy of {$simName}</h3>
+                            </div>
+                            <div class="modal-body">
+                                <div class="control-group">
+                                    <label>Name of new Simulation</label>
+                                    <input class="input-xlarge focused" name="simulationname" value="{$simName}" type="text">
+                                    <label class="control-label" for="textarea">Description</label>
+                                    <div class="controls">
+                                    <textarea class="input-xlarge" name="simulationdescription" id="textarea" rows="6">{$simDescription}</textarea>
+                                    </div>
+                                    <input name="simulationcopy" value="{$simID}" type="hidden">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <a href="#" class="btn" data-dismiss="modal">Close</a>
+                                <button type="submit" class="btn btn-primary">Create a copy</button>
+                            </div>
+                           </form>
+                        </div>
+                        <!-- END Hover box for copy simulation -->
+
         <div class="btn-toolbar">
             <div class="btn-group">
                     <a id="c1" class="btn dropdown-toggle" data-toggle="dropdown" data-target="#" href="path/to/page.html"><i class="icon-map-marker"></i>Map view<span class="caret"></span>
@@ -103,7 +125,7 @@
                     </ul>
                 <a class="btn" href="simEdit.php?simid={$simID}"><i class="icon-cog"></i>Edit Simulation</a>
                 <a class="btn" href="export.php?simid={$simID}"><i class="icon-download"></i> CSV export</a>
-                <a class="btn" href="export.php?simid={$simID}"><i class="icon-circle-arrow-right"></i> Copy</a>
+                <a class="btn" data-toggle="modal" href="#sim{$simID}"><i class="icon-circle-arrow-right"></i> Copy</a>
             </div>   
         </div>
     </div>
