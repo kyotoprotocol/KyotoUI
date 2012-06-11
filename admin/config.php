@@ -13,8 +13,8 @@ define ("SIMTREE", "simulations");
 
 //Kyoto Simulation Defaults
 define ("DEFAULT_SIMCSV", "data.csv");
-define ("DEFAULT_SIM", "defaultsimulation");
-define ("DEFAULT_CLASS", "SimulateKyoto");
+define ("DEFAULT_SIM", "Default Sim");
+define ("DEFAULT_CLASS", "uk.ac.ic.kyoto.Simulation");
 define ("DEFAULT_STATE", "NOT STARTED");
 define ("DEFAULT_CURRENTTIME", "0");
 define ("DEFAULT_FINISHTIME", "10");
