@@ -9,17 +9,15 @@
         $("ul.nav-pills > li").click(function() {
             $(".active").removeClass("active");
             $(this).addClass("active"); 
-            $(".chartarea").show();
             //ajax here
             $.ajax({
                 type: "GET",
                 url: "ajax.php",
-                data: {func : 'test'},
+                data: {func : $(this).attr('id')},
                 success: function(data) {
-                    //show div hide others
-                    
                     //load data and redraw chart
                     updateTable(data);
+                    //show div hide others
                 }
             });
         });
@@ -81,7 +79,7 @@
                 <li><a href="#"><i class="icon-flag"></i> Help</a></li>
             </ul>
         </div>
-        <div class="span10 chartarea hidden">
+        <div class="span10">
             <div id="co2_chart"></div>
         </div>
 </div> 
