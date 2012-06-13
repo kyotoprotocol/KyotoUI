@@ -17,6 +17,7 @@
                 data: {func : 'test'},
                 success: function(data) {
                     //show div hide others
+                    
                     //load data and redraw chart
                     updateTable(data);
                 }
