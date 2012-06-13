@@ -21,31 +21,64 @@ try {
     $smarty->assign('db',DB);
 
     // set URL and other appropriate options
+    if ($handle = opendir('admin/csv')) {
+///        echo "Directory handle: $handle\n";
+//        echo "Entries:\n";
+        $simulations = array();
+
+        while (false !== ($entry = readdir($handle))) {
+            $tag = substr($entry,0,-7);
+            // Loop all SIMULATION CSV's
+            if (substr($entry,-7) == 'sim.csv') {
+                $file = fopen('admin/csv/'.$tag.'params.csv', 'r');
+                // grab the first line - as headers
+                $csvdata[$tag]['file'] = $entry;
+                while (($line = fgetcsv($file)) !== FALSE) {
+                    $csvdata[$tag][$line[0]] = $line[1];
+                }
+                fclose($file);
+                unset($file);
+                
+            }
+        }
+    closedir($handle);
+    }
+    $smarty->assign('CSVfiles', $csvdata);
+
     
     // V rough implementation of making a full default simulation, or a baby one
-    if (isset($_GET['size'])) {    
-        if ($_GET['size']=='baby') {    
-            $notices[] = 'Making a baby sim';
-            define ("DEFAULTSIMCSV", DEFAULT_BABY_SIMCSV);
-            define ("DEFAULTSIM", DEFAULT_BABY_SIM);
-            define ("DEFAULTCLASS", DEFAULT_BABY_CLASS);
-            define ("DEFAULTSTATE", DEFAULT_BABY_STATE);
-            define ("DEFAULTCURRENTTIME", DEFAULT_BABY_CURRENTTIME);
-            define ("DEFAULTFINISHTIME", DEFAULT_BABY_FINISHTIME);
-            define ("DEFAULTDESCRIPTION", DEFAULT_BABY_DESCRIPTION);
-        }
-   }else{
-            $notices[] = 'Making a default sim';
-            define ("DEFAULTSIMCSV", DEFAULT_SIMCSV);
-            define ("DEFAULTSIM", DEFAULT_SIM);
-            define ("DEFAULTCLASS", DEFAULT_CLASS);
+    if (isset($_POST['filename'])) {    
+            var_dump($_POST);  
+            var_dump($_POST);  
+            var_dump($_POST);  
+            var_dump($_POST);  
+            $notices[] = 'Importing: '.$_POST['filename'];
+            
+            $tag = substr($_POST['filename'],0,-7);
+            $file = fopen('admin/csv/'.$tag.'params.csv', 'r');
+            // grab the first line - as headers
+            $simData['file'] = $entry;
+            $simData[$tag] = $entry;
+            $notices[] = 'loading CSV parameters';
+            $notices[] = 'loading simulation parameters';
+            while (($line = fgetcsv($file)) !== FALSE) {
+                $simData[$line[0]] = $line[1];
+                if (substr($line[0],0,6) == 'param.') {
+                        $paramData[substr($line[0],6)] = $line[1];
+                }
+            }
+            fclose($file);
+            unset($file);
+
+            define ("DEFAULTSIMCSV", $_POST['filename']);
+            define ("DEFAULTSIM", $simData['name']);
+            define ("DEFAULTCLASS", $simData['classname']);
             define ("DEFAULTSTATE", DEFAULT_STATE);
             define ("DEFAULTCURRENTTIME", DEFAULT_CURRENTTIME);
-            define ("DEFAULTFINISHTIME", DEFAULT_FINISHTIME);
-            define ("DEFAULTDESCRIPTION", DEFAULT_DESCRIPTION);
-    }
+            define ("DEFAULTFINISHTIME", $simData['finishTime']);
+            define ("DEFAULTDESCRIPTION", $simData['description']);
+            $paramData["finishTime"] = DEFAULTFINISHTIME;
 
-    if (isset($_GET['init'])) {    
         $simulation = new SimulationModel();
 
         $notices[] = 'looking for '.DEFAULTSIM;
@@ -91,7 +124,7 @@ try {
             $notices[] = 'create new '.DEFAULTSIM.' with ID'.$useid;
         }
         $notices[] = 'loading CSV data';
-        $file = fopen('admin/'.DEFAULTSIMCSV, 'r');
+        $file = fopen('admin/csv/'.DEFAULTSIMCSV, 'r');
         // grab the first line - as headers
         $csvheaders = fgetcsv($file);
         while (($line = fgetcsv($file)) !== FALSE) {
@@ -106,17 +139,7 @@ try {
         }
         fclose($file);
         unset($file);
-        $notices[] = 'loading CSV parameters';
-        $file = fopen('admin/params.csv', 'r');
-        // cut out the first line of row headers
-        $crap = fgetcsv($file);
-        // init finishTime into parameters, if exists in CSV, CSV will overwrite.
-            $parameters["finishTime"] = DEFAULTFINISHTIME;
-        while (($line = fgetcsv($file)) !== FALSE) {
-                $parameters[$line[0]] = $line[1];
-            }
-        fclose($file);  
-        unset($file);
+
         /*
          * Sam's WEB UI simulation mongo tree uses explicitly declared variables for java
          * Therefore MongoInt64 is used. Most helpful post in the world ever - 2nd answer.
@@ -150,13 +173,14 @@ try {
                                             array(  '_id'               =>  new MongoInt64($useid),
                                                     'name'              =>  DEFAULTSIM,
                                                     'classname'         =>  DEFAULTCLASS,
+                                                    'author'         =>  $simData['author'],
                                                     'description'       =>  DEFAULTDESCRIPTION,
                                                     'state'             =>  DEFAULTSTATE,
-                                                    'finishTime'        =>  new MongoInt64($parameters["finishTime"]),
+                                                    'finishTime'        =>  new MongoInt64(DEFAULTFINISHTIME),
                                                     'createdAt'         =>  new MongoInt64(time()*1000) ,
                                                     'currentTime'       =>  new MongoInt64(0),
                                                     'finishedAt'        =>  new MongoInt64(0),
-                                                    'parameters'        =>  $parameters,
+                                                    'parameters'        =>  $paramData,
                                                     'parent'            =>  new MongoInt64(0),
                                                     'children'          =>  array(),
                         //                         'startedAt'         =>  '',

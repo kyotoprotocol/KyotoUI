@@ -17,6 +17,26 @@
             Useful for initialisation and resetting the database
         </blockquote>
         <hr>
+          <div class="control-group">
+            <form name="input" action="initialise.php" method="post">
+            {*html_radios name='simulation' options=$CSVfiles
+            separator=''*}
+            {foreach $CSVfiles as $file}
+                    <label class="radio">
+                    <div class="well">
+                        <input name="filename" id="{$file['name']}" value="{$file['file']}" type="radio">
+                        <h3>{$file['name']}</h3>
+                        <h4>by: {$file['author']}</h4>
+                        <h5>{$file['file']}</h5>
+                        <blockquote>{$file['description']}</blockquote>
+                    </div>
+                </label>
+                {/foreach}
+                <button type="submit" class="btn">Import</button>
+            </form>
+          </div>
+
+                        
                 <a href="initialise.php?init=true" class="btn btn-primary">
             Create Default Simulation
             </a>
