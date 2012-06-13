@@ -76,7 +76,8 @@ try {
             } else {
                 $notices[] = 'Found counters table (likely used Presage WEB UI)';
                 $useid = $id->getNext();
-                $id->setNext(new MongoInt64($useid+1));
+                $useid++;
+                $id->setNext(new MongoInt64($useid));
                 $id->save();
                 $notices[] = 'Using simid:'.$useid;
             }
