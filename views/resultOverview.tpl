@@ -1,94 +1,88 @@
 {extends file="views/layout.tpl"}
-{block name=title}Simulation Overview - {$simName}{/block}
+{block name=title}Simulation Result - {$simName}{/block}
 {block name=head}
-{literal}
 
 <script type="text/javascript" src="http://www.google.com/jsapi"></script>
- <script>
-    $(function() {
-        $(document).ready(function() { 
-            {/literal}
-                window.bigtime = {$countries|@json_encode};     // convert array of countries to JSON
-            {literal};
-        });
-        $(".params").click(function() {     // when a button is clicked
-            var newarray = [];
-            var self = this;
-            newarray.push(['Country', $(this).attr('id')]);
-            $.each(bigtime, function(index, country) {      // loop taking the relevant data
-                newarray.push([country['ISO2'], parseInt(country[$(self).attr('id')])]);
-            });
-            show(newarray); // pass to function in order to show updated geochart
-            return false;
-         });
-      });
- </script>
 <script type="text/javascript">
-    window.geochart = {};
-    window.options = {};
-    google.load('visualization', '1', {packages: ['geochart']});
-
-    function drawVisualization() {
-        var data = google.visualization.arrayToDataTable([
-            ['Country', 'arableLandArea %'],
-            {/literal}
-                {foreach $countries as $c}
-                    ['{$c['ISO2']}', {$c['arableLandAreaPercent']}], // default geochart data
-                {/foreach}
-            {literal}
-        ]);
-            
-        window.options = {
-            colorAxis: { minValue: 0, maxValue: 100,  colors: ['#c5e5c5', '#2c662c']},
-            datalessRegionColor: ['#da4f49'],
-            width: 960,
-            height: 500,
-            magnifyingGlass: {enable: true, zoomFactor: 100.0}
-        };
-
-        window.geochart = new google.visualization.GeoChart(
-            document.getElementById('visualization'));
-        geochart.draw(data, options);
-    }
-
-    google.setOnLoadCallback(drawVisualization);
-        
-    function show(parameters){
-        if(geochart) {
-            geochart.clearChart();  // make chart ready for re-population
+    {literal}
+    $(document).ready(function() {
+        $("ul.nav-pills > li").click(function() {
+            $(".active").removeClass("active");
+            $(this).addClass("active"); 
+            $(".chartarea").show();
+            //ajax here
+            $.ajax({
+                type: "GET",
+                url: "ajax.php",
+                data: {func : 'test'},
+                success: function(data) {
+                    //show div hide others
+                    //load data and redraw chart
+                    updateTable(data);
+                }
+            });
+        });
+    });
+    {/literal}    
+</script>
+<script type="text/javascript">
+    {literal}
+    google.load("visualization", "1", {packages:["corechart", "table"]});
+    google.setOnLoadCallback(drawChart);
+         
+     function drawChart() {
+         var data = google.visualization.arrayToDataTable([
+             ['Year', 'Carbon Output'],
+             ['2004', 1000],
+             ['2005', 1100],
+             ['2006', 1100],
+             ['2007', 1300]
+         ]);
+             
+         window.options = {
+             title: 'Global Carbon Output',
+             hAxis: {title: 'Year', titleTextStyle: {color: 'blue'}},
+             yAxis: {title: 'Tonnes CO2', titleTextStyle: {color: 'blue'}}
+         };
+             
+         window.table = new google.visualization.AreaChart(document.getElementById('co2_chart'));
+             
+         table.draw(data, options);
+     }
+         
+     function updateTable(parameters){
+        if(table) {
+            table.clearChart();  // make chart ready for re-population
         }
         var data = google.visualization.arrayToDataTable(parameters); // set parameters as data
-        window.options = {
-            colorAxis: { colors: ['#c5e5c5', '#2c662c']},
-            datalessRegionColor: ['#da4f49'],
-            width: 960,
-            height: 500,
-            magnifyingGlass: {enable: true, zoomFactor: 100.0}
-        };
-        var chart = new google.visualization.GeoChart(document.getElementById('visualization'));
-        chart.draw(data, options);
-    }        
-    
+
+        table.draw(data, options);
+    }   
+     
+   
+    {/literal}    
 </script>
-{/literal}
+ 
 {/block}
 
-
 {block name=body}
-
+<p class="lead">Simulation result overview page</p>
 <div class="row-fluid">
-    <div class="span8">
-        <div id="area_chart" ></div>
-    </div>
-    <div class="span2 offset8">
-        <div>
-            ELLO<br>
-            <br>
-            <br>
-            ello2
-        
+        <div class="subnav">
+        <!-- sidebar -->
+            <ul class="nav nav-pills">
+                <li class="active" id="overview"><a href="#"><i class="icon-white icon-home"></i> Overview</a></li>
+                <li id="group"><a href="#"><i class="icon-book" ></i> Per Group</a></li>
+                <li><a href="#"><i class="icon-pencil" ></i> Per Country</a></li>
+                <li><a href="#"><i class="icon-user"></i> Profile</a></li>
+                <li><a href="#"><i class="icon-cog"></i> Settings</a></li>
+                <li class="divider"></li>
+                <li><a href="#"><i class="icon-flag"></i> Help</a></li>
+            </ul>
         </div>
-    </div>
+        <div class="span10 chartarea hidden">
+            <div id="co2_chart"></div>
+        </div>
 </div> 
 
 {/block}
