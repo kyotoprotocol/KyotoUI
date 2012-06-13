@@ -232,30 +232,5 @@ try {
 
 
     $smarty->display('views/initialise.tpl');
-
-    $version = fopen("http://github.com/api/v2/json/commits/list/kyotoprotocol/KyotoUI/master", "rb");
-    $contents = stream_get_contents($version);
-    fclose($version);
-    unset($version);
-    $commitdata = json_decode($contents);
-    $webversion = trim($commitdata->commits[0]->id);
-    
-    $file = fopen('./.git/refs/heads/master', 'r');
-    $dave = fgets($file);
-    fclose($file);
-    $localversion = trim($dave);
-    unset($file);
-
-    //v hacky but guess what - I'm not bovad
-    if ($localversion != $webversion) {
-        ?>
-        <div class="alert alert-error">
-            Version mismatch from the master branch. Try git pull. (Unless you're working on a branch, that is to be expected).<br>
-            Local: <?php echo $localversion; ?><br>
-            Web: <?php echo $webversion; ?><br>
-            Web: <?php var_dump($commitdata) ?><br>
-        </div>
-        <?PHP
-    }
     
 ?>
