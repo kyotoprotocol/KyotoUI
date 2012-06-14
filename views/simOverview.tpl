@@ -139,10 +139,10 @@
        
 
 <div class="row">
-    <div class="span4">
+    <div class="span8">
         <h1>{$simName}</h1>
     </div>
-    <div class="span8"></div>
+        <div class="span4"><h5>Author: {$simAuthor}</h5></div>
 </div> 
 <div class="row">
     <div class="span12">

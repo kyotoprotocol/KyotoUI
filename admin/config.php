@@ -13,22 +13,9 @@ define ("SIMTREE", "simulations");
 
 
 //Kyoto Simulation Defaults
-define ("DEFAULT_SIMCSV", "data.csv");
-define ("DEFAULT_SIM", "Default Sim");
-define ("DEFAULT_CLASS", "uk.ac.ic.kyoto.Simulation");
 define ("DEFAULT_STATE", "NOT STARTED");
 define ("DEFAULT_CURRENTTIME", "0");
 define ("DEFAULT_FINISHTIME", "10");
-define ("DEFAULT_DESCRIPTION", "This is a default class. Ideally all countries are included and it is designed to demonstrate how beautiful the economic models are that we have created.");
-
-//Config params for baby simulation if we necessary
-define ("DEFAULT_BABY_SIMCSV", "babydata.csv");
-define ("DEFAULT_BABY_SIM", "defaultbabysimulation");
-define ("DEFAULT_BABY_CLASS", DEFAULT_CLASS);
-define ("DEFAULT_BABY_STATE", DEFAULT_STATE);
-define ("DEFAULT_BABY_CURRENTTIME", DEFAULT_CURRENTTIME);
-define ("DEFAULT_BABY_FINISHTIME", DEFAULT_FINISHTIME);
-define ("DEFAULT_BABY_DESCRIPTION", "This is a default baby class, has a smaller dataset to get going.");
 
 define ("AGENT_CLASS_LIST", "NonAnnex,AbstractPostCommunistCountry,EU,CanadaAgent,USAgent,NonParticipant");
 
