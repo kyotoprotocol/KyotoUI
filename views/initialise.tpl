@@ -20,9 +20,12 @@
     </div>
 {/if} 
 <div class="row">
-    <div class="span12">
+    <div class="span11">
         <h1>Getting Started</h1>
         <br>
+    </div>
+    <div class="span1">
+    <a class="btn" target="_blank" href="https://github.com/kyotoprotocol/KyotoUI/wiki/ImportExport">Help</a>
     </div>
 </div>
 <div class="row">

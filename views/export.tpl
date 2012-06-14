@@ -2,11 +2,13 @@
 {block name=title}Initialise Data{/block}
 
 {block name=body}
-
 <div class="row">
-    <div class="span12">
+    <div class="span11">
         <h1>Export Simulation Country data to CSV</h1>
         <br>
+    </div>
+    <div class="span1">
+<a class="btn" target="_blank" href="https://github.com/kyotoprotocol/KyotoUI/wiki/ImportExport">Help</a>
     </div>
 </div>
 {if isset($success)}
@@ -15,6 +17,7 @@
         <strong>Success!</strong> {$filename} created!
     </div>
 {/if} 
+
 <div class="row">
     <div class="span6">
           <div class="control-group">
