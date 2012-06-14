@@ -1,0 +1,8 @@
+name,Default Simulation Data
+classname,uk.ac.ic.kyoto.Simulation
+finishTime,10
+description,This is a default class. Ideally all countries are included and it is designed to demonstrate how beautiful the economic models are that we have created.
+author,"JW, Max + Khadivi"
+param.test,testvalue
+param.worldemissions,565
+param.david,1000
