@@ -20,35 +20,38 @@ try {
     $smarty->assign('host',HOST);
     $smarty->assign('db',DB);
 
-    // set URL and other appropriate options
+
     
     // V rough implementation of making a full default simulation, or a baby one
-    if (isset($_GET['size'])) {    
-        if ($_GET['size']=='baby') {    
-            $notices[] = 'Making a baby sim';
-            define ("DEFAULTSIMCSV", DEFAULT_BABY_SIMCSV);
-            define ("DEFAULTSIM", DEFAULT_BABY_SIM);
-            define ("DEFAULTCLASS", DEFAULT_BABY_CLASS);
-            define ("DEFAULTSTATE", DEFAULT_BABY_STATE);
-            define ("DEFAULTCURRENTTIME", DEFAULT_BABY_CURRENTTIME);
-            define ("DEFAULTFINISHTIME", DEFAULT_BABY_FINISHTIME);
-            define ("DEFAULTDESCRIPTION", DEFAULT_BABY_DESCRIPTION);
-        }
-   }else{
-            $notices[] = 'Making a default sim';
-            define ("DEFAULTSIMCSV", DEFAULT_SIMCSV);
-            define ("DEFAULTSIM", DEFAULT_SIM);
-            define ("DEFAULTCLASS", DEFAULT_CLASS);
+    if (isset($_POST['filename'])) {    
+            $notices[] = 'Importing: '.$_POST['filename'];
+            
+            $tag = substr($_POST['filename'],0,-7);
+            $file = fopen('admin/csv/'.$tag.'params.csv', 'r');
+            // grab the first line - as headers
+  //          $notices[] = 'loading CSV parameters';
+  //          $notices[] = 'loading simulation parameters';
+            while (($line = fgetcsv($file)) !== FALSE) {
+                $simData[$line[0]] = $line[1];
+                if (substr($line[0],0,6) == 'param.') {
+                        $paramData[substr($line[0],6)] = $line[1];
+                }
+            }
+            fclose($file);
+            unset($file);
+
+            define ("DEFAULTSIMCSV", $_POST['filename']);
+            define ("DEFAULTSIM", $simData['name']);
+            define ("DEFAULTCLASS", $simData['classname']);
             define ("DEFAULTSTATE", DEFAULT_STATE);
             define ("DEFAULTCURRENTTIME", DEFAULT_CURRENTTIME);
-            define ("DEFAULTFINISHTIME", DEFAULT_FINISHTIME);
-            define ("DEFAULTDESCRIPTION", DEFAULT_DESCRIPTION);
-    }
+            define ("DEFAULTFINISHTIME", $simData['finishTime']);
+            define ("DEFAULTDESCRIPTION", $simData['description']);
+            $paramData["finishTime"] = DEFAULTFINISHTIME;
 
-    if (isset($_GET['init'])) {    
         $simulation = new SimulationModel();
 
-        $notices[] = 'looking for '.DEFAULTSIM;
+    //    $notices[] = 'looking for '.DEFAULTSIM;
         $defaultsim = $simulation->findOne(array("name" => DEFAULTSIM));
 
         /*
@@ -58,8 +61,8 @@ try {
          * If it doesnt exist then it will be given an autoincremented ID
          */
         if ($defaultsim == NULL){
-            $notices[] = 'not found '.DEFAULTSIM;
-            $notices[] = 'create new '.DEFAULTSIM;
+    //        $notices[] = 'not found '.DEFAULTSIM;
+    //        $notices[] = 'create new '.DEFAULTSIM;
             
             // find insert id
             $counter = new CountersModel();
@@ -67,32 +70,32 @@ try {
 
             if ($counter->count() < 1){
                 //counters doesnt exist so make it
-                $notices[] = 'Counters table doesnt exist (likely a new mongo db)';
+     //           $notices[] = 'Counters table doesnt exist (likely a new mongo db)';
                 $counter->setID('simulations');
                 $counter->setNext(new MongoInt64(2));
                 $counter->save();
                 $useid = 1;
-                $notices[] = 'Created counters branch in mongo, using simid:'.$useid;
+     //           $notices[] = 'Created counters branch in mongo, using simid:'.$useid;
             } else {
-                $notices[] = 'Found counters table (likely used Presage WEB UI)';
+     //           $notices[] = 'Found counters table (likely used Presage WEB UI)';
                 $useid = $id->getNext();
                 $useid++;
                 $id->setNext(new MongoInt64($useid));
                 $id->save();
-                $notices[] = 'Using simid:'.$useid;
+    //            $notices[] = 'Using simid:'.$useid;
             }
             
         } else {
             $useid = $defaultsim->getID();
-            $notices[] = 'found '.DEFAULTSIM.$useid;
+  //          $notices[] = 'found '.DEFAULTSIM.$useid;
             $defaultsim->destroy();
-            $notices[] = 'dropped '.DEFAULTSIM.$useid;
+  //          $notices[] = 'dropped '.DEFAULTSIM.$useid;
             $defaultsim->save();
             unset ($defaultsim);
-            $notices[] = 'create new '.DEFAULTSIM.' with ID'.$useid;
+    //        $notices[] = 'create new '.DEFAULTSIM.' with ID'.$useid;
         }
-        $notices[] = 'loading CSV data';
-        $file = fopen('admin/'.DEFAULTSIMCSV, 'r');
+   //     $notices[] = 'loading CSV data';
+        $file = fopen('admin/csv/'.DEFAULTSIMCSV, 'r');
         // grab the first line - as headers
         $csvheaders = fgetcsv($file);
         while (($line = fgetcsv($file)) !== FALSE) {
@@ -107,17 +110,7 @@ try {
         }
         fclose($file);
         unset($file);
-        $notices[] = 'loading CSV parameters';
-        $file = fopen('admin/params.csv', 'r');
-        // cut out the first line of row headers
-        $crap = fgetcsv($file);
-        // init finishTime into parameters, if exists in CSV, CSV will overwrite.
-            $parameters["finishTime"] = DEFAULTFINISHTIME;
-        while (($line = fgetcsv($file)) !== FALSE) {
-                $parameters[$line[0]] = $line[1];
-            }
-        fclose($file);  
-        unset($file);
+
         /*
          * Sam's WEB UI simulation mongo tree uses explicitly declared variables for java
          * Therefore MongoInt64 is used. Most helpful post in the world ever - 2nd answer.
@@ -151,13 +144,14 @@ try {
                                             array(  '_id'               =>  new MongoInt64($useid),
                                                     'name'              =>  DEFAULTSIM,
                                                     'classname'         =>  DEFAULTCLASS,
+                                                    'author'         =>  $simData['author'],
                                                     'description'       =>  DEFAULTDESCRIPTION,
                                                     'state'             =>  DEFAULTSTATE,
-                                                    'finishTime'        =>  new MongoInt64($parameters["finishTime"]),
+                                                    'finishTime'        =>  new MongoInt64(DEFAULTFINISHTIME),
                                                     'createdAt'         =>  new MongoInt64(time()*1000) ,
                                                     'currentTime'       =>  new MongoInt64(0),
                                                     'finishedAt'        =>  new MongoInt64(0),
-                                                    'parameters'        =>  $parameters,
+                                                    'parameters'        =>  $paramData,
                                                     'parent'            =>  new MongoInt64(0),
                                                     'children'          =>  array(),
                         //                         'startedAt'         =>  '',
@@ -173,17 +167,18 @@ try {
        
             $environmentStateItem = $environmentState->findOne(array("simId" => $useid));
             if ($environmentStateItem == NULL) {
-            $notices[] = 'environmentState tree not found';
+   //         $notices[] = 'environmentState tree not found';
             $environmentState = new EnvironmentStateModel(array("simId" => new MongoInt64($useid)));
             $environmentState->save();
 
             $notices[] = 'environmentState tree item made';
             } else {
-            $notices[] = 'environmentState tree item found';
+   //         $notices[] = 'environmentState tree item found';
             }
   
          
     $smarty->assign('notices',$notices);
+    $smarty->assign('alert',' ');
         
     $smarty->assign('status',"Success");
     // End of the initialise script
@@ -209,20 +204,40 @@ try {
      $smarty->assign('showbtn', 'true'); //Probably useless now.
     }
 
-   
-    
-     $sQ = new SimulationModel();
+    // LOAD SIMULATION CSV's AND COMPARE WITH OTHERS
+    if ($handle = opendir('admin/csv')) {
+        $simulations = array();
 
-     $babysimQ = $sQ->findOne(array("name" => DEFAULT_BABY_SIM));
-     if ($babysimQ != NULL){
-        
-        $smarty->assign('babysim', $babysimQ->getID());
-     }
-     $defsimQ = $sQ->findOne(array("name" => DEFAULT_SIM));
-     if ($defsimQ != NULL){
-        $smarty->assign('defsim', $defsimQ->getID());
-     }
-    
+        while (false !== ($entry = readdir($handle))) {
+            $tag = substr($entry,0,-7);
+            // Loop all SIMULATION CSV's
+            $simulation = new SimulationModel();
+
+            if (substr($entry,-7) == 'sim.csv') {
+                $file = fopen('admin/csv/'.$tag.'params.csv', 'r');
+                $csvdata[$tag]['file'] = $entry;
+                
+                while (($line = fgetcsv($file)) !== FALSE) {
+                    $csvdata[$tag][$line[0]] = $line[1];
+                }
+                $defaultsim = $simulation->findOne(array("name" => $csvdata[$tag]['name']));
+                //var_dump($defaultsim);
+                if (is_null($defaultsim)) {
+                    $csvdata[$tag]['id'] = 'X';
+                } else {
+                    $csvdata[$tag]['installed'] = 'true';
+                    $csvdata[$tag]['id'] = $defaultsim->getID();
+                }
+                fclose($file);
+                unset($file);
+                
+            }
+        }
+    closedir($handle);
+    }
+    $smarty->assign('CSVfiles', $csvdata);
+
+     
 } catch (MongoConnectionException $e)
 {
     //echo $e;

@@ -26,7 +26,7 @@ $smarty->assign('simList',simulationList());
             $countriesDisplay[$c['ISO']]['ISO2'] = toISO2($c['ISO']);
             $countriesDisplay[$c['ISO']]['GDPperkm2'] = (int)(($c['GDP']/$c['landArea'])) ;
             foreach (agentList() as $agenttype){
-                if ($c['agentName'] == $agenttype) {
+                if ($c['className'] == $agenttype) {
                     $countriesDisplay[$c['ISO']]['Group'.$agenttype] = (int)1 ;
                 } else {
                     $countriesDisplay[$c['ISO']]['Group'.$agenttype] = (int)0 ;
@@ -47,6 +47,8 @@ $smarty->assign('simList',simulationList());
 //        var_dump($dropdownarray);
         $smarty->assign('dropdownlist',$dropdownarray);
         $smarty->assign('countries',$countriesDisplay);
+        
+        $smarty->assign('simAuthor', $sim->getAuthor());
         $smarty->assign('simName', $sim->getName());
         $smarty->assign('simDescription', $sim->getDescription());
         $smarty->assign('simData', $sim->getAttributes());

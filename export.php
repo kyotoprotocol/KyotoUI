@@ -42,7 +42,7 @@ if (isset($_POST['filename'])) {
     $countriesKeys = array_keys(end($countries));
     $CSVarray = array();
 
-    $fp = fopen('local/'.$filename, 'w');
+    $fp = fopen('local/'.$filename.'sim.csv', 'w');
 
     unset($countriesKeys['_id']);
     fputcsv($fp, $countriesKeys);
@@ -62,14 +62,43 @@ if (isset($_POST['filename'])) {
 //$CSVarray[] = $CSVarray_sub;
             unset($CSVarray_sub);
     }
-    $notices[] = "Saving as: ".$filename;
+    $notices[] = 'local/'.$filename.'sim.csv';
 
    fclose($fp); 
     
-    $smarty->assign('notices',$notices);
+// Make param CSV also
+   unset($fp);
+    $fp = fopen('local/'.$filename.'params.csv', 'w');
+    
+    $simData['name'] = $sim->getName();
+    $simData['classname'] = $sim->getClassname();
+    $simData['finishTime'] = $sim->getFinishTime();
+    $simData['description'] = $sim->getDescription();
+    $simData['author'] = $sim->getAuthor();
+    $parameterDave = $sim->getParameters();
+    while ($p = current($parameterDave)) {
+        $Pkey = key($parameterDave);
+        $simData["param.".$Pkey] = $p;
+            next($parameterDave);
+    }
+    while ($line = current($simData)) {
+           
+            fputcsv($fp, array(key($simData),$line));
+            next($simData);
+    }
+   fclose($fp); 
+
+    $notices[] = 'local/'.$filename.'params.csv';
+
+
+   
+   
+   
+   
+   $smarty->assign('notices',$notices);
 } else {
 
-    $smarty->assign('filename', 'mynewdata.csv');
+    $smarty->assign('filename', 'mynewdata');
 
 }
 

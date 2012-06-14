@@ -21,7 +21,7 @@
                 <form class="well" name="input" action="export.php" method="post">
                     <label>Export CSV file</label>
                     <input class="input-xlarge focused" name="filename" value="{$filename}" type="text">
-                    <p class="help-block">This will be saved in local/.<br>This folder is ignored by GIT and intentionally done you if you're overwriting the default CSV's you have to manually copy it.</p>
+                    <p class="help-block">This will be saved in local/.<br>This folder is ignored by GIT and intentionally done you if you're overwriting the default CSV's you have to manually copy it. Drag to admin/csv/ to add to git and import.</p>
                     <label class="checkbox">
                     <input type="checkbox" disabled="disabled" > Check only if you're an absolute legend
                     </label>

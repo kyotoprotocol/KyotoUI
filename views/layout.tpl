@@ -30,8 +30,8 @@
                     <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="initialise.php">Initialise</a></li>
-                        <li><a href="export.php">CSV Export</a></li>
+                        <li><a href="initialise.php">Import Simulations</a></li>
+                        <li><a href="export.php">Export Simulations</a></li>
                         <!--<li><a href="#">Export Editor</a></li>-->
                     </ul>
                 </li>

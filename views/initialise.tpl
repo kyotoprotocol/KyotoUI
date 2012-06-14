@@ -3,6 +3,22 @@
 
 {block name=body}
 
+
+{if isset($alert)}
+    <div class="alert alert-success">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+            {$alert}
+           {if isset($notices)}
+                <ul>
+                    {foreach $notices as $item}
+                        <li>{$item}</li>
+                    {/foreach}
+                </ul>
+            Result: <span class="label label-important">{$status}</span> <br><br>
+            {/if}
+
+    </div>
+{/if} 
 <div class="row">
     <div class="span12">
         <h1>Getting Started</h1>
@@ -13,60 +29,44 @@
     <div class="span12">
         <h2>Default simulation management</h2>
         <blockquote>
-            Adds sims to MongoDB using admin/data.csv<br>
-            Useful for initialisation and resetting the database
+            Get started by clicking "install" for adding the CSV's to your mongo db.<br>
+            Useful for initialisation, resetting the database and adding new simulations.
         </blockquote>
         <hr>
-                <a href="initialise.php?init=true" class="btn btn-primary">
-            Create Default Simulation
-            </a>
-                <a href="initialise.php?init=true&size=baby" class="btn btn-primary">
-            Create a baby Simulation
-            </a>
-            {if isset($notices)}
-                <ul>
-                    {foreach $notices as $item}
-                        <li>{$item}</li>
-                    {/foreach}
-                </ul>
-            Result: <span class="label label-important">{$status}</span> <br><br>
-            {/if}
+        
+        <table class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Author</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+            {foreach $CSVfiles as $file}
+          <tr>
+            <td>{$file['id']} </td>
+            <td>{$file['name']}</td>
+            <td>{$file['description']}</td>
+            <td>{$file['author']}</td>
+            <td>
+                <form name="input" action="initialise.php" method="post">
+                {if isset($file['installed'])}
+                <button name="filename" value="{$file['file']}" type="submit" class="btn btn-danger"><i class="icon-exclamation-sign"></i>reinstall</button>
+                {else}
+                <button name="filename" value="{$file['file']}"  type="submit" class="btn btn-success"><i class="icon-plus"></i>install</button>
+                {/if}
+            </td>
+          </tr>
+            {/foreach}
+        </tbody>
+      </table>
         <hr>
     </div>
 </div>
-<div class="row">
-    <div class="span12">
-        <h2>Default Simulation Status</h2>
-        <blockquote>
-            Identify what simulations you have initialised.
-        </blockquote>
-            {if isset($babysim)} 
-            <span class="label label-success">
-                Baby Default simulation found id: {$babysim}
-            </span>
-            {else}
-            <span class="label label-important">
-                Baby Default simulation missing, press the create button!
-            <a href="initialise.php?init=true&size=baby" class="btn btn-primary">
-            Create a baby Simulation
-            </a>
-            </span>     
-            {/if}
-             <br><br>
-            {if isset($defsim)} 
-            <span class="label label-success">
-                Default simulation found id: {$defsim}
-            </span>
-            {else}
-            <span class="label label-important">
-                Default simulation missing, press the create button!
-            <a href="initialise.php?init=true" class="btn btn-primary">
-            Create Default Simulation
-            </a>
-            </span>
-            {/if}
-    </div>
-</div>
+
 <div class="row">
     <div class="span12">
         <h2>Tables in MongoDB </h2>
@@ -85,10 +85,28 @@
     <div class="span6">
         <h2>Empty the tables</h2>
         
+                       <div class="modal hide" id="delete">
+                           <form class="well" name="input" action="initialise.php" method="post">
+
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">×</button>
+                                <h3>Are you sure you want to drop the database?</h3>
+                            </div>
+                            <div class="modal-body">
+                                <img src="http://static.moviefanatic.com/images/gallery/puss-in-boots.jpg">
+                                    <input type="hidden" name="drop" value="true">
+                            </div>
+                            <div class="modal-footer">
+                                <a href="#" class="btn" data-dismiss="modal">Close</a>
+                                <button type="submit" class="btn btn-danger">Drop</button>
+                            </div>
+                           </form>
+                        </div>
+        
+        
             <form class="well" method="POST">
                 <span class="help-block">Will erase all simulations, counter and environmentstate</span>
-                <input type="hidden" name="drop" value="true">
-                <button type="submit" class="btn btn-danger">Submit</button>
+                <button data-toggle="modal" href="#delete"class="btn btn-danger">Drop</button>
             </form>
     </div>
 </div>
