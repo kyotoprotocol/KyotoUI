@@ -80,17 +80,6 @@
         </div>
     </div> 
 </div>
-<!--
-    <div class="row-fluid">
-        <div class="span10">
-            <div id="pie_chart"></div>
-        </div>
-        <div class="span2 offset10">
-            <div id="stats_table"></div>
-        </div>
-    </div>
-</div>
--->
 
 
 {/block}
