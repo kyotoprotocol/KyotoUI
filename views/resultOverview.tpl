@@ -97,19 +97,19 @@
 </div>
 <div class="row">
     <div class="span3">
-        <div class="well">
+        <div class="well" style="height: 140px;">
             <p style="color: black;line-height: 96px;font-size: 96px; font-weight: bold">13K</p>
             <h4>Credit Trades</h4>
         </div>
     </div>
     <div class="span4">
-        <div class="well">
+        <div class="well" style="height: 140px;">
             <p style="color: green;line-height: 96px;font-size: 96px; font-weight: bold">199M</p>
-            <h4>Trees planted</h4>
+            <h4>Tonnes of CO2 absorbed by Carbon Reduction</h4>
         </div>
     </div>
     <div class="span5">
-        <div class="well">
+        <div class="well" style="height: 140px;">
             <p style="color: red;line-height: 96px;font-size: 96px; font-weight: bold">$40Bn</p>
             <h4>Spent on dirty industry for GDP growth</h4>
         </div>
