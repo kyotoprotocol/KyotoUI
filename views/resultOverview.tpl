@@ -5,61 +5,55 @@
 <script type="text/javascript" src="http://www.google.com/jsapi"></script>
 <script type="text/javascript">
     {literal}
-    $(document).ready(function() {
-        $('.nav-tabs').button();
-        $("ul.nav-pills > li").click(function() {
-            $(".active").removeClass("active");
-            $(this).addClass("active"); 
-            //ajax here
-            $.ajax({
-                type: "GET",
-                url: "ajax.php",
-                data: {func : $(this).attr('id')},
-                success: function(data) {
-                    //load data and redraw chart
-                    updateTable(data);
-                    //show div hide others
-                }
-            });
-        });
-    });
-    {/literal}    
-</script>
-<script type="text/javascript">
-    {literal}
     google.load("visualization", "1", {packages:["corechart", "table"]});
-    google.setOnLoadCallback(drawChart);
          
-     function drawChart() {
+    function drawChart() {
+        window.geochart = {};
          var data = google.visualization.arrayToDataTable([
-             ['Year', 'Carbon Output'],
-             ['2004', 1000],
-             ['2005', 1100],
-             ['2006', 1100],
-             ['2007', 1300]
+            ['Country', 'Selected'],
+            ['US', 1] 
          ]);
              
-         window.options = {
-             title: 'Global Carbon Output',
-             hAxis: {title: 'Year', titleTextStyle: {color: 'blue'}},
-             yAxis: {title: 'Tonnes CO2', titleTextStyle: {color: 'blue'}}
+         var options = {
+              
          };
              
-         window.table = new google.visualization.AreaChart(document.getElementById('co2_chart'));
+         window.geochart = new google.visualization.GeoChart(document.getElementById('geo_chart'));
              
-         table.draw(data, options);
+         geochart.draw(data, options);
      }
          
-     function updateTable(parameters){
-        if(table) {
-            table.clearChart();  // make chart ready for re-population
+     function updateGeochart(countries){
+        if(geochart) {
+            geochart.clearChart();  // make chart ready for re-population
         }
-        var data = google.visualization.arrayToDataTable(parameters); // set parameters as data
-
-        table.draw(data, options);
+        data = google.visualization.arrayToDataTable(countries['ISO2'],countries['GDP']); // set data
+        //window.options = google.visualization.arrayToDataTable(options); // set options  
+        geochart.draw(data);
     }   
+
+    google.setOnLoadCallback(drawChart);
      
    
+
+    $(document).ready(function() {
+        $(".nav-tabs").button();
+        $.ajax({
+            type: "GET",
+            url: "ajax.php",
+            data: {func : 'load', simid : {/literal}{$simid}{literal}},
+            success: function(data) {
+                window.countries = [];
+                countries.push(['Country', 'GDP']);
+                $.each(data['countries'], function(index, output){
+                        countries.push([output['ISO'], output['GDP']]);
+                });
+                console.log(countries);
+                updateGeochart(countries);
+                //show div hide others
+            }
+        });
+    });
     {/literal}    
 </script>
  
@@ -127,11 +121,7 @@
                 <button class="btn">Cheating Countries</button>
             </div>
         <h2>GeoChart of CO2 reduction in Tonnes</h2>
-        <iframe src="//google-developers.appspot.com/chart/interactive/docs/gallery/geochart_06d031f6a0bf088f1320a975cdefa0e3.frame" style="border: none;width: 100%; height: 550px;">
-  &lt;p&gt;[This section requires a browser that supports iframes.]&lt;/p&gt;
-        </iframe>
-
-        
+            <div id="geo_chart"></div>
     </div>
 </div>
 <hr>
@@ -186,9 +176,7 @@
 <div class="row">
     <div class="span12">
         <h2>Global CO2 Emissions VS Global GDP</h2>
-<iframe src="//google-developers.appspot.com/chart/interactive/docs/gallery/linechart_a9fba3b6f44d821a89c71526093a1820.frame" style="border: none;width: 100%; height: 500px;">
-  &lt;p&gt;[This section requires a browser that supports iframes.]&lt;/p&gt;
-</iframe>
+<!-- some CHART SHIT -->
     </div>
 </div>
 

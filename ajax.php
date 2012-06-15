@@ -2,25 +2,24 @@
 /*
  * Handles all ajax requests to the backend
  */
+include('admin/config.php');
 
+$simulation = new SimulationModel();    // instantiate collection model
+if (isset($_GET['simid'])) {
+    $sim = $simulation->findOne(array("_id" => (int)$_GET['simid']));
+} else {
+    var_dump('failed'); die();
+}
+    
 switch ($_GET['func']) {
-    case 'overview' :
-        $data = 
-            array('Year' => 'Carbon Output', 
-                '2004' => rand(10, 1000), 
-                '2005'=> rand(10, 1000), 
-                '2006'=> rand(10, 1000),
-                '2007'=> rand(10, 1000),
-                '2008'=> rand(10, 1000), 
-                '2009'=> rand(10, 1000),
-                '2010'=> rand(10, 1000),
-                '2011'=> rand(10, 1000),
-                '2012'=> rand(10, 1000)
-            );
-        ajaxSend(dataToArray($data));
+    case 'load' :
+        $attributes = $sim->getAttributes();
+        $output = $attributes;
+        ajaxSend($output);
         break;
+    
     case 'group' :
-        //whatever load up les charts with data formatted however
+        //whatever l//code hereoad up les charts with data formatted however
         $data = 
             array(
                 array('Year', 'Carbon Output'), 
