@@ -2,7 +2,9 @@
 {block name=title}Simulation Overview {/block}
 {block name=head}
 {literal}
-
+<script>
+    $('.nav-tabs').button()
+</script>    
 {/literal}
 {/block}
 {block name=body}
@@ -58,6 +60,14 @@
 <hr>
 <div class="row">
     <div class="span12">
+
+<!-- Add data-toggle="buttons-radio" for radio style toggling on btn-group -->
+            <div class="btn-group" data-toggle="buttons-radio">
+                <button class="btn">CO2 Tonnes</button>
+                <button class="btn">CO2 % Change</button>
+                <button class="btn">Kyoto Members</button>
+                <button class="btn">Cheating Countries</button>
+            </div>
         <h2>GeoChart of CO2 reduction in Tonnes</h2>
         <iframe src="//google-developers.appspot.com/chart/interactive/docs/gallery/geochart_06d031f6a0bf088f1320a975cdefa0e3.frame" style="border: none;width: 100%; height: 550px;">
   &lt;p&gt;[This section requires a browser that supports iframes.]&lt;/p&gt;
