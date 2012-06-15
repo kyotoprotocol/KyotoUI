@@ -53,7 +53,21 @@
                 <li><a href="simulations.php">Simulations</a>
                 {/if}
                 </li>
-                <li><a href="#">Results</a></li>
+                {if isset($simList)}
+                    <li class="dropdown" id="menu3">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#menu3">
+                        Results
+                        <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                                <li><a href="resultsOverview.php">List all</a></li>
+                                <li class="divider"></li>
+                            {foreach $simList as $item}
+                                <li><a href="simOverview.php?simid={$item@key}">{$item}</a></li>
+                            {/foreach}
+                        </ul>
+                    </li>
+                {/if}
                 </ul>
             {if isset($simName)}
                 {if isset($simID)}
