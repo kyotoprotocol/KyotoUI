@@ -38,21 +38,14 @@
 
 <form action="simEdit.php?simid={$simid}" id="editForm" method="post">
 <div class="row">
-    <div class="span6">
+    <div class="span12">
         <h1>{$simName}</h1>
         <input type="text" id="name" name="name" value="{$simName}" style="display:none">
-        <ul class="nav nav-pills">
-            <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="path/to/page.html">Simulations<b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                {foreach from=$simulations key=k item=s}
-                    <li><a href='simEdit.php?simid={$s->getID()}' >{$s->getName()}</a></li>
-                {/foreach}
-                </ul>
-            </li>
-        </ul>            
+        <h3>{$simAuthor}</h3>
+        <h5>{$simDescription}</h5>       
     </div>
  </div>
+    <br>
 <div class="well">                
 <div class="row">
     <div class="span12">
@@ -70,10 +63,10 @@
                         {if $s == 0}
                             <td>Not Set</td>
                         {else}
-                        <td><input type="text" name="{$k}" value="{date("M j, Y  g:i a", substr($s, 0, -3))}" readonly="true"></td>
+                        <td>{date("M j, Y  g:i a", substr($s, 0, -3))}</td>
                         {/if}
                     </tr>
-                    {else if $k == "name"}
+                    {else if $k == "name" or $k=='author' or $k=='description'}
                     {else if is_array($s)}
                         {if $k == 'parent' or $k == 'children'}
                         {else if $k == 'countries'}

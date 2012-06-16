@@ -11,14 +11,11 @@ $smarty->assign('simList',simulationList());
 
 $simulation = new SimulationModel();    // instantiate collection model
 
-<<<<<<< HEAD
 if (isset($_GET['simid'])) {
     $sim = $simulation->findOne(array("_id" => (int)$_GET['simid'], "state" => "COMPLETE"));
 } else {
     var_dump('Please set simulation id'); die(); //temporary error reporting
 }
-
-
 
 if($sim){
     $smarty->assign('simid', $sim->getID());
@@ -28,11 +25,6 @@ if($sim){
     $smarty->assign('noSims', true);
 }
 
-$smarty->display('views/resultOverview.tpl');
-    
-?>
-=======
     $smarty->display('views/resultOverview.tpl');
         
 ?>
->>>>>>> 918341fc1bbc309cd76bf1db58319e508c56dbab

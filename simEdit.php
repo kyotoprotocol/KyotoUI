@@ -29,7 +29,11 @@ $smarty->assign('simList',simulationList());
                     // do nothing - already taken care of above
                 } else {
                     $function = 'set'. ucfirst($key);
-                    call_user_func($postSim->$function($_POST[$key]));
+                    if($key == "finishTime"){   //specify all long int simulation fields here
+                        call_user_func($postSim->$function(new MongoInt64($_POST[$key])));
+                    } else {
+                        call_user_func($postSim->$function($_POST[$key]));
+                    }
                 }
             } else {
                 $postSim->setID($simID);
@@ -47,6 +51,8 @@ $smarty->assign('simList',simulationList());
     $attributes = $sim->getAttributes();
     
     $smarty->assign('simName', $sim->getName());
+    $smarty->assign('simAuthor', $sim->getAuthor());
+    $smarty->assign('simDescription', $sim->getDescription());
     $smarty->assign('simid', $simID);
     $smarty->assign('attributes', $attributes);
     $smarty->assign('simulations',  $simulations);
