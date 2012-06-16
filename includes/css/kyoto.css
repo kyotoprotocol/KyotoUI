@@ -6,7 +6,10 @@
         Purpose of the stylesheet follows.
 */
 
-.alert{
+.alert-success {
+    display: none;
+}
+.alert-error {
     display: none;
 }
 
