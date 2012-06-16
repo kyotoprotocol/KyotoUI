@@ -10,6 +10,9 @@
         <h1>View and Edit Simulations</h1> 
     </div>
  </div>
+<blockquote>
+Shows the list of simulations in mongodb in the database: Presage
+</blockquote>
 {if isset($success)}
 <div class="row">
     <div class="span12">
@@ -153,19 +156,11 @@
                         {/foreach}
                         </dl>
                     </td>*}
-                {else}
-                <!--not a kyoto simulation-->
-                <td colspan="3">
-                    <div class="alert" style="margin-bottom: 2px;">
-                        <strong>{$s['name']}</strong> -- Non Kyoto Simulation ({$s['classname']})
-                    </div>
-                </td>
-                {/if}
 
                     <td>
                         <div class="btn-group">          
                             <a class="btn btn-primary" href="simOverview.php?simid={$s["_id"]}" >View</a>
-                            <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+                            <a class="btn btn-primary dropdown-toggle " data-toggle="dropdown"><span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <!--<li><a href="#">View Countries</a></li>-->
                                 <li><a href="export.php?simid={$s["_id"]}">Export to CSV</a></li>
@@ -177,6 +172,19 @@
                             </ul>
                         </div><!-- /btn-group -->
                     </td>
+                {else}
+                <!--not a kyoto simulation-->
+                <td colspan="3">
+                    <div class="alert" style="margin-bottom: 2px;">
+                        <strong>{$s['name']}</strong> -- Non Kyoto Simulation ({$s['classname']})
+                    </div>
+                </td>
+                    <td>
+                        <div class="btn-group">          
+                            <a class="btn btn-danger" data-toggle="modal" href="#simdel{$s["_id"]}">Delete</a>
+                        </div><!-- /btn-group -->
+                    </td>
+                {/if}
                 <tr>
                 {/foreach}
              </tbody>
