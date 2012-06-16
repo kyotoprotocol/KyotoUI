@@ -2,7 +2,7 @@
 {block name=title}Simulation Editor - {$simName}{/block}
 {block name=head}
 {literal}
-    <script type="text/javascript">
+    <script type="text/javascript">        
         $(document).ready(function() {
             $("h1").click(function() {
                 $(this).hide();
@@ -13,15 +13,45 @@
                 $("h1").text($(this).val());
                 $("h1").show();
             });
+            $("h3").click(function() {
+                $(this).hide();
+                $("#author").show().focus();
+            });
+            $("#author").blur(function() {
+                $(this).hide();
+                $("h3").text($(this).val());
+                $("h3").show();
+            });
+            $("h5").click(function() {
+                $(this).hide();
+                $("#description").show().focus();
+            });
+            $("#description").blur(function() {
+                $(this).hide();
+                $("h5").text($(this).val());
+                $("h5").show();
+            });
             $("#submit").click(function() {
                 $("#editForm").submit();
             });
-            $('#name').bind('keypress', function(e) {
+          /*  $('#name').bind('keypress', function(e) {
                 if(e.keyCode==13){
                     $("#name").blur();
                     return false;
                 }
             });
+            $('#author').bind('keypress', function(e) {
+                if(e.keyCode==13){
+                    $("#author").blur();
+                    return false;
+                }
+            });
+            $('#description').bind('keypress', function(e) {
+                if(e.keyCode==13){
+                    $("#description").blur();
+                    return false;
+                }
+            });  */  
         });
     </script>
 {/literal}
@@ -42,7 +72,9 @@
         <h1>{$simName}</h1>
         <input type="text" id="name" name="name" value="{$simName}" style="display:none">
         <h3>{$simAuthor}</h3>
-        <h5>{$simDescription}</h5>       
+        <input type="text" id="author" name="author" value="{$simAuthor}" style="display:none">
+        <h5>{$simDescription}</h5> 
+        <input class='span12' type="text" id="description" name="description" value="{$simDescription}" style="display:none">
     </div>
  </div>
     <br>
@@ -60,10 +92,10 @@
                     {else if $k == 'createdAt' or $k=='currentTime' or $k=='finishedAt'}
                     <tr>
                         <td>{$k}</td>
-                        {if $s == 0}
-                            <td>Not Set</td>
+                        {if $s == '0'}
+                            <td><input type="text" name="{$k}" value="{$s}" readonly="true"></td>
                         {else}
-                        <td>{date("M j, Y  g:i a", substr($s, 0, -3))}</td>
+                        <td><input type="text" name="{$k}" value="{$s}" readonly="true">  ({date("M j, Y  g:i a", substr($s, 0, -3))})</td>
                         {/if}
                     </tr>
                     {else if $k == "name" or $k=='author' or $k=='description'}
