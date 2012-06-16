@@ -5,8 +5,8 @@
   <title>{block name=title}Kyoto Web App{/block}</title>
   </html>
         <link rel=StyleSheet href="includes/css/bootstrap.css" type="text/css">
-        <link rel=StyleSheet href="includes/css/kyoto.css" type="text/css">  
-    <script src="http://code.jquery.com/jquery-1.7.2.js"></script>
+        <link rel=StyleSheet href="includes/css/kyoto.css" type="text/css"> 
+    <script src="includes/js/jquery-1.7.2.min.js"></script>
     <script src="includes/js/bootstrap.js"></script>
     <script type="text/javascript">
     $(document).ready(function() {

@@ -3,6 +3,24 @@ classname,uk.ac.ic.kyoto.Simulation
 finishTime,10
 description,This is a default class. Ideally all countries are included and it is designed to demonstrate how beautiful the economic models are that we have created.
 author,"JW, Max + Khadivi"
-param.test,testvalue
-param.worldemissions,565
-param.david,1000
+param.GROWTH_MARKET_STATE,0.05
+param.STABLE_MARKET_STATE,0.02
+param.RECESSION_MARKET_STATE,0.03
+param.GROWTH_MARKET_CHANCE,0.1
+param.STABLE_MARKET_CHANCE,0.8
+param.RECESSION_MARKET_CHANCE,0.1
+param.CARBON_INVESTMENT_PRICE,1
+param.GROWTH_SCALER,0.001
+param.PERCENTAGE_OF_GDP,0.1
+param.CARBON_REDUCTION_PRICE_MIN,10
+param.CARBON_REDUCTION_PRICE_MAX,200
+param.CARBON_ABSORPTION_PRICE_MIN,10
+param.CARBON_ABSORPTION_PRICE_MAX,200
+param.FOREST_CARBON_ABSORPTION,1
+param.MONITOR_COST_PERCENTAGE,0.005
+param.SANCTION_RATE,0.05
+param.MONITORING_PRICE,5000
+param.YEARS_IN_SESSION,10
+param.TARGET_REDUCTION,0.95
+param.MINIMUM_KYOTO_REJOIN_TIME,4
+param.MINIMUM_KYOTO_MEMBERSHIP_DURATION,10

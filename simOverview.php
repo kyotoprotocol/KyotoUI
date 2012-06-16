@@ -11,14 +11,24 @@ $smarty->assign('simList',simulationList());
         if (isset($_GET['simid'])) {
             $sim = $simulation->findOne(array("_id" => (int)$_GET['simid']));
         } else {
-        // Not the best idea to default load sim, no idea if an error occurs in linking simid!!
-        //    $sim = $simulation->findOne(array(), array('countries' => 1));
+            var_dump('error no sim found'); die(); // basic error reporting
         }
         
         $countries = $sim->getCountries();      // populate countries array from collection
         $simID = new MongoInt64($sim->getID()); // ensure simID is of the correct type
         
 
+        $params = array(); // initialise empty params array
+        
+        if($_POST){
+            foreach(array_keys($_POST) as $key){
+                if(substr_count($key, 'slider_')){
+                    $params[str_replace('slider_', '', $key)] = $_POST[$key];    
+                }
+            }
+            //write params to db?
+        }
+        
         //ADD comparison data for map here:
         foreach ($countries as $c) {            // package countries to contain all relevant data
             $countriesDisplay[$c['ISO']] = $c;

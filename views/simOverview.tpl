@@ -20,8 +20,9 @@
             });
             show(newarray); // pass to function in order to show updated geochart
             return false;
-         });
-      });
+        });
+    });
+
  </script>
 <script type="text/javascript">
     window.geochart = {};
@@ -111,7 +112,6 @@
                     {foreach from=($dropdownlist) key=k item=c}
                             <li><a href='#' class="params" id="{$c}">{$c}</a></li>
                     {/foreach}
-                
                     </ul>
             </div>
               
@@ -188,17 +188,23 @@
                                 {/if}
                                 </tr>
                     {elseif $key == 'parameters'}
+                        <form action="simOverview.php?simid={$simID}" method="POST">
                         <tr>
                             <td>{$key}  [{$c|@count}]</td>
                             <td>
                                 <dl class="dl-horizontal">
-                                    {foreach $c as $p}
-                                        <dt>{$p@key}</dt>
-                                        <dd>{$p}</dd>
+                                    {foreach from=$c key=k item=p}
+                                        {if $k == "finishTime"}
+                                        <!-- do nothing -->
+                                        {else}
+                                            <dt>{$k}</dt>
+                                            <dd>{$p}</dd>
+                                        {/if}
                                     {/foreach}
                                 </dl>
                             </td>
                         <tr>
+                        </form>
                     {elseif $key == 'children' or $key == 'parent' or  $key == 'description' or $key == 'name' }
                     {else}
                         <tr>
