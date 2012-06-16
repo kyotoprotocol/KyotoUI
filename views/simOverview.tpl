@@ -119,7 +119,7 @@
                     <a id="c2" class="btn dropdown-toggle" data-toggle="dropdown" href=""><i class="icon-cog"></i>Edit Countries<span class="caret"></span>
                     </a>
                         <ul class="dropdown-menu">
-                    {foreach $simData['countries'] as $cnt}
+                    {foreach from=$simData['countries'] key=key item=cnt}
                         <li><a href="country.php?country={$cnt['ISO']}&simid={$simID}">{$cnt['name']}</a></li>
                     {/foreach}
                     </ul>
@@ -155,32 +155,41 @@
      <div class="span12">
         <table class="table table-condensed">
              <tbody>
-                {foreach $simData as $c}
-                    {if $c@key == 'countries'}
+                {foreach from=$simData key=key item=c}
+                    {if $key == 'countries'}
                         <tr>
-                            <td>{$c@key} [{$c|@count}]</td>
+                            <td>{$key} [{$c|@count}]</td>
                             <td>
                                 {if $c|@count > 20}
                                 <ul class="nav nav-pills">
                                     <li class="dropdown">
                                         <a class="dropdown-toggle" data-toggle="dropdown" href="path/to/page.html"><i class="icon-cog"></i>Edit Countries<b class="caret"></b></a>
                                         <ul class="dropdown-menu">
-                                        {foreach $c as $cnt}
+                                        {foreach from=$c item=cnt}
                                             <li><a href="country.php?country={$cnt['ISO']}&simid={$simID}">{$cnt['name']}</a></li>
                                         {/foreach}
                                         </ul>
                                     </li>
                                 </ul>
                                 {else}
-                                {foreach $c as $cnt}
+                                {foreach from=$c item=cnt}
                                     <a class="btn-mini btn-info" href="country.php?country={$cnt['ISO']}&simid={$simID}">{$cnt['name']}</a>
                                 {/foreach}
                                 {/if}
                             </td>
                         <tr>
-                    {elseif $c@key == 'parameters'}
+                     {elseif ($key == "createdAt") or ($key == "currentTime") or ($key == "finishedAt")}
+                               <tr>
+                                   <td>{$key}</td>
+                               {if $c == 0}
+                                   <td>Not Set</td>
+                               {else}
+                                <td>{date("M j, Y  g:i a", substr($c, 0, -3))}</td>
+                                {/if}
+                                </tr>
+                    {elseif $key == 'parameters'}
                         <tr>
-                            <td>{$c@key}  [{$c|@count}]</td>
+                            <td>{$key}  [{$c|@count}]</td>
                             <td>
                                 <dl class="dl-horizontal">
                                     {foreach $c as $p}
@@ -190,10 +199,10 @@
                                 </dl>
                             </td>
                         <tr>
-                    {elseif $c@key == 'children' or $c@key == 'parent' or  $c@key == 'description' or $c@key == 'name' }
+                    {elseif $key == 'children' or $key == 'parent' or  $key == 'description' or $key == 'name' }
                     {else}
                         <tr>
-                            <td>{$c@key}</td>
+                            <td>{$key}</td>
                             <td>{$c}</td>
                         <tr>
                     {/if}

@@ -23,6 +23,9 @@
          geochart.draw(data, options);
      }
          
+     google.setOnLoadCallback(drawChart);
+      
+     //make this an onclick - same as the other file where we do this 
      function updateGeochart(countries){
         if(geochart) {
             geochart.clearChart();  // make chart ready for re-population
@@ -32,8 +35,6 @@
         geochart.draw(data);
     }   
 
-    google.setOnLoadCallback(drawChart);
-     
    
 
     $(document).ready(function() {

@@ -113,25 +113,32 @@
                     </td>
                     <td>
                         <dl class="dl-horizontal">
-                        {foreach $s as $param}
-                           {if ($param@key == "description") }
-                           {elseif ($param@key == "state") }
-                           {elseif ($param@key == "id") }
-                           {elseif ($param@key == "countries") }
-                           {elseif ($param@key == "children") }
-                           {elseif ($param@key == "classname") }
-                           {elseif ($param@key == "parent") }
-                           {elseif ($param@key == "name") }
-                           {elseif ($param@key == "parameters") }
-                                <dt>{$param@key}</dt>
-                                {foreach $param as $subparam}
-                                    <dd>{$subparam@key} : {$subparam}</dd>
+                        {foreach from=$s key=key item=param}
+                           {if ($key == "description") }
+                           {elseif ($key == "createdAt") or ($key == "currentTime") or ($key == "finishedAt")}
+                               <dt>{$key}</dt>
+                               {if $param == 0}
+                                   <dd>Not Set</dd>
+                               {else}
+                                <dd>{date("M j, Y  g:i a", substr($param, 0, -3))}</dd>
+                                {/if}
+                           {elseif ($key == "state") }
+                           {elseif ($key == "id") }
+                           {elseif ($key == "countries") }
+                           {elseif ($key == "children") }
+                           {elseif ($key == "classname") }
+                           {elseif ($key == "parent") }
+                           {elseif ($key == "name") }
+                           {elseif ($key == "parameters") }
+                                <dt>{$key}</dt>
+                                {foreach from=$param key=k item=subparam}
+                                    <dd>{$k} : {$subparam}</dd>
                                 {/foreach}
                            {elseif (is_array($param)) }
-                                <dt>{$param@key}</dt>
+                                <dt>{$key}</dt>
                                 <dd>array</dd>
                            {else}
-                                <dt>{$param@key}</dt>
+                                <dt>{$key}</dt>
                                 <dd>{$param}</dd>
                            {/if}
                         
