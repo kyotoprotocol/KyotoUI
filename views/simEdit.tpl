@@ -6,7 +6,6 @@
         $(document).ready(function() {
             $("form :input").change(function() {
                 $(this).closest('form').data('changed', true);
-                    console.log('change is occuring');
                 $('.alert-info').delay(500).slideDown('slow');
             });
             $("h1").click(function() {
