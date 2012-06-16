@@ -10,7 +10,8 @@
     <script src="includes/js/bootstrap.js"></script>
     <script type="text/javascript">
     $(document).ready(function() {
-        $('.alert').delay(500).slideDown('slow');
+        $('.alert-success').delay(500).slideDown('slow');
+        $('.alert-error').delay(500).slideDown('slow');
         $('.alert-success').delay(2000).slideUp('slow');
     });
 </script>

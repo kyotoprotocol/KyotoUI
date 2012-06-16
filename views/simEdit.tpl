@@ -4,6 +4,11 @@
 {literal}
     <script type="text/javascript">        
         $(document).ready(function() {
+            $("form :input").change(function() {
+                $(this).closest('form').data('changed', true);
+                    console.log('change is occuring');
+                $('.alert-info').delay(500).slideDown('slow');
+            });
             $("h1").click(function() {
                 $(this).hide();
                 $("#name").show().focus();
@@ -64,7 +69,12 @@
         <button type="button" class="close" data-dismiss="alert">×</button>
         <strong>Success!</strong> {$simName} updated.
     </div>
-{/if} 
+{/if}
+
+    <div class="alert alert-info hidden">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>There are unsaved changes to {$simName}!</strong>
+    </div>
 
 <form action="simEdit.php?simid={$simid}" id="editForm" method="post">
 <div class="row">
