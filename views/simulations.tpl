@@ -23,21 +23,21 @@
 
 <div class="row">
     <div class="span12">
-        <table class="table table-bordered table-condensed table-striped">
-            <colgroup>
+        <table class="table table-bordered table-condensed">
+            <!--<colgroup>
                 <col class="span1">
-                <col class="span2">
                 <col class="span4">
                 <col class="span4">
                 <col class="span2">
-            </colgroup>
+            </colgroup>-->
             <thead>
                 <tr>
                     <th>_id</th>
-                    <th>Name</th>
+                    <th>Status</th>
+                    <th style="width:250px;">Name</th>
                     <th>Description</th>
                     <!--<th>Parameters</th>-->
-                    <th>Actions</th>
+                    <th style="width:80px;">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -98,8 +98,6 @@
             {if ($s['classname']==$DEFAULT_CLASSNAME)}
                  <!-- next two cells are kyoto simulation specific-->
                     <td>
-                        <h3>{$s["name"]}</h3>
-                        <hr>
                         {if $s["state"] == "NOT STARTED" }
                         <span class="label label-inverse">{$s["state"]}</span>
                         {else if $s["state"] == "AUTO START" }
@@ -107,6 +105,9 @@
                         {else}
                         <span class="label">{$s["state"]}</span>
                         {/if}
+                    </td>
+                    <td>
+                        <h3>{$s["name"]}</h3>
                     </td>
                     <td>
                         {if isset($s["description"]) }
@@ -117,10 +118,10 @@
                                 </div>
                         {/if}    
                     </td>
-                    <td>
+                    {*<td>
                         <dl class="dl-horizontal">
                             
-                        {*foreach from=$s key=key item=param}
+                        {foreach from=$s key=key item=param}
                            {if ($key == "description") }
                            {elseif ($key == "createdAt") or ($key == "currentTime") or ($key == "finishedAt")}
                                <dt>{$key}</dt>
@@ -149,9 +150,9 @@
                                 <dd>{$param}</dd>
                            {/if}
                         
-                        {/foreach*}
+                        {/foreach}
                         </dl>
-                    </td>
+                    </td>*}
                 {else}
                 <!--not a kyoto simulation-->
                 <td colspan="3">
