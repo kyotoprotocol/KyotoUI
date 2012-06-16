@@ -57,6 +57,8 @@
                                 <div class="control-group">
                                     <label>Name of new Simulation</label>
                                     <input class="input-xlarge focused" name="simulationname" value="{$s["name"]}" type="text">
+                                    <label>Author: Who owns this simulation?</label>
+                                    <input class="input-xlarge" name="author" value="Howard?" type="text">
                                     <label class="control-label" for="textarea">Description</label>
                                     <div class="controls">
                                     <textarea class="input-xlarge" name="simulationdescription" id="textarea" rows="6">{$s["description"]}</textarea>

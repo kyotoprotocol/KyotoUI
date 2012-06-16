@@ -70,21 +70,27 @@ if (isset($_POST['filename'])) {
    unset($fp);
     $fp = fopen('local/'.$filename.'params.csv', 'w');
     
-    $simData['name'] = $sim->getName();
-    $simData['classname'] = $sim->getClassname();
-    $simData['finishTime'] = $sim->getFinishTime();
-    $simData['description'] = $sim->getDescription();
-    $simData['author'] = $sim->getAuthor();
+    $simData[] = array('name' => $sim->getName());
+    $simData[] = array('classname' => $sim->getClassname());
+    $simData[] = array('finishTime' => $sim->getFinishTime());
+    $simData[] = array('description' => $sim->getDescription());
+    $simData[] = array('author' => $sim->getAuthor());
     $parameterDave = $sim->getParameters();
     while ($p = current($parameterDave)) {
         $Pkey = key($parameterDave);
-        $simData["param.".$Pkey] = $p;
+        $simData[] = array("param.".$Pkey => $p);
             next($parameterDave);
     }
+   
+    /*
     while ($line = current($simData)) {
            
             fputcsv($fp, array(key($simData),$line));
             next($simData);
+    }*/
+    for ($i = 0; $i<count($simData); $i++) {
+        $dave = key($simData[$i]);
+            fputcsv($fp, array($dave,$simData[$i][$dave]));
     }
    fclose($fp); 
 
