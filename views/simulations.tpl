@@ -71,7 +71,7 @@
                            </form>
                         </div>
                         <!-- END Hover box for copy simulation -->
-                        <!-- Hover box for copy simulation -->
+                        <!-- Hover box for delete simulation -->
                         <div class="modal hide" id="simdel{$s["_id"]}">
                            <form class="well" name="input" action="simulations.php" method="post">
 
@@ -91,7 +91,7 @@
                             </div>
                            </form>
                         </div>
-                        <!-- END Hover box for copy simulation -->
+                        <!-- END Hover box for delete simulation -->
                     </td>
                     <td>
                         <h3>{$s["name"]}</h3>
