@@ -17,8 +17,8 @@ if (isset($_POST['simulationcopy'])) {
         //Get next sim id from presage table "counters"
         $counter = new CountersModel();
         $id = $counter->findOne(array("_id" => "simulations"));
-        $useid = $id->getNext();
-        $id->setNext(new MongoInt64($useid+1));
+        $useid = $id->getNext()+1;
+        $id->setNext(new MongoInt64($useid));
         $id->save();
         
         // Load simulation to be copied
