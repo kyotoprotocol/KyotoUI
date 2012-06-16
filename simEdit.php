@@ -30,9 +30,9 @@ $smarty->assign('simList',simulationList());
                 } else {
                     $function = 'set'. ucfirst($key);
                     if($key == 'finishTime' OR $key == 'createdAt' OR $key == 'parent' OR $key == 'currentTime'){   //specify all long int simulation fields here
-                        call_user_func($postSim->$function(new MongoInt64($_POST[$key])));
+                        call_user_func(array($postSim, $function), (new MongoInt64($_POST[$key])));
                     } else {
-                        call_user_func($postSim->$function($_POST[$key]));
+                        call_user_func(array($postSim, $function), $_POST[$key]);
                     }
                 }
             } else {
