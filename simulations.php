@@ -67,6 +67,7 @@ if (isset($_POST['simulationcopy'])) {
 
 $smarty->assign('simList',$simList);
 $smarty->assign('simulations', $s);
+$smarty->assign('DEFAULT_CLASSNAME',DEFAULT_CLASSNAME);
 $smarty->display('views/simulations.tpl');
 
 ?>

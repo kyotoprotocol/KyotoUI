@@ -95,6 +95,8 @@
                         </div>
                         <!-- END Hover box for delete simulation -->
                     </td>
+            {if ($s['classname']==$DEFAULT_CLASSNAME)}
+                 <!-- next two cells are kyoto simulation specific-->
                     <td>
                         <h3>{$s["name"]}</h3>
                         <hr>
@@ -110,7 +112,10 @@
                         {if isset($s["description"]) }
                             {$s["description"]}
                         {else}
-                            Missing Description
+                          	<div class="alert alert-error">
+                                   <strong>Missing Description!</strong><br> Its likely you've created this in Presage CLI or Presage WEB UI so you're going to be missing a lot of country data for initialisation.
+                                </div>
+                                
                         {/if}    
                     </td>
                     <td>
@@ -147,6 +152,13 @@
                         {/foreach}
                         </dl>
                     </td>
+                {else}
+                <!--not a kyoto simulation-->
+                <td colspan="3">
+                
+                </td>
+                {/if}
+
                     <td>
                         <div class="btn-group">          
                             <a class="btn btn-primary" href="simOverview.php?simid={$s["_id"]}" >View</a>

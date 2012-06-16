@@ -16,6 +16,7 @@ define ("SIMTREE", "simulations");
 define ("DEFAULT_STATE", "NOT STARTED");
 define ("DEFAULT_CURRENTTIME", "0");
 define ("DEFAULT_FINISHTIME", "10");
+define ("DEFAULT_CLASSNAME", "uk.ac.ic.kyoto.Simulation");
 
 define ("AGENT_CLASS_LIST", "NonAnnex,AbstractPostCommunistCountry,EU,CanadaAgent,USAgent,NonParticipant");
 
