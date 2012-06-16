@@ -23,7 +23,7 @@
 
 <div class="row">
     <div class="span12">
-        <table class="table table-bordered table-striped">
+        <table class="table table-bordered table-condensed table-striped">
             <colgroup>
                 <col class="span1">
                 <col class="span2">
@@ -36,7 +36,7 @@
                     <th>_id</th>
                     <th>Name</th>
                     <th>Description</th>
-                    <th>Parameters</th>
+                    <!--<th>Parameters</th>-->
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -112,15 +112,15 @@
                         {if isset($s["description"]) }
                             {$s["description"]}
                         {else}
-                          	<div class="alert alert-error">
+                          	<div class="alert alert-info" style="margin-bottom: 2px;">
                                    <strong>Missing Description!</strong><br> Its likely you've created this in Presage CLI or Presage WEB UI so you're going to be missing a lot of country data for initialisation.
                                 </div>
-                                
                         {/if}    
                     </td>
                     <td>
                         <dl class="dl-horizontal">
-                        {foreach from=$s key=key item=param}
+                            
+                        {*foreach from=$s key=key item=param}
                            {if ($key == "description") }
                            {elseif ($key == "createdAt") or ($key == "currentTime") or ($key == "finishedAt")}
                                <dt>{$key}</dt>
@@ -149,13 +149,15 @@
                                 <dd>{$param}</dd>
                            {/if}
                         
-                        {/foreach}
+                        {/foreach*}
                         </dl>
                     </td>
                 {else}
                 <!--not a kyoto simulation-->
                 <td colspan="3">
-                
+                    <div class="alert" style="margin-bottom: 2px;">
+                        <strong>{$s['name']}</strong> -- Non Kyoto Simulation ({$s['classname']})
+                    </div>
                 </td>
                 {/if}
 
