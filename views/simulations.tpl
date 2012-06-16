@@ -117,7 +117,7 @@ Shows the list of simulations in mongodb in the database: Presage
                             {$s["description"]}
                         {else}
                           	<div class="alert alert-info" style="margin-bottom: 2px;">
-                                   <strong>Missing Description!</strong><br> Its likely you've created this in Presage CLI or Presage WEB UI so you're going to be missing a lot of country data for initialisation.
+                                   <strong>Missing Description!</strong><br> If you've created this in PresageCLI or PresageWEBUI it's unlikely to work due to missing data.
                                 </div>
                         {/if}    
                     </td>

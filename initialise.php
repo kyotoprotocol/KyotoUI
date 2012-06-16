@@ -72,7 +72,7 @@ try {
                 //counters doesnt exist so make it
      //           $notices[] = 'Counters table doesnt exist (likely a new mongo db)';
                 $counter->setID('simulations');
-                $counter->setNext(new MongoInt64(2));
+                $counter->setNext(new MongoInt64(1));
                 $counter->save();
                 $useid = 1;
      //           $notices[] = 'Created counters branch in mongo, using simid:'.$useid;

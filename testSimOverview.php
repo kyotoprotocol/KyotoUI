@@ -9,7 +9,7 @@
     $smarty = new Smarty;
     include('admin/config.php');
     $smarty->assign('simList',simulationList());
-    $smarty->display('views/testSimOverview.tpl');
+    $smarty->display('views/resultOverview.tpl');
 
 
 ?>

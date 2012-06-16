@@ -1,5 +1,5 @@
 name,Default Mini Simulation Data
-classname,uk.ac.ic.kyoto.Simulation
+classname,uk.ac.ic.kyoto.simulations.Simulation
 finishTime,10
 description,"Mini Class, made from a subset of the country data. Used to get started, tries one or two instances of each agent."
 author,"JW, Max + Khadivi"

@@ -1,5 +1,5 @@
 name,Default Simulation Data
-classname,uk.ac.ic.kyoto.Simulation
+classname,uk.ac.ic.kyoto.simulations.Simulation
 finishTime,10
 description,This is a default class. Ideally all countries are included and it is designed to demonstrate how beautiful the economic models are that we have created.
 author,"JW, Max + Khadivi"
