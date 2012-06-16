@@ -39,7 +39,7 @@
             $("#submit").click(function() {
                 $("#editForm").submit();
             });
-          /*  $('#name').bind('keypress', function(e) {
+            $('#name').bind('keypress', function(e) {
                 if(e.keyCode==13){
                     $("#name").blur();
                     return false;
@@ -56,7 +56,7 @@
                     $("#description").blur();
                     return false;
                 }
-            });  */  
+            });  
         });
     </script>
 {/literal}
