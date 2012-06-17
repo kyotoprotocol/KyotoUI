@@ -110,6 +110,40 @@
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="span2">
+        <div class="well">
+        fuck
+        </div>
+    </div>
+    <div class="span2">
+        <div class="well">
+        fuck
+        </div>
+    </div>
+    <div class="span2">
+        <div class="well">
+        fuck
+        </div>
+    </div>
+    <div class="span2">
+        <div class="well">
+        fuck
+        </div>
+    </div>
+    <div class="span2">
+        <div class="well">
+        fuck
+        </div>
+    </div>
+    <div class="span2">
+        <div class="well">
+        fuck
+        </div>
+    </div>
+
+</div>
+
 <hr>
 <div class="row">
     <div class="span12">
