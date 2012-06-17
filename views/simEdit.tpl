@@ -6,7 +6,6 @@
         $(document).ready(function() {
             $("form :input").change(function() {
                 $(this).closest('form').data('changed', true);
-                    console.log('change is occuring');
                 $('.alert-info').delay(500).slideDown('slow');
             });
             $("h1").click(function() {
@@ -39,7 +38,7 @@
             $("#submit").click(function() {
                 $("#editForm").submit();
             });
-          /*  $('#name').bind('keypress', function(e) {
+            $('#name').bind('keypress', function(e) {
                 if(e.keyCode==13){
                     $("#name").blur();
                     return false;
@@ -56,7 +55,7 @@
                     $("#description").blur();
                     return false;
                 }
-            });  */  
+            });  
         });
     </script>
 {/literal}
