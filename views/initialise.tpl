@@ -89,21 +89,28 @@
         <h2>Empty the tables</h2>
         
                        <div class="modal hide" id="delete">
-                           <form class="well" name="input" action="initialise.php" method="post">
 
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">×</button>
                                 <h3>Are you sure you want to drop the database?</h3>
                             </div>
                             <div class="modal-body">
-                                <img src="http://static.moviefanatic.com/images/gallery/puss-in-boots.jpg">
-                                    <input type="hidden" name="drop" value="true">
+                                <center>
+                                    <img src="http://static.moviefanatic.com/images/gallery/puss-in-boots.jpg">
+                                </center>
                             </div>
                             <div class="modal-footer">
                                 <a href="#" class="btn" data-dismiss="modal">Close</a>
-                                <button type="submit" class="btn btn-danger">Drop</button>
+                                <form style="display:inline;"  name="input" action="initialise.php" method="post">
+                                    <input type="hidden" name="dropALL" value="true">
+                                        <button type="submit" class="btn btn-danger">Drop EVERYTHING!</button>
+                                </form>
+                                <form style="display:inline;" name="input" action="initialise.php" method="post">
+                                    <input type="hidden" name="drop" value="true">
+                                        <button type="submit" class="btn">Just drop simulations</button>
+                                </form>
                             </div>
-                           </form>
+
                         </div>
         
         

@@ -184,6 +184,8 @@ try {
     // End of the initialise script
     // Start of drop script
     } elseif (isset($_POST['drop'])) {    
+                $smarty->assign('alert',' Sim Table dropped');
+
             $environmentState = new EnvironmentStateModel();
             $dropitlikeitshot = $environmentState->findAll();
             foreach ($dropitlikeitshot as $dog) {
@@ -198,7 +200,11 @@ try {
             $dropitlikeitshot = $counter->findAll();
             foreach ($dropitlikeitshot as $dog) {
                 $dog->destroy();
+                       
             }
+    } elseif (isset($_POST['dropALL'])) {    
+        $smarty->assign('alert',' Database Dropped');
+         $db->drop();
     } else { //Normal page work:
      $smarty->assign('status',"Not Started");
      $smarty->assign('showbtn', 'true'); //Probably useless now.
