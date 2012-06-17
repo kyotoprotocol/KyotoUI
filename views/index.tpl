@@ -8,6 +8,17 @@
 </script>
 {/block}
 {block name=body}
+{if isset($mongodriver)}
+    <div class="alert alert-error">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>Serious Error</strong> No PHP MONGO Driver Installed! <a href="https://github.com/kyotoprotocol/KyotoUI">See README</a>
+    </div>
+{elseif isset($mongodbconnect)}
+    <div class="alert alert-error">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>Error</strong> Mongo Connection missing <a href="https://github.com/kyotoprotocol/KyotoUI">See README. Mongo may not be installed, or active.</a>
+    </div>
+{/if} 
 
     <div class="hero-unit">
     <h1>Welcome Howard!</h1>

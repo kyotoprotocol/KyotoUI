@@ -34,7 +34,8 @@ function startDB(){
     } catch(MongoConnectionException $e) {
         echo $e;
         echo "DB FAIL";
-        die();
+        return 'failure';
+        //die();
     }
 }
 
