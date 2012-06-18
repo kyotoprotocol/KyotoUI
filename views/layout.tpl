@@ -71,15 +71,9 @@
                     </li>
                 {/if}
                 </ul>
-            {if isset($simName)}
-                {if isset($simID)}
-                <a class="brand" href="simOverview.php?simid={$simID}" style="float: right;font-weight: bold; color: rgb(ad,ad,ad); text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.1), 0px 0px 30px rgba(255, 255, 255, 0.125);">
-                {else}
-                <a class="brand" href="simulations.php?" style="float: right;font-weight: bold; color: rgb(ad,ad,ad); text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.1), 0px 0px 30px rgba(255, 255, 255, 0.125);">
-                 {/if}
-                {$simName}
+                <a class="brand" href="index.php?" style="float: right;font-weight: bold; color: rgb(ad,ad,ad); text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.1), 0px 0px 30px rgba(255, 255, 255, 0.125);">
+                db:{$smarty.session.database}
                 </a>
-            {/if}
         </div>
     </div>
 </div>
