@@ -5,11 +5,18 @@ include('models/SimulationModel.php');
 include('models/EnvironmentStateModel.php');
 include('models/CountersModel.php');
 
+
+
+
+
+
 // Database options
-// Remote host: 155.198.117.244
-define ("HOST", "127.0.0.1:27017");
+// Remote host: 
 define ("DB", "presage");
 define ("SIMTREE", "simulations");
+define ("LOCAL_HOST", "127.0.0.1:27017");
+define ("REMOTE_HOST", "155.198.117.244:27017");
+
 
 
 //Kyoto Simulation Defaults
@@ -19,6 +26,17 @@ define ("DEFAULT_FINISHTIME", "10");
 define ("DEFAULT_CLASSNAME", "uk.ac.ic.kyoto.simulations.Simulation");
 
 define ("AGENT_CLASS_LIST", "NonAnnex,AbstractPostCommunistCountry,EU,CanadaAgent,USAgent,NonParticipant");
+
+// Session for remembering database choice.
+session_start();
+if($_SESSION['database']=='remote') {
+    define ("HOST", REMOTE_HOST);
+} else {
+    define ("HOST", LOCAL_HOST);
+}
+
+
+
 
 try {
 BaseMongoRecord::$connection = new Mongo(HOST);
@@ -57,5 +75,6 @@ $simulations = array();
 function agentList() {
     return explode(',',AGENT_CLASS_LIST);
 }
+
 
 ?>
