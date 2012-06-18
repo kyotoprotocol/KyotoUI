@@ -28,13 +28,14 @@
     Get started
     </a>
     </p>
-    </div>
-<div class="row">
-    <div class="span12">
-    <img src="http://www.carbonstreamafrica.com/wp-content/uploads/2008/11/penguins2.jpg">
-    </div>
-    
 </div>
+<ul class="thumbnails">
+    <li class="span12">
+        <a href="#" class="thumbnail">
+            <img src="http://www.carbonstreamafrica.com/wp-content/uploads/2008/11/penguins2.jpg" alt="">
+        </a>
+    </li>
+</ul>
     <a id="dave" rel="tooltip" href="test.php" title="Contribute and we'll add you in!" style="float:right;" ><i class="icon-thumbs-up"></i>Contributors</a>
 
 {/block}
