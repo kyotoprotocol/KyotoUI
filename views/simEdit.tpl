@@ -2,8 +2,10 @@
 {block name=title}Simulation Editor - {$simName}{/block}
 {block name=head}
 {literal}
-    <script type="text/javascript">        
+    <script type="text/javascript">  
         $(document).ready(function() {
+            $('.simwiz').show();
+            $('.alert-info').hide();
             $("form :input").change(function() {
                 $(this).closest('form').data('changed', true);
                 $('.alert-info').delay(500).slideDown('slow');
@@ -62,6 +64,7 @@
 {/block}
 
 {block name=body}
+
 
 {if isset($updated)}
     <div class="alert alert-success">

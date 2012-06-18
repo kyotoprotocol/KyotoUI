@@ -17,7 +17,8 @@
 </script>
     {block name=head}{/block}
 </head>
-<body>
+
+<body data-spy="scroll" data-target=".subnav" data-offset="50">
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">
@@ -83,11 +84,42 @@
     </div>
 </div>
     <div class="container" style="margin-top: 55px">
+        {if $smarty.server.PHP_SELF == '/simOverview.php'
+         OR $smarty.server.PHP_SELF == '/simEdit.php'
+         OR $smarty.server.PHP_SELF == '/simRun.php'
+         OR $smarty.server.PHP_SELF == '/simResults.php'}
+        <div class="subnav">
+            <ul class="nav nav-pills">
+            {if $smarty.server.PHP_SELF == '/simOverview.php'}
+                <li class="active"><a href="#">Simulation Overview</a></li>
+            {else}
+                <li><a href="simOverview.php?simid={$smarty.get.simid}">Simulation Overview</a></li>
+            {/if}
+            {if $smarty.server.PHP_SELF == '/simEdit.php'}
+                <li class="active"><a href="#">Edit Simulation</a></li>
+            {else}
+                <li><a href="simEdit.php?simid={$smarty.get.simid}">Edit Simulation</a></li>
+            {/if}
+            {if $smarty.server.PHP_SELF == '/simRun.php'}
+                <li class="active"><a href="#">Run Simulation</a></li>
+            {else}
+                <li><a href="#">Run Simulation</a></li>
+            {/if}
+            {if $smarty.server.PHP_SELF == '/simResults.php'}
+                <li class="active"><a href="#">View Results</a></li>
+            {else}
+                <li><a href="#">View Results</a></li>
+            {/if}
+            </ul>
+        </div>
+        {/if}
+        
         {if isset($error)}
             <div class="alert alert-error">
                 {$error}
             </div>
         {/if}
-        {block name=body}{/block}
+        {block name=body}     
+        {/block}
     </div>
 </body>
