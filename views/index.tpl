@@ -31,14 +31,14 @@
                  <form name="input" action="index.php" method="post">
              <div class="btn-group">
                     {if ($setdb=='local')}
-                        <button type="submit" name="database" value="local" class="btn btn-large disabled">Using local mongo database</button>
+                        <button type="submit" name="database" value="local" class="btn btn-large btn-success disabled">Using local db</button>
                     {else}
-                        <button type="submit" name="database" value="local" class="btn btn-large btn-info">Use local mongo database</button>
+                        <button type="submit" name="database" value="local" class="btn btn-large btn-info">Switch to local db</button>
                     {/if}
                     {if ($setdb=='remote')}
-                        <button type="submit" name="database" value="remote" class="btn btn-large disabled">Using remote mongo database</button>
+                        <button type="submit" name="database" value="remote" class="btn btn-large btn-success disabled">Using remote db</button>
                     {else}
-                        <button type="submit" name="database" value="remote" class="btn btn-large btn-info">Use remote mongo database</button>
+                        <button type="submit" name="database" value="remote" class="btn btn-large btn-info">Switch to remote db</button>
                     {/if}
               </div>        
                  </form>
