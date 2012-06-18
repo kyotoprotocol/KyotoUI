@@ -6,7 +6,8 @@
 <script type="text/javascript" src="http://www.google.com/jsapi"></script>
  <script>
     $(function() {
-        $(document).ready(function() { 
+        $(document).ready(function() {
+                $('.simwiz').show(); //show simulation wizard 'breadcrumbs'
             {/literal}
                 window.bigtime = {$countries|@json_encode};     // convert array of countries to JSON
             {literal};
