@@ -21,11 +21,11 @@
 {/if} 
 
     <div class="hero-unit">
-    <h1>Welcome Howard!</h1>
-    <p>This is the kyoto web interface. </p>
+    <h1>Welcome to KyotoUI!</h1>
+    <p>This is the web interface for the <a href="https://github.com/farhanrahman/kyoto">Kyoto Protocol</a> simulator built upon <a href="http://www.presage2.info/">Presage</a>. </p>
     <p>
     <a href="initialise.php" class="btn btn-primary btn-large">
-    Enjoy
+    Get started
     </a>
     </p>
     </div>
