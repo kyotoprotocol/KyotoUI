@@ -83,35 +83,39 @@
         </div>
     </div>
 </div>
-    <div class="container" style="margin-top: 55px">
-        {if $smarty.server.PHP_SELF == '/simOverview.php'
-         OR $smarty.server.PHP_SELF == '/simEdit.php'
-         OR $smarty.server.PHP_SELF == '/simRun.php'
-         OR $smarty.server.PHP_SELF == '/simResults.php'}
-        <div class="subnav">
-            <ul class="nav nav-pills">
-            {if $smarty.server.PHP_SELF == '/simOverview.php'}
-                <li class="active"><a href="#">Simulation Overview</a></li>
-            {else}
-                <li><a href="simOverview.php?simid={$smarty.get.simid}">Simulation Overview</a></li>
-            {/if}
-            {if $smarty.server.PHP_SELF == '/simEdit.php'}
-                <li class="active"><a href="#">Edit Simulation</a></li>
-            {else}
-                <li><a href="simEdit.php?simid={$smarty.get.simid}">Edit Simulation</a></li>
-            {/if}
-            {if $smarty.server.PHP_SELF == '/simRun.php'}
-                <li class="active"><a href="#">Run Simulation</a></li>
-            {else}
-                <li><a href="#">Run Simulation</a></li>
-            {/if}
-            {if $smarty.server.PHP_SELF == '/simResults.php'}
-                <li class="active"><a href="#">View Results</a></li>
-            {else}
-                <li><a href="#">View Results</a></li>
-            {/if}
-            </ul>
-        </div>
+    <div class="container" style="margin-top: 48px">
+        {if isset($smarty.get.simid)}
+            <div class="row">
+                <div class="span12">
+                    <div class="subnav">
+                        <ul class="nav nav-tabs">
+                        {if (substr_count($smarty.server.PHP_SELF, 'simOverview.php')==1)}
+                            <li class="active"><a href="#">Overview</a></li>
+                        {else}
+                            <li><a href="simOverview.php?simid={$smarty.get.simid}">Overview</a></li>
+                        {/if}
+                        {if (substr_count($smarty.server.PHP_SELF, 'simEdit.php')==1)}
+                            <li class="active"><a href="#">Edit</a></li>
+                        {else}
+                            <li><a href="simEdit.php?simid={$smarty.get.simid}">Edit</a></li>
+                        {/if}
+                        {if (substr_count($smarty.server.PHP_SELF, 'simRun.php')==1)}
+                            <li class="active"><a href="#">Run</a></li>
+                        {else}
+                            <li class="disabled"><a href="#">Run</a></li>
+                        {/if}
+                        {if (substr_count($smarty.server.PHP_SELF, 'simResults.php')==1)}
+                            <li class="active"><a href="#">Results</a></li>
+                        {else}
+                            <li class="disabled"><a href="#">Results</a></li>
+                        {/if}
+                          <li class="nav-header pull-right ">
+                           SIM#{$smarty.get.simid} : {$simName}
+                          </li>  
+                        </ul>
+                    </div>
+                </div>
+            </div>
         {/if}
         
         {if isset($error)}

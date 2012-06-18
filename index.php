@@ -37,7 +37,6 @@ if (!extension_loaded('mongo')) {
     }
 
    $smarty->assign('setdb', $_SESSION['database']);
-
 //$smarty->assign('simList',simulationList());
 $smarty->display('views/index.tpl');
 ?>

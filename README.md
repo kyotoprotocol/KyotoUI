@@ -36,11 +36,13 @@ Currently won't start a simulation - we're working on the java code to do this, 
 
 - OSX
 	- mamp?
+	- rock mongo doesnt work due to outdated php driver available for mac
 
 
 - Windows
 	- WAMP - http://www.wampserver.com/en/
-	- Convenient if installed to - C:\wamp\www\KyotoInterface\
+	- Convenient if installed to - C:\wamp\www\KyotoUI\
+	- powershell instruction: C:\wamp\www\ git clone https://github.com/kyotoprotocol/KyotoUI.git
 
 
 ## Useful ##
