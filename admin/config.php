@@ -20,10 +20,12 @@ define ("DEFAULT_CLASSNAME", "uk.ac.ic.kyoto.simulations.Simulation");
 
 define ("AGENT_CLASS_LIST", "NonAnnex,AbstractPostCommunistCountry,EU,CanadaAgent,USAgent,NonParticipant");
 
-
+try {
 BaseMongoRecord::$connection = new Mongo(HOST);
 BaseMongoRecord::$database = 'presage';
-
+    } catch(MongoConnectionException $e) {
+        //var_dump($e);
+    }
 
 //some of the old code still uses this method of connecting. Instead use a MongoRecord model
 function startDB(){
@@ -32,8 +34,8 @@ function startDB(){
         $db = $m->selectDB(DB);
         return $db;
     } catch(MongoConnectionException $e) {
-        echo $e;
-        echo "DB FAIL";
+   //     echo $e;
+   //     echo "DB FAIL";
         return 'failure';
         //die();
     }
