@@ -29,6 +29,12 @@
     </a>
     </p>
     </div>
+<div class="row">
+    <div class="span12">
+    <img src="http://www.carbonstreamafrica.com/wp-content/uploads/2008/11/penguins2.jpg">
+    </div>
+    
+</div>
     <a id="dave" rel="tooltip" href="test.php" title="Contribute and we'll add you in!" style="float:right;" ><i class="icon-thumbs-up"></i>Contributors</a>
 
 {/block}
