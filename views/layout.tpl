@@ -106,7 +106,8 @@
                             <li class="disabled"><a href="#">Results</a></li>
                         {/if}
                           <li class="nav-header pull-right ">
-                           SIM#{$smarty.get.simid} : {$simName}
+                           SIM#{$smarty.get.simid} : 
+                                           {if isset($simName)}{$simName}{/if}
                           </li>  
                         </ul>
                     </div>

@@ -10,7 +10,7 @@ if (isset($_GET['simid'])) {
 } else {
     var_dump('failed'); die();
 }
-    
+    $initialCarbonOutput = 0;
 switch ($_GET['func']) {
     case 'load' :
         //$attributes = $sim->getAttributes();
