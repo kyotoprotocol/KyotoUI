@@ -21,16 +21,27 @@ $smarty->assign('simList',simulationList());
         
         $simID = new MongoInt64($sim->getID()); // ensure simID is of the correct type
         
-        //var_dump($agent);
-       // var_dump($agentslist);
+        $as = new AgentStateModel();    // instantiate collection model
+        $i = 0;
             foreach ($agentslist as $dave) {
-               // $s[] = $sim->getAttributes();
+               
                 $properties = $dave->getProperties();
                 $propcount = count($properties);
                 $propkeys = array_keys($properties);
-               $a[] = $dave->getAttributes();
-            }
+               $a[$i] = $dave->getAttributes();
 
+               
+               $binaryUUID = $dave->getAid();
+                $agentstate = $as->find(array("aid"=>$binaryUUID));
+                foreach ($agentstate as $ag) {
+                    $a[$i]['agentstates'][] = $ag->getAttributes();
+                    $statekeys = array_keys($ag->getProperties());
+                }
+                $i++;
+                
+            }
+ 
+        $smarty->assign('statekeys', $statekeys);
         $smarty->assign('propkeys', $propkeys);
         $smarty->assign('propcount', $propcount);
         $smarty->assign('agents', $a);
@@ -39,5 +50,5 @@ $smarty->assign('simList',simulationList());
         $smarty->assign('simDescription', $sim->getDescription());
         $smarty->assign('simData', $sim->getAttributes());
         $smarty->assign('simID', $simID);
-        $smarty->display('views/testOutput.tpl');
+        $smarty->display('views/rawResultOutput.tpl');
 ?>

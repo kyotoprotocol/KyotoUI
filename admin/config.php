@@ -5,6 +5,7 @@ include('models/SimulationModel.php');
 include('models/EnvironmentStateModel.php');
 include('models/CountersModel.php');
 include('models/AgentsModel.php');
+include('models/AgentStateModel.php');
 
 
 

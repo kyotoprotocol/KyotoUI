@@ -98,7 +98,7 @@ Shows the list of simulations in mongodb in the database: Presage
                         </div>
                         <!-- END Hover box for delete simulation -->
                     </td>
-            {if ($s['classname']==$DEFAULT_CLASSNAME)}
+            {*if ($s['classname']==$DEFAULT_CLASSNAME)*}
                  <!-- next two cells are kyoto simulation specific-->
                     <td>
                         {if $s["state"] == "NOT STARTED" }
@@ -165,6 +165,7 @@ Shows the list of simulations in mongodb in the database: Presage
                                 <!--<li><a href="#">View Countries</a></li>-->
                                 <li><a href="export.php?simid={$s["_id"]}">Export to CSV</a></li>
                                 <li><a href="simEdit.php?simid={$s["_id"]}">Edit</a></li>
+                                <li><a href="rawResultOutput.php?simid={$s["_id"]}">Raw RESULTS</a></li>
                                 <li><a data-toggle="modal" href="#sim{$s["_id"]}">Copy</a></li>
                                 <li><a data-toggle="modal" href="#simdel{$s["_id"]}">Delete</a></li>
                                 <!--            <li class="divider"></li>
@@ -172,7 +173,7 @@ Shows the list of simulations in mongodb in the database: Presage
                             </ul>
                         </div><!-- /btn-group -->
                     </td>
-                {else}
+                {*else}
                 <!--not a kyoto simulation-->
                 <td colspan="3">
                     <div class="alert" style="margin-bottom: 2px;">
@@ -184,7 +185,7 @@ Shows the list of simulations in mongodb in the database: Presage
                             <a class="btn btn-danger" data-toggle="modal" href="#simdel{$s["_id"]}">Delete</a>
                         </div><!-- /btn-group -->
                     </td>
-                {/if}
+                {/if*}
                 <tr>
                 {/foreach}
              </tbody>
