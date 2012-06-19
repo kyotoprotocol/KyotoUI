@@ -100,10 +100,10 @@
                         {else}
                             <li class="disabled"><a href="#">Run</a></li>
                         {/if}
-                        {if (substr_count($smarty.server.PHP_SELF, 'simResults.php')==1)}
+                        {if (substr_count($smarty.server.PHP_SELF, 'resultOverview.php')==1)}
                             <li class="active"><a href="#">Results</a></li>
                         {else}
-                            <li class="disabled"><a href="#">Results</a></li>
+                            <li class="disabled"><a href="resultOverview.php?simid={$smarty.get.simid}">Results</a></li>
                         {/if}
                           <li class="nav-header pull-right ">
                            SIM#{$smarty.get.simid} : 

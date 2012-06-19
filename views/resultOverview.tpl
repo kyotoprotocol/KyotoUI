@@ -12,25 +12,32 @@
             url: "ajax.php",
             data: {func : 'load', simid : {/literal}{$simid}{literal}},
             success: function(data) {
+                window.data = data;
                 window.countries = [];
                 window.stats = [];
                 $.each(data, function(index, element){
                     if(index == 'countries'){
-                        countries.push(['Country', 'GDP']);
+                        countries.push(['Country', 'C02 Output']);
                         $.each(element, function(index, output){
-                            countries.push([output['ISO2'], output['GDP']]);
+                            countries.push([output['ISO2'], parseInt(output['carbonOutput'])]);
                         });
-                        show(countries);
+                        updateGeochart(countries);
                         }
-                   else if(index == 'stats'){
-                       // blap
-                           console.log(element.carbonOutput/1000000);
-                           $("#co2_tonnes").text((element.carbonOutput/1000000000).toFixed(1)); //billion tonnes
+                    else if(index == 'stats'){
+                       // place statistics in correct ids
+                        $("#co2_tonnes").text((element.carbonOutput/1000000000).toFixed(1)); //billion tonnes
                    }
                 });
                 
                 //show div hide others
             }
+        });
+            
+        // specific functionality
+        $(".geochart_buttons").children().click( function(e) {
+            console.log(data);
+            console.log($(this).attr('id'));
+               
         });
     });
     </script>
@@ -39,26 +46,9 @@
     window.options = {};
     google.load('visualization', '1', {packages: ['geochart']});
 
-    function drawVisualization() {
-        var data = google.visualization.arrayToDataTable([
-        ]);
-            
-        window.options = {
-            colorAxis: {colors: ['#c5e5c5', '#2c662c']},
-            datalessRegionColor: ['#da4f49'],
-            width: 960,
-            height: 500,
-            magnifyingGlass: {enable: true, zoomFactor: 100.0}
-        };
-
-        window.geochart = new google.visualization.GeoChart(
-            document.getElementById('geo_chart'));
-        geochart.draw(data, options);
-    }
-
-    //google.setOnLoadCallback(drawVisualization);
+    google.setOnLoadCallback(updateGeochart);
         
-    function show(parameters){
+    function updateGeochart(parameters){
         if(geochart) {
             geochart.clearChart();  // make chart ready for re-population
         }
@@ -101,7 +91,7 @@
         <table class="table table-bordered">
             <tr>
                 <td style="height: 365px;background-image: url('includes/img/dinero_bg.jpg'); padding-top: 50px;padding-right: 20px;">
-        <p id="co2_tonnes" align="right" style="color: white;line-height: 200px;font-size: 256px; font-weight: bold">160M</p>
+        <p id="co2_tonnes" align="right" style="color: white;line-height: 200px;font-size: 256px; font-weight: bold"></p>
         <h1 align="right"style="color: white;">BILLION TONNES OF GLOBAL CO2 REDUCTION</h1>
 
                 </td>
@@ -168,11 +158,11 @@
     <div class="span12">
 
 <!-- Add data-toggle="buttons-radio" for radio style toggling on btn-group -->
-            <div class="btn-group" data-toggle="buttons-radio">
-                <button class="btn">CO2 Tonnes</button>
-                <button class="btn">CO2 % Change</button>
-                <button class="btn">Kyoto Members</button>
-                <button class="btn">Cheating Countries</button>
+            <div class="btn-group geochart_buttons" data-toggle="buttons-radio">
+                <button id="carbonOutput" class="btn active">CO2 Tonnes</button>
+                <button id="carbonChangePercent" class="btn">CO2 % Change</button>
+                <button id="kyotoMember" class="btn">Kyoto Members</button>
+                <button id="cheat" class="btn">Cheating Countries</button>
             </div>
         <h2>GeoChart of CO2 reduction in Tonnes</h2>
             <div id="geo_chart"></div>
