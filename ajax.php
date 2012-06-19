@@ -17,7 +17,7 @@ switch ($_GET['func']) {
         $countries = $sim->getCountries();
         //$output = $attributes;
         $output = array();
-        
+        $noMembers = 0;
         foreach ($countries as $c) {            // package countries to contain all relevant data
             $output['countries'][$c['ISO']] = $c;
             $output['countries'][$c['ISO']]['arableLandAreaPercent'] = (int)(($c['arableLandArea']/$c['landArea'])*100) ;
@@ -26,14 +26,19 @@ switch ($_GET['func']) {
             $initialCarbonOutput += $c['carbonOutput'];
             if(rand(0,10) > 5){
                 //set it to be a member
-                $output['countries'][$c['ISO']]['kyotomember'] = 1;
+                $output['countries'][$c['ISO']]['kyotoMember'] = 1;
+                $output['countries'][$c['ISO']]['cheat'] = 1;
+                $noMembers ++;
             } else {
-                $output['countries'][$c['ISO']]['kyotomember'] = 0;
+                $output['countries'][$c['ISO']]['kyotoMember'] = 0;
+                $output['countries'][$c['ISO']]['cheat'] = 0;
             }
+            $output['countries'][$c['ISO']]['carbonChangePercentage'] = rand(0, 100);
         }
         
         $output['stats']['carbonOutput'] = $initialCarbonOutput; //calculated overview data
-        
+        $output['stats']['globalCarbonChangePercentage'] = (($initialCarbonOutput - rand(1000000, $initialCarbonOutput))/$initialCarbonOutput)*100;
+        $output['stats']['numberOfMemberCountries'] = $noMembers;
         ajaxSend($output);
         break;
     
