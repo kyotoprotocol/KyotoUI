@@ -63,7 +63,7 @@
     window.options = {};
     google.load('visualization', '1', {packages: ['geochart']});
 
-    google.setOnLoadCallback(updateGeochart);
+    //google.setOnLoadCallback(updateGeochart);
         
     function updateGeochart(parameters){
         if(geochart) {

@@ -34,6 +34,7 @@ session_start();
 if($_SESSION['database']=='remote') {
     define ("HOST", REMOTE_HOST);
 } else {
+    $_SESSION['database']='local';
     define ("HOST", LOCAL_HOST);
 }
 
