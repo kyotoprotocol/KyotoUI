@@ -30,7 +30,7 @@ $smarty->assign('simList',simulationList());
                 $propkeys = array_keys($properties);
                $a[$i] = $dave->getAttributes();
 
-               //var_dump($a[$i]);
+               //okvar_dump($a[$i]);
                $binaryUUID = $dave->getAid();
                 $agentstate = $as->find(array("aid"=>$binaryUUID));
                 foreach ($agentstate as $ag) {
