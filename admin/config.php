@@ -4,6 +4,7 @@ include('libs/mongorecord/BaseMongoRecord.php');
 include('models/SimulationModel.php');
 include('models/EnvironmentStateModel.php');
 include('models/CountersModel.php');
+include('models/AgentsModel.php');
 
 
 

@@ -18,7 +18,7 @@
     {block name=head}{/block}
 </head>
 
-<body data-spy="scroll" data-target=".subnav" data-offset="50">
+<body>
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">
@@ -77,7 +77,7 @@
         </div>
     </div>
 </div>
-        {if isset($smarty.get.simid)}
+    {if isset($smarty.get.simid)}
     <div class="container" style="margin-top: 48px">
             <div class="row">
                 <div class="span12">
