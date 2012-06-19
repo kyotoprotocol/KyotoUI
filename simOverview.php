@@ -4,7 +4,7 @@ require('libs/Smarty.class.php');
 $smarty = new Smarty;
 include('admin/config.php');
 $smarty->assign('simList',simulationList());
-$smarty->caching = false;
+
         $simulation = new SimulationModel();    // instantiate collection model
             
         // Load specific simulation

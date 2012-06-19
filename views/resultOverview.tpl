@@ -4,39 +4,7 @@
 
 <script type="text/javascript" src="http://www.google.com/jsapi"></script>
 <script type="text/javascript">
-    {literal}
-    google.load("visualization", "1", {packages:["corechart", "table"]});
-         
-    function drawChart() {
-        window.geochart = {};
-         var data = google.visualization.arrayToDataTable([
-            ['Country', 'Selected'],
-            ['US', 1] 
-         ]);
-             
-         var options = {
-              
-         };
-             
-         window.geochart = new google.visualization.GeoChart(document.getElementById('geo_chart'));
-             
-         geochart.draw(data, options);
-     }
-         
-     google.setOnLoadCallback(drawChart);
-      
-     //make this an onclick - same as the other file where we do this 
-     function updateGeochart(countries){
-        if(geochart) {
-            geochart.clearChart();  // make chart ready for re-population
-        }
-        data = google.visualization.arrayToDataTable(countries['ISO2'],countries['GDP']); // set data
-        //window.options = google.visualization.arrayToDataTable(options); // set options  
-        geochart.draw(data);
-    }   
-
-   
-
+    {literal}   
     $(document).ready(function() {
         $(".nav-tabs").button();
         $.ajax({
@@ -46,15 +14,55 @@
             success: function(data) {
                 window.countries = [];
                 countries.push(['Country', 'GDP']);
-                $.each(data['countries'], function(index, output){
-                        countries.push([output['ISO'], output['GDP']]);
+                $.each(data, function(index, output){
+                    countries.push([output['ISO2'], output['GDP']]);
                 });
-                console.log(countries);
-                updateGeochart(countries);
+                show(countries);
                 //show div hide others
             }
         });
     });
+    </script>
+    <script type="text/javascript">
+    window.geochart = {};
+    window.options = {};
+    google.load('visualization', '1', {packages: ['geochart']});
+
+    function drawVisualization() {
+        var data = google.visualization.arrayToDataTable([
+        ]);
+            
+        window.options = {
+            colorAxis: {colors: ['#c5e5c5', '#2c662c']},
+            datalessRegionColor: ['#da4f49'],
+            width: 960,
+            height: 500,
+            magnifyingGlass: {enable: true, zoomFactor: 100.0}
+        };
+
+        window.geochart = new google.visualization.GeoChart(
+            document.getElementById('geo_chart'));
+        geochart.draw(data, options);
+    }
+
+    //google.setOnLoadCallback(drawVisualization);
+        
+    function show(parameters){
+        if(geochart) {
+            geochart.clearChart();  // make chart ready for re-population
+        }
+        var data = google.visualization.arrayToDataTable(parameters); // set parameters as data
+        window.options = {
+            colorAxis: { colors: ['#c5e5c5', '#2c662c']},
+            datalessRegionColor: ['#da4f49'],
+            width: 960,
+            height: 500,
+            magnifyingGlass: {enable: true, zoomFactor: 100.0}
+        };
+        var geochart = new google.visualization.GeoChart(document.getElementById('geo_chart'));
+        geochart.draw(data, options);
+    }        
+    
     {/literal}    
 </script>
  

@@ -13,8 +13,18 @@ if (isset($_GET['simid'])) {
     
 switch ($_GET['func']) {
     case 'load' :
-        $attributes = $sim->getAttributes();
-        $output = $attributes;
+        //$attributes = $sim->getAttributes();
+        $countries = $sim->getCountries();
+        //$output = $attributes;
+        $output = array();
+        
+        foreach ($countries as $c) {            // package countries to contain all relevant data
+            $output[$c['ISO']] = $c;
+            $output[$c['ISO']]['arableLandAreaPercent'] = (int)(($c['arableLandArea']/$c['landArea'])*100) ;
+            $output[$c['ISO']]['ISO2'] = toISO2($c['ISO']);
+            $output[$c['ISO']]['GDPperkm2'] = (int)(($c['GDP']/$c['landArea'])) ;
+        }
+        
         ajaxSend($output);
         break;
     

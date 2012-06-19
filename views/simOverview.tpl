@@ -7,7 +7,7 @@
  <script>
     $(function() {
         $(document).ready(function() {
-                $('.simwiz').show(); //show simulation wizard 'breadcrumbs'
+            $('.simwiz').show(); //show simulation wizard 'breadcrumbs'
             {/literal}
                 window.bigtime = {$countries|@json_encode};     // convert array of countries to JSON
             {literal};
