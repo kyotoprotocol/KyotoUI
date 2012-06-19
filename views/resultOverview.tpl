@@ -13,35 +13,12 @@
             data: {func : 'load', simid : {/literal}{$simid}{literal}},
             success: function(data) {
                 window.data = data;
-                window.countries = [];
-                window.stats = [];
-                $.each(data, function(index, element){
-                    if(index == 'countries'){
-                        countries.push(['Country', 'C02 Output']);
-                        $.each(element, function(index, output){
-                            countries.push([output['ISO2'], parseInt(output['carbonOutput'])]);
-                        });
-                            
-                        updateGeochart(countries);
-                        }
-                    else if(index == 'stats'){
-                       // place statistics in correct ids
-                        $("#co2_tonnes").text((element.carbonOutput/1000000000).toFixed(1)); //billion tonnes
-                   }
-                });
-                
-                //show div hide others
+                arrayCountriesTool(data, 'carbonOutput', 'geochart');
+                arrayStatsTool(data);
             }
-        });
+        });            
             
-        // specific functionality (data array is available here)
-        $(".geochart_buttons").children().click( function(e) {
-            console.log($(this).attr('id'));
-            arrayTool(data, $(this).attr('id'));
-        });
-            
-            
-        function arrayTool(data, field){
+        function arrayCountriesTool(data, field, chart){
             var newArray = [];
             $.each(data, function(index, element){
                 if(index == 'countries'){
@@ -49,15 +26,41 @@
                     $.each(element, function(index, output){
                         newArray.push([output['ISO2'], parseInt(output[field])]);
                     });
-                        console.log('hello');
-                            console.log(newArray);
-                    updateGeochart(newArray);
-                        return newArray;
+                    if(chart == 'geochart'){
+                        updateGeochart(newArray);
+                    } else {
+                        //add more - look into passing the chart?
                     }
+                }
             });
-        }; 
+        };
+            
+        function arrayStatsTool(data){
+            //iterate through the stats array 
+                console.log(data.stats);
+            $.each(data.stats, function(index, element){
+                console.log(index);
+                if(index == 'globalCarbonChangePercentage'){
+                        console.log(element);
+                    $('#'+ index).text(element.toFixed(0) + '%'); //billion tonnes
+                } else if(index == 'carbonOutput') {
+                    $('#'+ index).text((element/1000000000).toFixed(0));
+                } else {
+                    $('#'+ index).text((element).toFixed(0));
+                }
+            });
+        };
+            
+            
+        // specific functionality (data array is available here)
+        $(".geochart_buttons").children().click( function(e) {
+            console.log($(this).attr('id'));
+            arrayCountriesTool(data, $(this).attr('id'), 'geochart');
+        });
+            
     });
     </script>
+    
     <script type="text/javascript">
     window.geochart = {};
     window.options = {};
@@ -96,11 +99,11 @@
 <div class="row">
     <div class="span3">
         <div class="well">
-            <p style="color: green;line-height: 96px;font-size: 96px; font-weight: bold">16%</p>
+            <p id="globalCarbonChangePercentage" style="color: green;line-height: 96px;font-size: 96px; font-weight: bold"></p>
             <h4>Global Reduction of C02</h4>
         </div>
         <div class="well">
-            <p style="color: green;line-height: 96px;font-size: 96px; font-weight: bold">204</p>
+            <p id="numberOfMemberCountries" style="color: green;line-height: 96px;font-size: 96px; font-weight: bold">204</p>
             <h4>Countries remain in Kyoto Protocol</h4>
         </div>
     </div>
@@ -108,7 +111,7 @@
         <table class="table table-bordered">
             <tr>
                 <td style="height: 365px;background-image: url('includes/img/dinero_bg.jpg'); padding-top: 50px;padding-right: 20px;">
-        <p id="co2_tonnes" align="right" style="color: white;line-height: 200px;font-size: 256px; font-weight: bold"></p>
+        <p id="carbonOutput" align="right" style="color: white;line-height: 200px;font-size: 256px; font-weight: bold"></p>
         <h1 align="right"style="color: white;">BILLION TONNES OF GLOBAL CO2 REDUCTION</h1>
 
                 </td>
@@ -176,9 +179,9 @@
 
 <!-- Add data-toggle="buttons-radio" for radio style toggling on btn-group -->
             <div class="btn-group geochart_buttons" data-toggle="buttons-radio">
-                <button id="carbonoutput" class="btn active">CO2 Tonnes</button>
-                <button id="carbonchangepercent" class="btn">CO2 % Change</button>
-                <button id="kyotomember" class="btn">Kyoto Members</button>
+                <button id="carbonOutput" class="btn active">CO2 Tonnes</button>
+                <button id="carbonChangePercentage" class="btn">CO2 % Change</button>
+                <button id="kyotoMember" class="btn">Kyoto Members</button>
                 <button id="cheat" class="btn">Cheating Countries</button>
             </div>
         <h2>GeoChart of CO2 reduction in Tonnes</h2>
