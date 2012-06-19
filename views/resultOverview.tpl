@@ -13,11 +13,22 @@
             data: {func : 'load', simid : {/literal}{$simid}{literal}},
             success: function(data) {
                 window.countries = [];
-                countries.push(['Country', 'GDP']);
-                $.each(data, function(index, output){
-                    countries.push([output['ISO2'], output['GDP']]);
+                window.stats = [];
+                $.each(data, function(index, element){
+                    if(index == 'countries'){
+                        countries.push(['Country', 'GDP']);
+                        $.each(element, function(index, output){
+                            countries.push([output['ISO2'], output['GDP']]);
+                        });
+                        show(countries);
+                        }
+                   else if(index == 'stats'){
+                       // blap
+                           console.log(element.carbonOutput/1000000);
+                           $("#co2_tonnes").text((element.carbonOutput/1000000000).toFixed(1)); //billion tonnes
+                   }
                 });
-                show(countries);
+                
                 //show div hide others
             }
         });
@@ -90,8 +101,8 @@
         <table class="table table-bordered">
             <tr>
                 <td style="height: 365px;background-image: url('includes/img/dinero_bg.jpg'); padding-top: 50px;padding-right: 20px;">
-        <p align="right" style="color: white;line-height: 200px;font-size: 256px; font-weight: bold">160M</p>
-        <h1 align="right"style="color: white;">TONNES OF GLOBAL CO2 REDUCTION</h1>
+        <p id="co2_tonnes" align="right" style="color: white;line-height: 200px;font-size: 256px; font-weight: bold">160M</p>
+        <h1 align="right"style="color: white;">BILLION TONNES OF GLOBAL CO2 REDUCTION</h1>
 
                 </td>
             </tr>
