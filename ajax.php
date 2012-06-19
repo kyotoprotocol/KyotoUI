@@ -24,6 +24,12 @@ switch ($_GET['func']) {
             $output['countries'][$c['ISO']]['ISO2'] = toISO2($c['ISO']);
             $output['countries'][$c['ISO']]['GDPperkm2'] = (int)(($c['GDP']/$c['landArea'])) ;
             $initialCarbonOutput += $c['carbonOutput'];
+            if(rand(0,10) > 5){
+                //set it to be a member
+                $output['countries'][$c['ISO']]['kyotomember'] = 1;
+            } else {
+                $output['countries'][$c['ISO']]['kyotomember'] = 0;
+            }
         }
         
         $output['stats']['carbonOutput'] = $initialCarbonOutput; //calculated overview data

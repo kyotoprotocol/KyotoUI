@@ -21,6 +21,7 @@
                         $.each(element, function(index, output){
                             countries.push([output['ISO2'], parseInt(output['carbonOutput'])]);
                         });
+                            
                         updateGeochart(countries);
                         }
                     else if(index == 'stats'){
@@ -33,12 +34,28 @@
             }
         });
             
-        // specific functionality
+        // specific functionality (data array is available here)
         $(".geochart_buttons").children().click( function(e) {
-            console.log(data);
             console.log($(this).attr('id'));
-               
+            arrayTool(data, $(this).attr('id'));
         });
+            
+            
+        function arrayTool(data, field){
+            var newArray = [];
+            $.each(data, function(index, element){
+                if(index == 'countries'){
+                    newArray.push(['Country', field]);
+                    $.each(element, function(index, output){
+                        newArray.push([output['ISO2'], parseInt(output[field])]);
+                    });
+                        console.log('hello');
+                            console.log(newArray);
+                    updateGeochart(newArray);
+                        return newArray;
+                    }
+            });
+        }; 
     });
     </script>
     <script type="text/javascript">
@@ -159,9 +176,9 @@
 
 <!-- Add data-toggle="buttons-radio" for radio style toggling on btn-group -->
             <div class="btn-group geochart_buttons" data-toggle="buttons-radio">
-                <button id="carbonOutput" class="btn active">CO2 Tonnes</button>
-                <button id="carbonChangePercent" class="btn">CO2 % Change</button>
-                <button id="kyotoMember" class="btn">Kyoto Members</button>
+                <button id="carbonoutput" class="btn active">CO2 Tonnes</button>
+                <button id="carbonchangepercent" class="btn">CO2 % Change</button>
+                <button id="kyotomember" class="btn">Kyoto Members</button>
                 <button id="cheat" class="btn">Cheating Countries</button>
             </div>
         <h2>GeoChart of CO2 reduction in Tonnes</h2>
