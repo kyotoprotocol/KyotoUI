@@ -1,7 +1,18 @@
 <?php
 /*
  * Handles all ajax requests to the backend
+ *
+/* Instructions:
+ * $output array contains 2 arrays, stats, and countries
+ * countries contains all information output about individual countries this is
+ * useful for displaying on the geochart etc.
+ * stats contains global data - add parameters to this which are calculated about the entire
+ * world. The javascript will then put these parameters into any element with the same id 
+ * as the parameters index in the array - if there are special requirements e.g. rounding,
+ * this can be done in the javascript.
  */
+
+
 include('admin/config.php');
 
 $simulation = new SimulationModel();    // instantiate collection model
