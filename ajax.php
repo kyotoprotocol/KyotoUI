@@ -19,11 +19,14 @@ switch ($_GET['func']) {
         $output = array();
         
         foreach ($countries as $c) {            // package countries to contain all relevant data
-            $output[$c['ISO']] = $c;
-            $output[$c['ISO']]['arableLandAreaPercent'] = (int)(($c['arableLandArea']/$c['landArea'])*100) ;
-            $output[$c['ISO']]['ISO2'] = toISO2($c['ISO']);
-            $output[$c['ISO']]['GDPperkm2'] = (int)(($c['GDP']/$c['landArea'])) ;
+            $output['countries'][$c['ISO']] = $c;
+            $output['countries'][$c['ISO']]['arableLandAreaPercent'] = (int)(($c['arableLandArea']/$c['landArea'])*100) ;
+            $output['countries'][$c['ISO']]['ISO2'] = toISO2($c['ISO']);
+            $output['countries'][$c['ISO']]['GDPperkm2'] = (int)(($c['GDP']/$c['landArea'])) ;
+            $initialCarbonOutput += $c['carbonOutput'];
         }
+        
+        $output['stats']['carbonOutput'] = $initialCarbonOutput; //calculated overview data
         
         ajaxSend($output);
         break;
