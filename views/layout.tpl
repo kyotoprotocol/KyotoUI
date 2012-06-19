@@ -77,8 +77,8 @@
         </div>
     </div>
 </div>
-    <div class="container" style="margin-top: 48px">
         {if isset($smarty.get.simid)}
+    <div class="container" style="margin-top: 48px">
             <div class="row">
                 <div class="span12">
                     <div class="subnav">
@@ -88,7 +88,9 @@
                         {else}
                             <li><a href="simOverview.php?simid={$smarty.get.simid}">Overview</a></li>
                         {/if}
-                        {if (substr_count($smarty.server.PHP_SELF, 'simEdit.php')==1)}
+                        {if (substr_count($smarty.server.PHP_SELF, 'simEdit.php')==1) or 
+                            (substr_count($smarty.server.PHP_SELF, 'country.php')==1)  
+                        }
                             <li class="active"><a href="#">Edit</a></li>
                         {else}
                             <li><a href="simEdit.php?simid={$smarty.get.simid}">Edit</a></li>
@@ -110,6 +112,8 @@
                     </div>
                 </div>
             </div>
+        {else}
+    <div class="container" style="margin-top: 55px">
         {/if}
         
         {if isset($error)}
