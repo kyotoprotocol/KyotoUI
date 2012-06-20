@@ -35,7 +35,12 @@ if (isset($_GET['simid'])) {
 
     $as = new AgentStateModel();    // instantiate collection model
     $steps = $agentslist->count();
+    echo $steps .'<br>';
     
+    $resultcheckq = new ResultModel();    // instantiate collection model
+    $resultcheck = $resultcheckq->find(array("simID" => $_GET['simid']),array('limit' => 1))
+                        
+                        
         foreach ($agentslist as $agent) {
             // EACH COUNTRY AS AGENT
             $agentProperties = $agent->getProperties();
