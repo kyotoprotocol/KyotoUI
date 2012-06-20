@@ -10,8 +10,9 @@
         $.ajax({
             type: "GET",
             url: "ajax.php",
-            data: {func : 'load', simid : {/literal}{$simid}{literal}},
+            data: {func : 'result', simid : {/literal}{$simid}{literal}},
             success: function(data) {
+                console.log(data);
                 window.data = data;
                 arrayCountriesTool(data, 'carbonOutput', 'geochart');
                 arrayStatsTool(data);
@@ -27,7 +28,7 @@
                         newArray.push([output['ISO2'], parseInt(output[field])]);
                     });
                     if(chart == 'geochart'){
-                        updateGeochart(newArray);
+                        //updateGeochart(newArray);
                     } else {
                         //add more - look into passing the chart?
                     }
@@ -41,10 +42,11 @@
             $.each(data.stats, function(index, element){
                 console.log(index);
                 if(index == 'globalCarbonChangePercentage'){
-                        console.log(element);
                     $('#'+ index).text(element.toFixed(0) + '%'); //billion tonnes
                 } else if(index == 'carbonOutput') {
-                    $('#'+ index).text((element/1000000000).toFixed(0));
+                    console.log('carbonOutput');
+                        console.log(element);
+                    $('#'+ index).text((element/1000000).toFixed(0));
                 } else {
                     $('#'+ index).text((element).toFixed(0));
                 }
@@ -112,7 +114,7 @@
             <tr>
                 <td style="height: 365px;background-image: url('includes/img/dinero_bg.jpg'); padding-top: 50px;padding-right: 20px;">
         <p id="carbonOutput" align="right" style="color: white;line-height: 200px;font-size: 256px; font-weight: bold"></p>
-        <h1 align="right"style="color: white;">BILLION TONNES OF GLOBAL CO2 REDUCTION</h1>
+        <h1 align="right"style="color: white;">MILLION TONNES OF GLOBAL CO2 REDUCTION</h1>
 
                 </td>
             </tr>
