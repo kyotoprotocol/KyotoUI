@@ -29,7 +29,8 @@ define ("DEFAULT_FINISHTIME", "10");
 define ("DEFAULT_CLASSNAME", "uk.ac.ic.kyoto.simulations.Simulation");
 
 define ("AGENT_CLASS_LIST", "NonAnnex,AbstractPostCommunistCountry,EU,CanadaAgent,USAgent,NonParticipant");
-define ("TICK_YEAR", 365);
+
+
 define ("NOTICE_1", "change in kyoto state, before, after, ticknumber");
 
 

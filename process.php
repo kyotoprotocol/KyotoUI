@@ -20,6 +20,12 @@ if (isset($_GET['simid'])) {
     $sim = $simulation->findOne(array("_id" => (int)$_GET['simid']));
     $agentslist = $agents->find(array("simID" => (float) $_GET['simid']));
     $simID = new MongoInt64($sim->getID()); // ensure simID is of the correct type
+    
+    $simprop = $sim->getParameters();
+    define ("TICK_YEAR", $simprop['TICK_YEAR']);
+echo TICK_YEAR .'innit';
+
+    
 //FIRST FIND LIST OF ALL AGENTS PROCESSED
         $as = new AgentStateModel();    // instantiate collection model
         $steps = $agentslist->count();
@@ -52,15 +58,15 @@ if (isset($_GET['simid'])) {
                         // Here is the year round up. Save and ting
                         echo 'Save the damn record';
                         $countryArray['simID']             = $simID;
-                        $countryArray['GDP']               = $iso;
+                        $countryArray['GDP']               = $agentTickProperties['gdp'];
                         $countryArray['ISO']               = $iso;
                         $countryArray['year']              = $year;
-                        $countryArray['GDPRate']           = 2;
-                        $countryArray['availableToSpend']  = 3;
-                        $countryArray['emissionsTarget']   = 4;
-                        $countryArray['carbonOffset']      = 5;
-                        $countryArray['carbonOutput']      = 6;
-                        $countryArray['isKyotoMember']     = 7;
+                        $countryArray['GDPRate']           = $agentTickProperties['gdp_rate'];
+                        $countryArray['availableToSpend']  = $agentTickProperties['available_to_spend'];
+                        $countryArray['emissionsTarget']   = $agentTickProperties['emission_target'];
+                        $countryArray['carbonOffset']      = $agentTickProperties['carbon_offset'];
+                        $countryArray['carbonOutput']      = $agentTickProperties['carbon_output'];
+                        $countryArray['isKyotoMember']     = $agentTickProperties['is_kyoto_member'];
                         $countryArray['notices']           = $notices;
                         $notices = array();
                         $result = new ResultModel($countryArray);    // instantiate collection model
@@ -77,6 +83,23 @@ if (isset($_GET['simid'])) {
                     //var_dump($ag->getAttributes());
                     //$statekeys = array_keys($ag->getProperties());
                 }
+
+            }
+ 
+        
+            
+//NEXT FIND OUT WHAT AGENT IS TO BE WORKED ON
+
+//LOAD UP AGENT STATE DATA + PROCESS INTO DESIRED TABLE
+
+//header("Location: process.php?page=2"); /* Redirect browser */
+
+
+} else {
+   echo 'No sim ID mate.';
+}
+
+
                 
                 
                 
@@ -92,18 +115,6 @@ if (isset($_GET['simid'])) {
                 $as1->setTime($m);
                 $as1->save();
                 }*/
-            }
- 
-        
-            
-//NEXT FIND OUT WHAT AGENT IS TO BE WORKED ON
-
-//LOAD UP AGENT STATE DATA + PROCESS INTO DESIRED TABLE
-
-//header("Location: process.php?page=2"); /* Redirect browser */
 
 
-} else {
-   echo 'No sim ID mate.';
-}
 ?>
