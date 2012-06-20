@@ -6,7 +6,7 @@
  */
 
 //$_GET['direction']
-//$_GET['countries'];
+$country = $_GET['country'];
 
 $filename = "code_to_coordinates.json";
 $handle = fopen($filename, "r");
@@ -49,9 +49,9 @@ function generateFlightPathArray($origin, $remote, $data, $jsoncountries, $names
     return $array;
 }
 
-$test['USA'] = generateFlightPathArray('ESP', 'USA', '999999', $countries, $names);
-$test['GRL'] = generateFlightPathArray('ESP', 'GRL', '999999', $countries, $names);
-$test['AUS'] = generateFlightPathArray('ESP', 'AUS', '999999', $countries, $names);
+$test['USA'] = generateFlightPathArray($country, 'USA', '999999', $countries, $names);
+$test['GRL'] = generateFlightPathArray($country, 'GRL', '999999', $countries, $names);
+$test['AUS'] = generateFlightPathArray($country, 'AUS', '999999', $countries, $names);
 
 echo json_encode($test);
 
