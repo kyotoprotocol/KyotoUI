@@ -296,7 +296,7 @@
         function draw_arrows_and_paint_countries()
         {
 
-            $.getJSON("generated/"+direction+currentCountry+".json", function(data) {
+            $.getJSON("test.php?direction="+direction+"&country="+currentCountry+"", function(data) {
                 var countries_div = $("#countries");
                 var country_name_div = $("#country_name");
                 countries_div.empty();
@@ -497,15 +497,7 @@
 </div>
 <div id="country_name_popup">
 </div>
-  <div id="html5badge">
-      <a href="http://www.w3.org/html/logo/">
-        <img src="http://www.w3.org/html/logo/badge/html5-badge-h-css3-device-graphics-semantics-storage.png" width="261" height="64" alt="HTML5 Powered with CSS3 / Styling, Device Access, Graphics, 3D &amp; Effects, Semantics, and Offline &amp; Storage" title="HTML5 Powered with CSS3 / Styling, Device Access, Graphics, 3D &amp; Effects, Semantics, and Offline &amp; Storage">
-      </a>
-  </div>
-
-<div id="credits">
-      Visualization by <a href="http://twitter.com/madewulf">@madewulf</a>  based on <a href="http://www.migrationdrc.org/research/typesofmigration/global_migrant_origin_database.html">the Global Migrant Origin Database</a> Version 4 (updated March 2007) - <a href="about.html">Learn more</a> - <a href="https://github.com/madewulf/MigrationsMap.net">Code on github</a>
-</div>
+    
 <div id="geoloc_me" class="ui-state-default ui-corner-all">
     <span title="Where am I?" class="ui-icon ui-icon-home"></span>
 </div>
