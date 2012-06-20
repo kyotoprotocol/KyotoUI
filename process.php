@@ -16,22 +16,28 @@ if (isset($_GET['simid'])) {
    
     $simulation = new SimulationModel();    // instantiate collection model
     $agents = new AgentsModel();    // instantiate collection model
-    
     $sim = $simulation->findOne(array("_id" => (int)$_GET['simid']));
-    $agentslist = $agents->find(array("simID" => (float) $_GET['simid']));
     $simID = new MongoInt64($sim->getID()); // ensure simID is of the correct type
     
     $simprop = $sim->getParameters();
     define ("TICK_YEAR", $simprop['TICK_YEAR']);
-echo TICK_YEAR .'innit';
+    echo TICK_YEAR .'innit';
 
     
 //FIRST FIND LIST OF ALL AGENTS PROCESSED
         $as = new AgentStateModel();    // instantiate collection model
         $steps = $agentslist->count();
         
-
-            foreach ($agentslist as $agent) {
+    if (isset($_GET['agentnum'])) {
+        // Find the agent 
+        $_GET['agent'];
+        //array('sort' => array('name' => 1), 'offset' => 10, 'limit' => 1)
+        $agentslist = $agents->find(array("simID" => (float) $_GET['simid']));
+    } else {
+        // Choose the first agent
+        $agentslist = $agents->find(array("simID" => (float) $_GET['simid']));
+    }
+        foreach ($agentslist as $agent) {
             // EACH COUNTRY AS AGENT
             $agentProperties = $agent->getProperties();
             $iso = $agentProperties['ISO'];

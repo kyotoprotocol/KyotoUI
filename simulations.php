@@ -57,7 +57,7 @@ if (isset($_POST['simulationcopy'])) {
 
     $simquery = new SimulationModel();    // instantiate collection model
  
-    $results = $simquery->find(array(), array('sort'=>array("_id"=>1)));
+    $results = $simquery->find(array(), array('sort'=>array("_id"=>-1)));
 
     $s = array();
     foreach ($results as $sim) {
