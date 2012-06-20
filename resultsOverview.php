@@ -7,11 +7,18 @@
 require('libs/Smarty.class.php');
 $smarty = new Smarty;
 include('admin/config.php');
-$smarty->assign('simList',simulationList());
 
-//code here
-        
+$simulation = new SimulationModel();
+$sims = $simulation->findAll(array('state' => 'COMPLETE'));
 
-        $smarty->display('views/resultsOverview.tpl');
+foreach($sims as $sim){
+    echo '<a href="resultOverview?simid='.$sim->getID(). '">'. $sim->getName().'</a> <br>';
+}
+
+die();
+
+    
+    $smarty->assign('simulations', $sims);
+    $smarty->display('views/resultsOverview.tpl');
         
 ?>
