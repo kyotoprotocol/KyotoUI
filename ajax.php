@@ -56,12 +56,26 @@ switch ($_GET['func']) {
     
     case 'result' :
         $result = new ResultModel();
-        $result->find(array("simID", $sim->getID()));
-        //do the bigtime charlie shit here
+        $id = new MongoInt64($sim->getId());
+        $results = $result->find(array("simID" => $id));
         
+        $params = array();
+        $global = array();
+        
+        //use sim to get number of ticks and hence years.
+        
+        foreach($results as $res){
+            $attributes = $res->getAttributes();
+            $params[$attributes['ISO']] = $attributes;
+            
+            //calculate global stuff
+            $global['carbonOutput'] += $attributes['carbonOutput'];
+        }
+        
+        $output = array('stats' => $global, 'countries' => $params);
+        
+        ajaxSend($output);
         break;
-    
-    
     
     default : echo 'error';
 }
