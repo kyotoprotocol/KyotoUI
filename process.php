@@ -25,18 +25,17 @@ if (isset($_GET['simid'])) {
 
     
 //FIRST FIND LIST OF ALL AGENTS PROCESSED
-        $as = new AgentStateModel();    // instantiate collection model
-        $steps = $agentslist->count();
         
-    if (isset($_GET['agentnum'])) {
-        // Find the agent 
-        $_GET['agent'];
-        //array('sort' => array('name' => 1), 'offset' => 10, 'limit' => 1)
-        $agentslist = $agents->find(array("simID" => (float) $_GET['simid']));
+    if (isset($_GET['agent'])) {
+        $agentslist = $agents->find(array("simID" => (float) $_GET['simid']),array('sort' => array('_id' => 1), 'offset' => $_GET['agent'], 'limit' => 1));
     } else {
         // Choose the first agent
-        $agentslist = $agents->find(array("simID" => (float) $_GET['simid']));
+        $agentslist = $agents->find(array("simID" => (float) $_GET['simid']),array('sort' => array('_id' => 1), 'offset' => 0, 'limit' => 1));
     }
+
+    $as = new AgentStateModel();    // instantiate collection model
+    $steps = $agentslist->count();
+    
         foreach ($agentslist as $agent) {
             // EACH COUNTRY AS AGENT
             $agentProperties = $agent->getProperties();
