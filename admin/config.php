@@ -6,6 +6,7 @@ include('models/EnvironmentStateModel.php');
 include('models/CountersModel.php');
 include('models/AgentsModel.php');
 include('models/AgentStateModel.php');
+include('models/ResultModel.php');
 
 
 
@@ -28,6 +29,9 @@ define ("DEFAULT_FINISHTIME", "10");
 define ("DEFAULT_CLASSNAME", "uk.ac.ic.kyoto.simulations.Simulation");
 
 define ("AGENT_CLASS_LIST", "NonAnnex,AbstractPostCommunistCountry,EU,CanadaAgent,USAgent,NonParticipant");
+define ("TICK_YEAR", 365);
+define ("NOTICE_1", "change in kyoto state, before, after, ticknumber");
+
 
 // Session for remembering database choice.
 session_start();
