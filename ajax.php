@@ -21,6 +21,7 @@ if (isset($_GET['simid'])) {
 } else {
     var_dump('failed'); die();
 }
+
     $initialCarbonOutput = 0;
 switch ($_GET['func']) {
     case 'load' :
@@ -53,16 +54,15 @@ switch ($_GET['func']) {
         ajaxSend($output);
         break;
     
-    case 'group' :
-        //whatever l//code hereoad up les charts with data formatted however
-        $data = 
-            array(
-                array('Year', 'Carbon Output'), 
-                array('2004', rand(10, 1000)),
-                array('2005', rand(10, 1000))
-            ); 
-        ajaxSend(dataToArray($data));
+    case 'result' :
+        $result = new ResultModel();
+        $result->find(array("simID", $sim->getID()));
+        //do the bigtime charlie shit here
+        
         break;
+    
+    
+    
     default : echo 'error';
 }
 
