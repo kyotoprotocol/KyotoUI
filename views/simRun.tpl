@@ -19,7 +19,7 @@
                 } else {
                     $("#progressbar").width(100+'%');
                     $("#progressbar").text('done');
-                    $("#progressbar").removeClass("active");
+                    $("#progressbarcontainer").removeClass("active");
                     console.log('Done!');
                 }
             }
@@ -28,7 +28,6 @@
                 
         var nextAgent = 0;
         var totalAgents = 0;
-        var returnData = {};
 
         if(nextAgent == 0){
             ajaxProcess({simid : {/literal}{$smarty.get.simid}{literal}});
@@ -43,12 +42,10 @@
 
 {/block}
 
-
 {block name=body}
-<div class="progress progress-striped
+<div id="progressbarcontainer" class="progress progress-striped
      active">
   <div id="progressbar" class="bar"
        style="width: 0%"></div>
 </div>
-
 {/block}
