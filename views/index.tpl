@@ -22,7 +22,7 @@
 {elseif isset($mongodbconnectRemote)}
     <div class="alert alert-error">
         <button type="button" class="close" data-dismiss="alert">×</button>
-        <strong>Error</strong> Mongo Connection missing <a href="https://github.com/kyotoprotocol/KyotoUI">See README.Your REMOTE Mongo program may not be installed, or active.</a>
+        <strong>Error</strong> Mongo Connection missing <a href="https://github.com/kyotoprotocol/KyotoUI">See README.Remote MongoDB connection not found, perhaps you need to be on the VPN.</a>
     </div>
 
 {/if}
@@ -34,8 +34,9 @@
             <p>This is the web interface for the <a href="https://github.com/farhanrahman/kyoto">Kyoto Protocol</a> simulator built upon <a href="http://www.presage2.info/">Presage</a>. </p>
             <div class="btn-toolbar">
                     <div class="btn-group">
-                <a href="initialise.php" class="btn btn-large btn-primary">Get started</a >
-                    </div>
+                        <a href="initialise.php" class="btn btn-large btn-primary">Get started</a >
+                        <a href="https://github.com/kyotoprotocol/KyotoUI/wiki/KyotoUIHelp" target="_blank" class="btn btn-large btn-primary">Help</a >
+                   </div>
                     <div class="btn-group">
                             {if ($setdb=='local')}
                                 <a href="#" class="btn btn-large btn-success disabled">Using local db</a >
