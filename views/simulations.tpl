@@ -2,7 +2,27 @@
 
 {block name=title}Simulations{/block}
 
-{block name=head}{/block}
+{block name=head}
+<script>
+jQuery(function($) {
+  $('div.btn-group[data-toggle-name=*]').each(function(){
+    var group   = $(this);
+    var form    = group.parents('form').eq(0);
+    var name    = group.attr('data-toggle-name');
+    var hidden  = $('input[name="' + name + '"]', form);
+    $('button', group).each(function(){
+      var button = $(this);
+      button.live('click', function(){
+          hidden.val($(this).val());
+      });
+      if(button.val() == hidden.val()) {
+        button.addClass('active');
+      }
+    });
+  });
+});
+</script>
+{/block}
 
 {block name=body}
 <div class="row">
@@ -10,9 +30,32 @@
         <h1>View and Edit Simulations</h1> 
     </div>
  </div>
-<blockquote>
-Shows the list of simulations in mongodb in the database: Presage
-</blockquote>
+<div class="row">
+    <div class="span12">
+     
+      <form class="well form-inline" name="dave" action="simulations.php" method="post" style="margin-top:5px;padding: 2px;">
+            <div class="btn-group span3" data-toggle-name="state" data-toggle="buttons-radio" >
+                <button type="button" value="all" class="btn" data-toggle="button">All</button>
+                <button type="button" value="notstarted" class="btn" data-toggle="button">Not Started</button>
+                <button type="button" value="complete" class="btn" data-toggle="button">Complete</button>
+            </div>
+            <input type="hidden" name="state" value="{$smarty.session.simfilterstate}" />
+            <div class="btn-group span3" data-toggle-name="type" data-toggle="buttons-radio" >
+                <button type="button" value="all" class="btn" data-toggle="button">All</button>
+                <button type="button" value="kyoto" class="btn" data-toggle="button">kyoto.simulation</button>
+            </div>
+            <input type="hidden" name="type" value="{$smarty.session.simfiltertype}" />
+
+           
+                <div class="input-prepend input-append span3">
+                    <span class="add-on">Limit to</span><input class="span1" name="limit" value="{$smarty.session.simfilterlimit}" type="text"><span class="add-on">sims</span>
+                </div>
+                <button type="submit" class="btn btn-inverse">Filter {$smarty.session.database} DB</button>
+           
+      </form>
+      
+    </div>
+ </div>
 {if isset($success)}
 <div class="row">
     <div class="span12">
@@ -40,7 +83,7 @@ Shows the list of simulations in mongodb in the database: Presage
                     <th style="width:250px;">Name</th>
                     <th>Description</th>
                     <!--<th>Parameters</th>-->
-                    <th style="width:80px;">Actions</th>
+                    <th style="width:110px;">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -98,7 +141,7 @@ Shows the list of simulations in mongodb in the database: Presage
                         </div>
                         <!-- END Hover box for delete simulation -->
                     </td>
-            {*if ($s['classname']==$DEFAULT_CLASSNAME)*}
+            {if ($s['classname']==$DEFAULT_CLASSNAME)}
                  <!-- next two cells are kyoto simulation specific-->
                     <td>
                         {if $s["state"] == "NOT STARTED" }
@@ -173,7 +216,7 @@ Shows the list of simulations in mongodb in the database: Presage
                             </ul>
                         </div><!-- /btn-group -->
                     </td>
-                {*else}
+                {else}
                 <!--not a kyoto simulation-->
                 <td colspan="3">
                     <div class="alert" style="margin-bottom: 2px;">
@@ -182,10 +225,22 @@ Shows the list of simulations in mongodb in the database: Presage
                 </td>
                     <td>
                         <div class="btn-group">          
-                            <a class="btn btn-danger" data-toggle="modal" href="#simdel{$s["_id"]}">Delete</a>
+                            <a class="btn btn-danger" data-toggle="modal" href="#simdel{$s["_id"]}"><i class="icon-trash icon-white"></i></a>
+                            <a class="btn btn-primary" href="simOverview.php?simid={$s["_id"]}" >View</a>
+                            <a class="btn btn-primary dropdown-toggle " data-toggle="dropdown"><span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <!--<li><a href="#">View Countries</a></li>-->
+                                <li><a href="export.php?simid={$s["_id"]}">Export to CSV</a></li>
+                                <li><a href="simEdit.php?simid={$s["_id"]}">Edit</a></li>
+                                <li><a href="rawResultOutput.php?simid={$s["_id"]}">Raw RESULTS</a></li>
+                                <li><a data-toggle="modal" href="#sim{$s["_id"]}">Copy</a></li>
+                                <li><a data-toggle="modal" href="#simdel{$s["_id"]}">Delete</a></li>
+                                <!--            <li class="divider"></li>
+                                <li><a href="#">Separated link</a></li>-->
+                            </ul> 
                         </div><!-- /btn-group -->
                     </td>
-                {/if*}
+                {/if}
                 <tr>
                 {/foreach}
              </tbody>
