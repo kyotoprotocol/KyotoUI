@@ -23,18 +23,40 @@ if (isset($_GET['simid'])) {
     define ("TICK_YEAR", $simprop['TICK_YEAR']);
     //define ("OUTPUTFORM", 'HTTPREQUEST');
     define ("OUTPUTFORM", 'JSON');
+    define ("CRAPOUT", true);
 
 //FIRST FIND LIST OF ALL AGENTS PROCESSED
-        
+    
+    $tickquarter = ((int)TICK_YEAR)/4;
+    
+    $quarter[0] = array ('offset' => 0, 'limit' => floor($tickquarter));
+    $quarter[1] = array ('offset' => floor($tickquarter), 'limit' =>floor($tickquarter));
+    $quarter[2] = array ('offset' => (floor($tickquarter)*2), 'limit' =>floor($tickquarter));
+    $quarter[3] = array ('offset' => (floor($tickquarter)*3), 'limit' =>TICK_YEAR-(floor($tickquarter)*3));
+    
+    if (CRAPOUT) var_dump($quarter);
     if (isset($_GET['agent'])) {
-        $offset =(int) $_GET['agent'];
-        $agentslist = $agents->find(array("simID" => (float) $_GET['simid']),array('sort' => array('_id' => 1), 'offset' => $offset, 'limit' => 1));
+        
+        $agentCount = $_GET['agentno'];
+        $steps = $agentCount*4;
+        $currentQuarter = ((int)$_GET['agent']%4);
+        $agentOffset = floor((int)$_GET['agent']/4);
+        if (CRAPOUT) echo 'Number of agents: '.$agentCount .'<br>';
+        if (CRAPOUT) echo 'Number of steps: '.$steps .'<br>';
+        if (CRAPOUT) echo 'Agent Number: '.$agentOffset .'<br>';
+        if (CRAPOUT) echo 'CurrentQuarter '.$currentQuarter.'<br>';
+        $agentslist = $agents->find(array("simID" => (float) $_GET['simid']),array('sort' => array('_id' => 1), 'offset' => $agentOffset, 'limit' => 1));
         $steps = $_GET['agentno'];
     } else {
         // Choose the first agent
         $count = $agents->find(array("simID"=>$simID));
-        $steps = $count->count();
-
+//        $steps = $count->count();
+        $agentCount = $count->count();
+        $steps = $agentCount*4;
+        if (CRAPOUT) echo 'Number of agents: '.$agentCount .'<br>';
+        if (CRAPOUT) echo 'Number of steps: '.$steps .'<br>';
+        $currentQuarter = 0;
+        if (CRAPOUT) echo 'CurrentQuarter '.$currentQuarter.'<br>';
         $agentslist = $agents->find(array("simID" => (float) $_GET['simid']),array('sort' => array('_id' => 1), 'offset' => 0, 'limit' => 1));
         $offset = 0;
     }
@@ -54,7 +76,7 @@ if (isset($_GET['simid'])) {
             //CHECK FOR RECORD ALREADY INCASE ACCIDENTALLY REPEAT REQUEST:
 
             $resultcheckq = new ResultModel();    // instantiate collection model
-            $resultcheck = $resultcheckq->findOne(array("simID" => (int)$_GET['simid'], "ISO" =>$iso));
+            $resultcheck = $resultcheckq->findOne(array("simID" => (int)$_GET['simid'], "ISO" =>$iso),array('sort' => array('_id' => 1), 'offset' => $quarter[$currentQuarter]['offset'], 'limit' =>$quarter[$currentQuarter]['offset']   ));
             if (is_null($resultcheck)) {
             //echo 'no record exists<bR>';
             } else {            
