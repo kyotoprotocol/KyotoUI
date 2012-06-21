@@ -8,8 +8,22 @@ include('admin/config.php');
 
 $simList = simulationList();
 //POST copy simulation?
+if (!isset($_SESSION['simfilterstate'])) {
+    // First visit this session, so make some session defaults.
+        $_SESSION['simfilterstate'] = 'all';
+        $_SESSION['simfiltertype'] = 'all';
+        $_SESSION['simfilterlimit'] = '100';
+}
+
+if (isset($_POST['type'])) {
+    // A filter request has been made!
+    $_SESSION['simfilterstate'] = $_POST['state'];
+    $_SESSION['simfiltertype'] = $_POST['type'];
+    $_SESSION['simfilterlimit'] = $_POST['limit'];
+    header("Location: simulations.php?#filterset"); /* Redirect browser */
+}
+
 if (isset($_POST['simulationcopy'])) {
-   
     if (in_array($_POST['simulationname'],$simList)) {
         $smarty->assign('error', 'Cannot copy due to duplicate name error. Choose a different name');
     } else {
@@ -57,7 +71,24 @@ if (isset($_POST['simulationcopy'])) {
 
     $simquery = new SimulationModel();    // instantiate collection model
  
-    $results = $simquery->find(array(), array('sort'=>array("_id"=>-1)));
+    if ($_SESSION['simfilterstate'] == 'all') {
+        //don't filter
+        $state = array();
+    } elseif ($_SESSION['simfilterstate'] == 'notstarted') {
+        $state = array('state'=>'NOT STARTED');
+    } elseif ($_SESSION['simfilterstate'] == 'complete') {
+        $state = array('state'=>'COMPLETE');
+    }
+
+ 
+    if ($_SESSION['simfiltertype'] == 'all') {
+        //don't filter
+        $type = array();
+    } elseif ($_SESSION['simfiltertype'] == 'kyoto') {
+        $type = array('classname'=>DEFAULT_CLASSNAME);
+    }
+
+    $results = $simquery->find(array_merge($type, $state), array('sort'=>array("_id"=>-1), 'limit'=>(int)$_SESSION['simfilterlimit']));
 
     $s = array();
     foreach ($results as $sim) {

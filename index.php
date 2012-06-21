@@ -20,20 +20,32 @@ if (!extension_loaded('mongo')) {
 } else {
     require('admin/config.php');
     if (startDB()=='failure'){
-    $smarty->assign('mongodbconnect', 'on');
+    $smarty->assign('mongodbconnectLocal', 'on');
     $smarty->assign('local', 'disabled');
     } else {
     $smarty->assign('local', 'enabled');
 
-        if (isset($_POST['database'])) {
-            $_SESSION['database']=$_POST['database'];
-        }
+        /*if (isset($_GET['database'])) {
+            $_SESSION['database']=$_GET['database'];
+                header("Location: index.php?#dbset"); 
+        }*/
     }
+    //
+
+    if (startRemoteDB()=='failure'){
+    $smarty->assign('mongodbconnectRemote', 'on');
+    $smarty->assign('remote', 'disabled');
+    } else {
+    $smarty->assign('remote', 'enabled');
+    }
+
+    
+    
 }
 
-    if (isset($_POST['database'])) {
-            $_SESSION['database']=$_POST['database'];
-       //     $smarty->assign('setdb', 'remote');
+    if (isset($_GET['database'])) {
+            $_SESSION['database']=$_GET['database'];
+            header("Location: index.php?#dbset"); /* Redirect browser */
     }
 
    $smarty->assign('setdb', $_SESSION['database']);
