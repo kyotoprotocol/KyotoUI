@@ -21,8 +21,8 @@ if (isset($_GET['simid'])) {
     
     $simprop = $sim->getParameters();
     define ("TICK_YEAR", $simprop['TICK_YEAR']);
-    define ("OUTPUTFORM", 'HTTPREQUEST');
-    //define ("OUTPUT_FORM", 'JSON');
+    //define ("OUTPUTFORM", 'HTTPREQUEST');
+    define ("OUTPUTFORM", 'JSON');
 
 //FIRST FIND LIST OF ALL AGENTS PROCESSED
         
@@ -107,14 +107,17 @@ if (isset($_GET['simid'])) {
                 } //End of DAY
 
             $outputARY['ISO'] = $iso;
-            $outputARY['success'] = true;
             $outputARY['percentage'] = (int)(($offset/$steps)*100);
+            $outputARY['totalAgents'] = $steps;
+            if ($offset+1==$steps) {
+            $outputARY['success'] = 'complete';
+            } else {
+            $outputARY['success'] = 'true';
+            }
+
             $offset++;
             $outputARY['nextAgent'] = $offset;
-            
-                IF (OUTPUTFORM == 'JSON') {
-                echo '<a href="process.php?simid='.$simID.'&agent='.$offset.'&agentno='.$steps.'">NEXT</a>';
-                }
+
             }//END OF AGENT
  
         
@@ -132,8 +135,12 @@ if (isset($_GET['simid'])) {
    echo 'No sim ID mate.';
 }
 
-echo json_encode($outputARY);
                 
+                IF (OUTPUTFORM == 'JSON') {
+                    echo json_encode($outputARY);
+
+                    //echo '<a href="process.php?simid='.$simID.'&agent='.$offset.'&agentno='.$steps.'">NEXT</a>';
+                }
                 
                 
                 
