@@ -21,25 +21,27 @@ if (isset($_GET['simid'])) {
     
     $simprop = $sim->getParameters();
     define ("TICK_YEAR", $simprop['TICK_YEAR']);
-    echo TICK_YEAR .'innit';
+    define ("OUTPUTFORM", 'HTTPREQUEST');
+    //define ("OUTPUT_FORM", 'JSON');
 
-    
 //FIRST FIND LIST OF ALL AGENTS PROCESSED
         
     if (isset($_GET['agent'])) {
-        $agentslist = $agents->find(array("simID" => (float) $_GET['simid']),array('sort' => array('_id' => 1), 'offset' => $_GET['agent'], 'limit' => 1));
+        $offset =(int) $_GET['agent'];
+        $agentslist = $agents->find(array("simID" => (float) $_GET['simid']),array('sort' => array('_id' => 1), 'offset' => $offset, 'limit' => 1));
+        $steps = $_GET['agentno'];
     } else {
         // Choose the first agent
+        $count = $agents->find(array("simID"=>$simID));
+        $steps = $count->count();
+
         $agentslist = $agents->find(array("simID" => (float) $_GET['simid']),array('sort' => array('_id' => 1), 'offset' => 0, 'limit' => 1));
+        $offset = 0;
     }
 
     $as = new AgentStateModel();    // instantiate collection model
-    $steps = $agentslist->count();
-    echo $steps .'<br>';
-    
-    $resultcheckq = new ResultModel();    // instantiate collection model
-    $resultcheck = $resultcheckq->find(array("simID" => $_GET['simid']),array('limit' => 1))
-                        
+    //echo $steps .'<br>';
+    $outputARY = array();
                         
         foreach ($agentslist as $agent) {
             // EACH COUNTRY AS AGENT
@@ -48,6 +50,18 @@ if (isset($_GET['simid'])) {
             $kyotostate = 'undefined';
             $notices = array();
             $year = 0;
+            
+            //CHECK FOR RECORD ALREADY INCASE ACCIDENTALLY REPEAT REQUEST:
+
+            $resultcheckq = new ResultModel();    // instantiate collection model
+            $resultcheck = $resultcheckq->findOne(array("simID" => (int)$_GET['simid'], "ISO" =>$iso));
+            if (is_null($resultcheck)) {
+            //echo 'no record exists<bR>';
+            } else {            
+            echo 'record exists<bR>';
+            die();
+            }
+            
                 $agentstate = $as->find(array("aid"=>$agent->getAid()));
                 foreach ($agentstate as $ag) {
                 // EACH DAY OF COUNTRY
@@ -66,7 +80,7 @@ if (isset($_GET['simid'])) {
                     if ($tick % TICK_YEAR == 0) {
                         // Last Day of the year
                         // Here is the year round up. Save and ting
-                        echo 'Save the damn record';
+          //              echo 'Save the damn record';
                         $countryArray['simID']             = $simID;
                         $countryArray['GDP']               = $agentTickProperties['gdp'];
                         $countryArray['ISO']               = $iso;
@@ -82,34 +96,43 @@ if (isset($_GET['simid'])) {
                         $result = new ResultModel($countryArray);    // instantiate collection model
                         $result->save();
                         $year++;
-
                     } elseif ($tick % TICK_YEAR == 1) {
                         //First day of the year 
                     } else {
                         // All other days of the year (perhaps adding and shit)
-                        
-                    }
-                    echo $tick.'<br>';
+                    }                   
+//                    echo $tick.'<br>';
                     //var_dump($ag->getAttributes());
                     //$statekeys = array_keys($ag->getProperties());
-                }
+                } //End of DAY
 
-            }
+            $outputARY['ISO'] = $iso;
+            $outputARY['success'] = true;
+            $outputARY['percentage'] = (int)(($offset/$steps)*100);
+            $offset++;
+            $outputARY['nextAgent'] = $offset;
+            
+                IF (OUTPUTFORM == 'JSON') {
+                echo '<a href="process.php?simid='.$simID.'&agent='.$offset.'&agentno='.$steps.'">NEXT</a>';
+                }
+            }//END OF AGENT
  
         
-            
-//NEXT FIND OUT WHAT AGENT IS TO BE WORKED ON
 
-//LOAD UP AGENT STATE DATA + PROCESS INTO DESIRED TABLE
-
-//header("Location: process.php?page=2"); /* Redirect browser */
+                IF (OUTPUTFORM == 'HTTPREQUEST') {
+                //echo '<a href="process.php?simid='.$simID.'&agent='.$offset.'&agentno='.$steps.'">NEXT</a>';
+                    if ($offset>$steps){
+                        echo 'finished'; die();
+                    }
+                header("Location: process.php?simid=".$simID."&agent=".$offset."&agentno=".$steps); /* Redirect browser */
+                }
 
 
 } else {
    echo 'No sim ID mate.';
 }
 
-
+echo json_encode($outputARY);
                 
                 
                 
