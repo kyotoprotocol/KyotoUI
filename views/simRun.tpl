@@ -3,60 +3,75 @@
 {block name=head}
 {literal}
     <script type="text/javascript">  
-   
-     $(document).ready(function(){
-            
+    
+    $(document).ready(function(){
         function ajaxProcess(data){
         $.ajax({
             type: "GET",
             url: "process.php",
             data: data,
-            success: function(data) {
-                console.log(data);
-                if(data['nextAgent'] <= data['totalAgents']){
-                    ajaxProcess({simid : {/literal}{$smarty.get.simid}{literal}, agent : data['nextAgent']+1, agentno : data['totalAgents']});
-                    $("#progressbar").width(data['percentage']+'%');    
+            success: function(data){
+                if(data == 'Record Exists!'){
+                    $("#progressoutput").append(data + '<br>');
+                    $("#progressbar").width(100+'%');
+                    $("#progressbar").text('done');
+                    $("#progressbarcontainer").removeClass("active");
+                    $("#progressoutput").append('All agents processed.');
+                } else if(data['success'] == 'failed'){
+                    $("#progressbar").width(100+'%');
+                    $("#progressbar").text('FAILED');
+                    $("#progressbarcontainer").addClass("progress-danger");
+                    $("#progressoutput").append('PROCESSING FAILED!!!');
+                    return false;
                 } else {
-                    //done
+                    if(data['nextAgent'] <= data['totalAgents']){
+                        $("#progressbar").width(data['percentage']+'%');  
+                        $("#progressbar").text(data['percentage']+'%');
+                        $("#progressoutput").append(data['nextAgent'] + '/' + data['totalAgents'] + ' ' + data['ISO'] + ': Success = ' + data['success'] + '<br>');
+                        ajaxProcess({simid : {/literal}{$smarty.get.simid}{literal}, agent : data['nextAgent'], agentno : data['totalAgents']});
+                    } else {
                         $("#progressbar").width(100+'%');
                         $("#progressbar").text('done');
-                        console.log('done');
+                        $("#progressbarcontainer").removeClass("active");
+                        $("#progressoutput").append('All agents processed.');    
+                    }
                 }
-                
             }
             });    
         }
                 
-        $("#process").click(function (){
-            var nextAgent = 0;
-            var totalAgents = 0;
-            var returnData = {};
-            
-            if(nextAgent == 0){
-                ajaxProcess({simid : {/literal}{$smarty.get.simid}{literal}});
-            } else {
-                ajaxProcess({simid : {/literal}{$smarty.get.simid}{literal}, agent : nextAgent, agentno : totalAgents});
-            }
-           
-            
-        });
+        var nextAgent = 0;
+        var totalAgents = 0;
+
+        if(nextAgent == 0){
+            ajaxProcess({simid : {/literal}{$smarty.get.simid}{literal}});
+        } else {
+            ajaxProcess({simid : {/literal}{$smarty.get.simid}{literal}, agent : nextAgent, agentno : totalAgents});
+        }
     });    
-            //processor.php?simid=X&agent={nextAgent}&agentno={totalAgents}
     </script>
 {/literal}
 
 {/block}
 
-
 {block name=body}
-<div class="span2 offset2">
-    <button id="process" class="btn-group" type="submit">Process {$smarty.get.simid}</button>
+<div>
+    <h1>Run and Process Simulation: {$smarty.get.simid}, {$simName}</h1>
+    
 </div>
-
-<div class="progress progress-striped
+<div>
+    <h3>Simulation Data Processing:</h3>
+</div>
+<div id="progressbarcontainer" class="progress progress-striped
      active">
   <div id="progressbar" class="bar"
        style="width: 0%"></div>
 </div>
-
+ 
+<div class="span8 offset2">
+    <div id="progressoutput" class="well">
+    
+    </div>
+</div>    
+</div>
 {/block}

@@ -58,7 +58,7 @@ if (isset($_GET['simid'])) {
             if (is_null($resultcheck)) {
             //echo 'no record exists<bR>';
             } else {            
-            echo 'record exists<bR>';
+            echo 'Records Exist!';
             die();
             }
             
