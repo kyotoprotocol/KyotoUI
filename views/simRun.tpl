@@ -17,7 +17,12 @@
                     $("#progressbar").text('done');
                     $("#progressbarcontainer").removeClass("active");
                     $("#progressoutput").append('All agents processed.');
-                } else if(data['success'] != 'true') {
+                //} else if(data['success'] == 'true') {
+                 //   console.log('true');
+                //} else if(data['success'] == 'complete'){
+                //    console.log('complete');
+                } else if(data['success'] == 'failed'){
+                    console.log('failed');
                     $("#progressbar").width(100+'%');
                     $("#progressbar").text('FAILED');
                     $("#progressbarcontainer").addClass("progress-danger");

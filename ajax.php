@@ -22,9 +22,8 @@ if (isset($_GET['simid'])) {
     var_dump('failed'); die();
 }
 
-$initialCarbonOutput = 0;
 switch ($_GET['func']) {
-    case 'load' :
+   /* case 'load' :
         //$attributes = $sim->getAttributes();
         $countries = $sim->getCountries();
         //$output = $attributes;
@@ -52,40 +51,27 @@ switch ($_GET['func']) {
         $output['stats']['globalCarbonChangePercentage'] = (($initialCarbonOutput - rand(1000000, $initialCarbonOutput))/$initialCarbonOutput)*100;
         $output['stats']['numberOfMemberCountries'] = $noMembers;
         ajaxSend($output);
-        break;
+        break;*/
     
     case 'result' :
         $result = new ResultModel();
         $id = new MongoInt64($sim->getId());
         $results = $result->find(array("simID" => $id));
         
-        
         $params = array();
         $global = array();
         
-       //use sim to get number of ticks and hence years.
-        
-       foreach($results as $res){
+        foreach($results as $res){
             $attributes = $res->getAttributes();
-            
+
             if($attributes['ISO']){
                 $params[$attributes['ISO']] = $attributes;
             } else {    //if no isos - useless in reality but good for debugging at this stage
-                $params[] = $attributes;
+                ajaxSend(array('error', 'No country ISOs'));
             }
-            
-            //calculate global stuff
-            $global['carbonOutput'] += $attributes['carbonOutput'];
-            $global['globalCarbonChangePercentage'] = 69;//$attributes['globalCarbonChangePercentage'];
-            $global['numberOfMemberCountries'] = 2;
-            $global['creditTrades'] = 10;
-            $global['carbonReductionTonnes'] = 10;
-            $global['dirtyIndustrySpend'] = '$10M';
         }
          
-        
         $output = array('stats' => $global, 'countries' => $params);
-        
         
         ajaxSend($output);
         break;
