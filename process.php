@@ -137,6 +137,7 @@ if (isset($_GET['simid'])) {
 
                 
                 IF (OUTPUTFORM == 'JSON') {
+                    header('content-type: application/json');
                     echo json_encode($outputARY);
 
                     //echo '<a href="process.php?simid='.$simID.'&agent='.$offset.'&agentno='.$steps.'">NEXT</a>';
