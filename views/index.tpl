@@ -13,11 +13,19 @@
         <button type="button" class="close" data-dismiss="alert">×</button>
         <strong>Serious Error</strong> No PHP MONGO Driver Installed! <a href="https://github.com/kyotoprotocol/KyotoUI">See README</a>
     </div>
-{elseif isset($mongodbconnect)}
+{else}
+{if isset($mongodbconnectLocal)}
     <div class="alert alert-error">
         <button type="button" class="close" data-dismiss="alert">×</button>
         <strong>Error</strong> Mongo Connection missing <a href="https://github.com/kyotoprotocol/KyotoUI">See README.Your local Mongo program may not be installed, or active.</a>
     </div>
+{elseif isset($mongodbconnectRemote)}
+    <div class="alert alert-error">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>Error</strong> Mongo Connection missing <a href="https://github.com/kyotoprotocol/KyotoUI">See README.Your REMOTE Mongo program may not be installed, or active.</a>
+    </div>
+
+{/if}
 {/if} 
 <div class="row">
     <div class="span12">

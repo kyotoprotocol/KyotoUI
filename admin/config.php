@@ -56,7 +56,19 @@ BaseMongoRecord::$database = 'presage';
 //some of the old code still uses this method of connecting. Instead use a MongoRecord model
 function startDB(){
     try {
-        $m = new Mongo(HOST);
+        $m = new Mongo(LOCAL_HOST);
+        $db = $m->selectDB(DB);
+        return $db;
+    } catch(MongoConnectionException $e) {
+   //     echo $e;
+   //     echo "DB FAIL";
+        return 'failure';
+        //die();
+    }
+}
+function startRemoteDB(){
+    try {
+        $m = new Mongo(REMOTE_HOST);
         $db = $m->selectDB(DB);
         return $db;
     } catch(MongoConnectionException $e) {
