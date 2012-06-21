@@ -13,12 +13,14 @@
             success: function(data) {
                 console.log(data);
                 if(data['nextAgent'] <= data['totalAgents']){
-                    ajaxProcess({simid : {/literal}{$smarty.get.simid}{literal}, agent : data['nextAgent']+1, agentno : data['totalAgents']});
-                    $("#progressbar").width(data['percentage']+'%');    
+                    ajaxProcess({simid : {/literal}{$smarty.get.simid}{literal}, agent : data['nextAgent'], agentno : data['totalAgents']});
+                    $("#progressbar").width(data['percentage']+'%');  
+                    $("#progressbar").text(data['percentage']+'%');
                 } else {
                     $("#progressbar").width(100+'%');
                     $("#progressbar").text('done');
-                    console.log('done');
+                    $("#progressbar").removeClass("active");
+                    console.log('Done!');
                 }
             }
             });    
