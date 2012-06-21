@@ -21,6 +21,7 @@ $smarty->assign('simList',simulationList());
             if($key != '_id'){
                 if(substr_count($key, 'param_')){
                     $params[str_replace('param_', '', $key)] = $_POST[$key];
+                    var_dump($params);
                 } elseif($key == 'newKey') {
                     if(strlen($_POST['newKey']) > 0){
                         $params[$_POST['newKey']] = $_POST['newValue'];
