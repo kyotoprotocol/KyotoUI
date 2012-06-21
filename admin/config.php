@@ -36,13 +36,17 @@ define ("NOTICE_1", "change in kyoto state, before, after, ticknumber");
 
 // Session for remembering database choice.
 session_start();
-if($_SESSION['database']=='remote') {
-    define ("HOST", REMOTE_HOST);
+if(isset($_SESSION['database'])) {
+    if($_SESSION['database']=='remote') {
+        define ("HOST", REMOTE_HOST);
+    } else {
+        $_SESSION['database']='local';
+        define ("HOST", LOCAL_HOST);
+    }
 } else {
-    $_SESSION['database']='local';
-    define ("HOST", LOCAL_HOST);
+        $_SESSION['database']='local';
+        define ("HOST", LOCAL_HOST);    
 }
-
 
 
 
