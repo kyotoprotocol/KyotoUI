@@ -24,11 +24,8 @@
         <div class="hero-unit" style="height: 600px; background-image: url('http://www.carbonstreamafrica.com/wp-content/uploads/2008/11/penguins2.jpg'); background-position: center;">
             <h1>Welcome to KyotoUI!</h1>
             <p>This is the web interface for the <a href="https://github.com/farhanrahman/kyoto">Kyoto Protocol</a> simulator built upon <a href="http://www.presage2.info/">Presage</a>. </p>
-            <div style="height:450px;">
-                <!-- crude see through box-->
-            </div>
             <div class="btn-toolbar">
-                <button href="initialise.php" class="btn btn-primary btn-large">Get started</button>
+                <button href="initialise.php" class="btn btn-primary btn-large">Get started</button >
                 <form name="input" action="index.php" method="post">
                     <div class="btn-group">
                             {if ($setdb=='local')}
