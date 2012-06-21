@@ -11,13 +11,7 @@ include('admin/config.php');
 $simulation = new SimulationModel();
 $sims = $simulation->findAll(array('state' => 'COMPLETE'));
 
-foreach($sims as $sim){
-    echo '<a href="resultOverview?simid='.$sim->getID(). '">'. $sim->getName().'</a> <br>';
-}
-
-die();
-
-    
+    //$smarty->assign('simList', $simList);
     $smarty->assign('simulations', $sims);
     $smarty->display('views/resultsOverview.tpl');
         
