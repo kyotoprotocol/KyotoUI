@@ -25,15 +25,16 @@ if (!extension_loaded('mongo')) {
     } else {
     $smarty->assign('local', 'enabled');
 
-        if (isset($_POST['database'])) {
-            $_SESSION['database']=$_POST['database'];
+        if (isset($_GET['database'])) {
+            $_SESSION['database']=$_GET['database'];
+                header("Location: index.php?#dbset"); /* Redirect browser */
         }
     }
 }
 
-    if (isset($_POST['database'])) {
-            $_SESSION['database']=$_POST['database'];
-       //     $smarty->assign('setdb', 'remote');
+    if (isset($_GET['database'])) {
+            $_SESSION['database']=$_GET['database'];
+            header("Location: index.php?#dbset"); /* Redirect browser */
     }
 
    $smarty->assign('setdb', $_SESSION['database']);

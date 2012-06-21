@@ -25,21 +25,21 @@
             <h1>Welcome to KyotoUI!</h1>
             <p>This is the web interface for the <a href="https://github.com/farhanrahman/kyoto">Kyoto Protocol</a> simulator built upon <a href="http://www.presage2.info/">Presage</a>. </p>
             <div class="btn-toolbar">
-                <button href="initialise.php" class="btn btn-primary btn-large">Get started</button >
-                <form name="input" action="index.php" method="post">
+                    <div class="btn-group">
+                <a href="initialise.php" class="btn btn-large btn-primary">Get started</a >
+                    </div>
                     <div class="btn-group">
                             {if ($setdb=='local')}
-                                <button type="submit" name="database" value="local" class="btn btn-large btn-success disabled">Using local db</button>
+                                <a href="#" class="btn btn-large btn-success disabled">Using local db</a >
                             {else}
-                                <button type="submit" name="database" value="local" class="btn btn-large btn-info">Switch to local db</button>
+                                <a href="index.php?database=local" class="btn btn-large btn-info">Switch to local db</a >
                             {/if}
                             {if ($setdb=='remote')}
-                                <button type="submit" name="database" value="remote" class="btn btn-large btn-success disabled">Using remote db</button>
+                                <a href="#" class="btn btn-large btn-success disabled">Using remote db</a >
                             {else}
-                                <button type="submit" name="database" value="remote" class="btn btn-large btn-info">Switch to remote db</button>
+                                <a href="index.php?database=remote" class="btn btn-large btn-info">Switch to remote db</a >
                             {/if}
-                    </div>        
-                </form>
+                   </div>        
              </div>
         </div>
     </div>
