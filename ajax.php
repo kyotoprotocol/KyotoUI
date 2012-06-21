@@ -22,7 +22,7 @@ if (isset($_GET['simid'])) {
     var_dump('failed'); die();
 }
 
-    $initialCarbonOutput = 0;
+$initialCarbonOutput = 0;
 switch ($_GET['func']) {
     case 'load' :
         //$attributes = $sim->getAttributes();
@@ -70,7 +70,7 @@ switch ($_GET['func']) {
             
             if($attributes['ISO']){
                 $params[$attributes['ISO']] = $attributes;
-            } else {
+            } else {    //if no isos - useless in reality but good for debugging at this stage
                 $params[] = $attributes;
             }
             

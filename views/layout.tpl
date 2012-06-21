@@ -98,7 +98,7 @@
                         {if (substr_count($smarty.server.PHP_SELF, 'simRun.php')==1)}
                             <li class="active"><a href="#">Run</a></li>
                         {else}
-                            <li class="disabled"><a href="#">Run</a></li>
+                            <li class="disabled"><a href="simRun.php?simid={$smarty.get.simid}">Run</a></li>
                         {/if}
                         {if (substr_count($smarty.server.PHP_SELF, 'resultOverview.php')==1)}
                             <li class="active"><a href="#">Results</a></li>
