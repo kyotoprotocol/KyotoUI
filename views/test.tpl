@@ -36,7 +36,7 @@
 
 var w = 1024,
     h = 600,
-    n = 2,
+    n = 4,
     m = 10,
     degrees = 180 / Math.PI;
 
