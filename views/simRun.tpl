@@ -3,8 +3,8 @@
 {block name=head}
 {literal}
     <script type="text/javascript">  
-   
-     $(document).ready(function(){
+    
+    $(document).ready(function(){
         function ajaxProcess(data){
         $.ajax({
             type: "GET",
@@ -17,12 +17,7 @@
                     $("#progressbar").text('done');
                     $("#progressbarcontainer").removeClass("active");
                     $("#progressoutput").append('All agents processed.');
-                //} else if(data['success'] == 'true') {
-                 //   console.log('true');
-                //} else if(data['success'] == 'complete'){
-                //    console.log('complete');
                 } else if(data['success'] == 'failed'){
-                    console.log('failed');
                     $("#progressbar").width(100+'%');
                     $("#progressbar").text('FAILED');
                     $("#progressbarcontainer").addClass("progress-danger");
@@ -53,8 +48,6 @@
         } else {
             ajaxProcess({simid : {/literal}{$smarty.get.simid}{literal}, agent : nextAgent, agentno : totalAgents});
         }
-           
-            
     });    
     </script>
 {/literal}
