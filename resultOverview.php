@@ -19,6 +19,8 @@ if (isset($_GET['simid'])) {
 
 if($sim){
     $smarty->assign('simid', $sim->getID());
+    $smarty->assign('simname', $sim->getName());
+    $smarty->assign('simdescription', $sim->getDescription());
 } else {
     var_dump('No simulations finished'); die(); //temporary error reporting
     $smarty->assign('simid', NULL);

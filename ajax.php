@@ -59,20 +59,33 @@ switch ($_GET['func']) {
         $id = new MongoInt64($sim->getId());
         $results = $result->find(array("simID" => $id));
         
+        
         $params = array();
         $global = array();
         
-        //use sim to get number of ticks and hence years.
+       //use sim to get number of ticks and hence years.
         
-        foreach($results as $res){
+       foreach($results as $res){
             $attributes = $res->getAttributes();
-            $params[$attributes['ISO']] = $attributes;
+            
+            if($attributes['ISO']){
+                $params[$attributes['ISO']] = $attributes;
+            } else {
+                $params[] = $attributes;
+            }
             
             //calculate global stuff
             $global['carbonOutput'] += $attributes['carbonOutput'];
+            $global['globalCarbonChangePercentage'] = 69;//$attributes['globalCarbonChangePercentage'];
+            $global['numberOfMemberCountries'] = 2;
+            $global['creditTrades'] = 10;
+            $global['carbonReductionTonnes'] = 10;
+            $global['dirtyIndustrySpend'] = '$10M';
         }
+         
         
         $output = array('stats' => $global, 'countries' => $params);
+        
         
         ajaxSend($output);
         break;

@@ -1,5 +1,5 @@
 {extends file="views/layout.tpl"}
-{block name=title}Simulation Result - {$simName}{/block}
+{block name=title}Simulation Result - {$simname}{/block}
 {block name=head}
 
 <script type="text/javascript" src="http://www.google.com/jsapi"></script>
@@ -48,7 +48,7 @@
                         console.log(element);
                     $('#'+ index).text((element/1000000).toFixed(0));
                 } else {
-                    $('#'+ index).text((element).toFixed(0));
+                    $('#'+ index).text(element);
                 }
             });
         };
@@ -96,7 +96,7 @@
 
 
 <div class="page-header">
-    <h1>Simulation 5   <small>Designed to observe what happens when bangladesh bloody go for it.</small></h1>
+    <h1>Simulation {$simid}: {$simname}   <small>{$simdescription}</small></h1>
 </div>
 <div class="row">
     <div class="span3">
@@ -105,7 +105,7 @@
             <h4>Global Reduction of C02</h4>
         </div>
         <div class="well">
-            <p id="numberOfMemberCountries" style="color: green;line-height: 96px;font-size: 96px; font-weight: bold">204</p>
+            <p id="numberOfMemberCountries" style="color: green;line-height: 96px;font-size: 96px; font-weight: bold"></p>
             <h4>Countries remain in Kyoto Protocol</h4>
         </div>
     </div>
@@ -124,52 +124,52 @@
 <div class="row">
     <div class="span3">
         <div class="well" style="height: 140px;">
-            <p style="color: black;line-height: 96px;font-size: 96px; font-weight: bold">13K</p>
+            <p id="creditTrades" style="color: black;line-height: 96px;font-size: 96px; font-weight: bold"></p>
             <h4>Credit Trades</h4>
         </div>
     </div>
     <div class="span4">
         <div class="well" style="height: 140px;">
-            <p style="color: green;line-height: 96px;font-size: 96px; font-weight: bold">199M</p>
+            <p id="carbonReductionTonnes" style="color: green;line-height: 96px;font-size: 96px; font-weight: bold"></p>
             <h4>Tonnes of CO2 absorbed by Carbon Reduction</h4>
         </div>
     </div>
     <div class="span5">
         <div class="well" style="height: 140px;">
-            <p style="color: red;line-height: 96px;font-size: 96px; font-weight: bold">$40Bn</p>
+            <p id="dirtyIndustrySpend" style="color: red;line-height: 96px;font-size: 96px; font-weight: bold"></p>
             <h4>Spent on dirty industry for GDP growth</h4>
         </div>
     </div>
 </div>
 <div class="row">
     <div class="span2">
-        <div class="well">
-        fuck
+        <div id="anoutput" class="well">
+        hello
+        </div>
+    </div>
+    <div class="span2">
+        <div id="farhan" class="well">
+        hello
         </div>
     </div>
     <div class="span2">
         <div class="well">
-        fuck
+        hello
         </div>
     </div>
     <div class="span2">
         <div class="well">
-        fuck
+        hello
         </div>
     </div>
     <div class="span2">
         <div class="well">
-        fuck
+        hello
         </div>
     </div>
     <div class="span2">
         <div class="well">
-        fuck
-        </div>
-    </div>
-    <div class="span2">
-        <div class="well">
-        fuck
+        hello
         </div>
     </div>
 
