@@ -105,8 +105,8 @@
           //title: ''
         };
 
-        var chart = new google.visualization.LineChart(document.getElementById('credit_cost_chart'));
-        chart.draw(data, options);
+        var linechart = new google.visualization.LineChart(document.getElementById('credit_cost_chart'));
+        linechart.draw(data, options);
       }
     
     {/literal}    

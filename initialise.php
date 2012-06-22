@@ -15,8 +15,8 @@ try {
     
     $db = startDB();
     //Still uses old database function startDB, not the way to do it.
-    $list = $db->listCollections();
-    $smarty->assign('collections',$list);
+    //$list = $db->listCollections();
+    //$smarty->assign('collections',$list);
     $smarty->assign('host',HOST);
     $smarty->assign('db',DB);
 
