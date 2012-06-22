@@ -5,7 +5,7 @@
 <script type="text/javascript" src="http://www.google.com/jsapi"></script>
 <script type="text/javascript">
     {literal}
-    google.load('visualization', '1', {packages:["corechart"]});
+    google.load('visualization', '1', {packages:['corechart', 'table', 'geomap', 'motionchart']});
     $(document).ready(function() {
         $(".nav-tabs").button();
         $("#loading").show();    
@@ -16,9 +16,11 @@
             success: function(data) {
                 $("#loading").delay(100).slideUp('slow');
                 console.log(data);
-                arrayCountriesTool(data, 'carbonOutput', 'geochart');
+                updateMotionChart();
+                //arrayCountriesTool(data, 'carbonOutput', 'geochart');
                 arrayStatsTool(data);
                 arrayTradesTool(data);
+                    arrayParamsTool(data);
                 updateLineChart(data);  //pass some useful data here parameters = data: ..., options:....
                 addNotices(data);
             }
@@ -65,6 +67,13 @@
             });
         }
             
+        function arrayParamsTool(data){
+            $.each(data.params, function(index, element){
+                console.log('hello');
+                $('#' + index).append(element);
+            });
+        }
+            
             
         // specific functionality (data array is available here)
         $(".geochart_buttons").children().click( function(e) {
@@ -79,9 +88,7 @@
         } else {
             window.geochart = new google.visualization.GeoChart(document.getElementById('geo_chart'));
         }
-            
         var data = google.visualization.arrayToDataTable(parameters.data); // set parameters as data
-        
         if(parameters.options){
             var options = parameters.options;
         } else { //default set up    
@@ -103,9 +110,7 @@
         } else {
             window.linechart = new google.visualization.LineChart(document.getElementById('credit_cost_chart'));
         }
-
         var data = google.visualization.arrayToDataTable(parameters.data);
-
         if(parameters.options){
             var options = parameters.options;
         } else { //default options
@@ -113,9 +118,29 @@
                 title: 'Company Performance'
             };
         }
-
         //draw the chart    
         window.linechart.draw(data, options);
+    }
+        
+    function updateMotionChart(parameters){
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Fruit');
+        data.addColumn('date', 'Date');
+        data.addColumn('number', 'Sales');
+        data.addColumn('number', 'Expenses');
+        data.addColumn('string', 'Location');
+        data.addRows([
+            ['Apples', new Date(1988,0,1), 1000, 300, 'East'],
+            ['Oranges', new Date(1988,0,1), 950, 200, 'West'],
+            ['Bananas', new Date(1988,0,1), 300, 250, 'West'],
+            ['Apples', new Date(1988,1,1), 1200, 400, 'East'],
+            ['Oranges', new Date(1988,1,1), 900, 150, 'West'],
+            ['Bananas', new Date(1988,1,1), 788, 617, 'West']
+        ]);
+
+        var motionchart = new google.visualization.MotionChart(
+            document.getElementById('motion_chart'));
+        motionchart.draw(data, {'width': 800, 'height': 400});
     }
     
     {/literal}    
@@ -169,8 +194,8 @@
     </div>
     <div class="span4">
         <div class="well" style="height: 140px;">
-            <p id="carbonReductionTonnes" style="color: green;line-height: 96px;font-size: 96px; font-weight: bold"></p>
-            <h4>Tonnes of CO2 absorbed by Carbon Reduction</h4>
+            <p id="finalYear" style="color: green;line-height: 96px;font-size: 96px; font-weight: bold"></p>
+            <h4>Final Year</h4>
         </div>
     </div>
     <div class="span5">
@@ -299,7 +324,15 @@
 <!-- TRADE OUTPUT HERE -->
 <div id="credit_cost_chart" style="width: 900px; height: 500px;"></div>
 
+<div class="row">
+    <div class="span12">
+        <h2>Motion Chart (the bellex)</h2>
+    </div>
+</div>
 
+
+<!-- TRADE OUTPUT HERE -->
+<div id="motion_chart"></div>
 
 <div class="row">
     <div class="span12">
