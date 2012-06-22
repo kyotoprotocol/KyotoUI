@@ -14,8 +14,9 @@
             success: function(data) {
                 console.log(data);
                 window.data = data;
-                arrayCountriesTool(data, 'carbonOutput', 'geochart');
-                arrayStatsTool(data);
+                //arrayCountriesTool(data, 'carbonOutput', 'geochart');
+                //  arrayStatsTool(data);
+                arrayTradesTool(data);
             }
         });            
             
@@ -52,6 +53,13 @@
                 }
             });
         };
+            
+        function arrayTradesTool(data){
+            console.log(data.trades);
+            $.each(data.trades, function(index, element){
+                $('#'+ index).append(element);
+            });
+        }
             
             
         // specific functionality (data array is available here)
@@ -124,7 +132,7 @@
 <div class="row">
     <div class="span3">
         <div class="well" style="height: 140px;">
-            <p id="creditTrades" style="color: black;line-height: 96px;font-size: 96px; font-weight: bold"></p>
+            <p id="tradeCount" style="color: black;line-height: 96px;font-size: 96px; font-weight: bold"></p>
             <h4>Credit Trades</h4>
         </div>
     </div>
@@ -143,36 +151,47 @@
 </div>
 <div class="row">
     <div class="span2">
-        <div id="anoutput" class="well">
-        hello
+        <div class="well" style="font-size:11px;">
+        <strong>Total Trade Value:</strong>
+        <div id="totalTradeValue" style="font-size:32px;">
+        </div>
         </div>
     </div>
     <div class="span2">
-        <div id="farhan" class="well">
-        hello
+        <div class="well" style="font-size:11px;">
+        <strong>Max. Credit Value:</strong>
+        <div id="maxCreditValue" style="font-size:32px;">
+        </div>
         </div>
     </div>
     <div class="span2">
-        <div class="well">
-        hello
+        <div class="well" style="font-size:11px;">
+        <strong>Min. Credit Value:</strong>
+        <div id="minCreditValue" style="font-size:32px;">
+        </div>
         </div>
     </div>
-    <div class="span2">
-        <div class="well">
-        hello
+   <div class="span2">
+        <div class="well" style="font-size:11px;">
+        <strong>Ave. Credit Value:</strong>
+        <div id="averageCreditValue" style="font-size:32px;">
+        </div>
         </div>
     </div>
-    <div class="span2">
-        <div class="well">
-        hello
+   <div class="span2">
+        <div class="well" style="font-size:11px;">
+        <strong>Buy Trans. Count:</strong>
+        <div id="buyCount" style="font-size:32px;">
+        </div>
         </div>
     </div>
-    <div class="span2">
-        <div class="well">
-        hello
+   <div class="span2">
+        <div class="well" style="font-size:11px;">
+        <strong>CDM Count:</strong>
+        <div id="cdmCount" style="font-size:32px;">
+        </div>
         </div>
     </div>
-
 </div>
 
 <hr>
