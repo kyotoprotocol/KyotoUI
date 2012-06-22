@@ -83,7 +83,7 @@ jQuery(function($) {
                     <th style="width:250px;">Name</th>
                     <th>Description</th>
                     <!--<th>Parameters</th>-->
-                    <th style="width:110px;">Actions</th>
+                    <th style="width:120px;">Actions</th>
                 </tr>
             </thead>
             <tbody>
