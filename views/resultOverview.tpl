@@ -12,10 +12,10 @@
             url: "ajax.php",
             data: {func : 'result', simid : {/literal}{$simid}{literal}},
             success: function(data) {
-                console.log(data);
                 window.data = data;
-                arrayCountriesTool(data, 'carbonOutput', 'geochart');
-                arrayStatsTool(data);
+                //arrayCountriesTool(data, 'carbonOutput', 'geochart');
+                //  arrayStatsTool(data);
+                arrayTradesTool(data);
             }
         });            
             
@@ -53,6 +53,13 @@
             });
         };
             
+        function arrayTradesTool(data){
+            //console.log(data.trades);
+            $.each(data.trades, function(index, element){
+                $('#'+ index).append(element);
+            });
+        }
+            
             
         // specific functionality (data array is available here)
         $(".geochart_buttons").children().click( function(e) {
@@ -66,7 +73,7 @@
     <script type="text/javascript">
     window.geochart = {};
     window.options = {};
-    google.load('visualization', '1', {packages: ['geochart']});
+    google.load('visualization', '1', {packages: ['geochart', 'corechart']});
 
     //google.setOnLoadCallback(updateGeochart);
         
@@ -84,7 +91,23 @@
         };
         var geochart = new google.visualization.GeoChart(document.getElementById('geo_chart'));
         geochart.draw(data, options);
-    }        
+    }
+       
+
+// target div =  credit_cost_chart
+           
+      function updateLineChart() {
+        var data = google.visualization.arrayToDataTable([
+
+        ]);
+
+        var options = {
+          //title: ''
+        };
+
+        var linechart = new google.visualization.LineChart(document.getElementById('credit_cost_chart'));
+        linechart.draw(data, options);
+      }
     
     {/literal}    
 </script>
@@ -124,7 +147,7 @@
 <div class="row">
     <div class="span3">
         <div class="well" style="height: 140px;">
-            <p id="creditTrades" style="color: black;line-height: 96px;font-size: 96px; font-weight: bold"></p>
+            <p id="tradeCount" style="color: black;line-height: 96px;font-size: 96px; font-weight: bold"></p>
             <h4>Credit Trades</h4>
         </div>
     </div>
@@ -143,36 +166,47 @@
 </div>
 <div class="row">
     <div class="span2">
-        <div id="anoutput" class="well">
-        hello
+        <div class="well" style="font-size:11px;">
+        <strong>Total Trade Value:</strong>
+        <div id="totalTradeValue" style="font-size:32px;">
+        </div>
         </div>
     </div>
     <div class="span2">
-        <div id="farhan" class="well">
-        hello
+        <div class="well" style="font-size:11px;">
+        <strong>Max. Credit Value:</strong>
+        <div id="maxCreditValue" style="font-size:32px;">
+        </div>
         </div>
     </div>
     <div class="span2">
-        <div class="well">
-        hello
+        <div class="well" style="font-size:11px;">
+        <strong>Min. Credit Value:</strong>
+        <div id="minCreditValue" style="font-size:32px;">
+        </div>
         </div>
     </div>
-    <div class="span2">
-        <div class="well">
-        hello
+   <div class="span2">
+        <div class="well" style="font-size:11px;">
+        <strong>Ave. Credit Value:</strong>
+        <div id="averageCreditValue" style="font-size:32px;">
+        </div>
         </div>
     </div>
-    <div class="span2">
-        <div class="well">
-        hello
+   <div class="span2">
+        <div class="well" style="font-size:11px;">
+        <strong>Buy Trans. Count:</strong>
+        <div id="buyCount" style="font-size:32px;">
+        </div>
         </div>
     </div>
-    <div class="span2">
-        <div class="well">
-        hello
+   <div class="span2">
+        <div class="well" style="font-size:11px;">
+        <strong>CDM Count:</strong>
+        <div id="cdmCount" style="font-size:32px;">
+        </div>
         </div>
     </div>
-
 </div>
 
 <hr>
@@ -367,8 +401,9 @@
 <div class="row">
     <div class="span12">
         <h2>Global CO2 Emissions VS Global GDP</h2>
-<iframe src="//google-developers.appspot.com/chart/interactive/docs/gallery/linechart_a9fba3b6f44d821a89c71526093a1820.frame" style="border: none;width: 100%; height: 500px;">
-  &lt;p&gt;[This section requires a browser that supports iframes.]&lt;/p&gt;
-</iframe>
     </div>
 </div>
+
+
+<!-- TRADE OUTPUT HERE -->
+<div id="credit_cost_chart"></div>

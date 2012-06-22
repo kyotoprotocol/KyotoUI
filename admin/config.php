@@ -7,6 +7,7 @@ include('models/CountersModel.php');
 include('models/AgentsModel.php');
 include('models/AgentStateModel.php');
 include('models/ResultModel.php');
+include('models/TradeModel.php');
 
 
 

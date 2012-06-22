@@ -54,10 +54,49 @@ switch ($_GET['func']) {
         break;*/
     
     case 'result' :
-        $result = new ResultModel();
         $id = new MongoInt64($sim->getId());
+        
+        $result = new ResultModel();
         $results = $result->find(array("simID" => $id));
         
+        $trade = new TradeModel();
+        $tradeArray = $trade->find(array("simID" => (string)$id));
+        
+        $trades['tradeCount'] = $tradeArray->count();
+        $trades['buyCount'] = 0;
+        $trades['cdmCount'] = 0;
+        
+        $minCreditValue = 100000000000000000000;
+        $maxCreditValue = 0;
+        
+        foreach($tradeArray as $t){
+            //total trade value
+            $trades['totalTradeValue'] += ($t->getQuantity() * $t->getUnitCost());
+            //max credit value
+            if($maxCreditValue < $t->getUnitCost()){
+                $maxCreditValue = $t->getUnitCost();
+            }
+            //min credit value
+            if($minCreditValue > $t->getUnitCost()){
+                $minCreditValue = $t->getUnitCost();
+            }
+            // average trade value
+            $trades['averageCreditValue'] += $t->getUnitCost();
+            // no. credit buys
+            if($t->getTradeType() == 'BUY'){
+                $trades['buyCount']++;
+            } else {
+            // no. cdm transactions
+                $trades['cdmCount']++;
+            }
+        }
+        
+        $trades['totalTradeValue'] = '$'.$trades['totalTradeValue'];
+        $trades['maxCreditValue'] = '$'.(int)$maxCreditValue;
+        $trades['minCreditValue'] = '$'.(int)$minCreditValue;
+        $trades['averageCreditValue'] = '$'.$trades['averageCreditValue']/$trades['tradeCount'];
+        
+              
         $params = array();
         $global = array();
         
@@ -71,7 +110,7 @@ switch ($_GET['func']) {
             }
         }
          
-        $output = array('stats' => $global, 'countries' => $params);
+        $output = array('stats' => $global, 'countries' => $params, 'trades' => $trades);
         
         ajaxSend($output);
         break;
