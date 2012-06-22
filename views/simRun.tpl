@@ -11,6 +11,8 @@
             url: "process.php",
             data: data,
             success: function(data){
+                console.log(data['timea']);
+                    console.log(data['timeb']);
                 if(data == 'Record Exists!'){
                     $("#progressoutput").append(data + '<br>');
                     $("#progressbar").width(100+'%');
@@ -27,7 +29,13 @@
                     if(data['nextAgent'] <= data['totalAgents']){
                         $("#progressbar").width(data['percentage']+'%');  
                         $("#progressbar").text(data['percentage']+'%');
-                        $("#progressoutput").append(data['nextAgent'] + '/' + data['totalAgents'] + ' ' + data['ISO'] + ': Success = ' + data['success'] + '<br>');
+                        $("#progressoutput").append(data['nextAgent'] + 
+                            '/' + data['totalAgents'] + ' ' 
+                            + data['ISO'] + ': Success = ' + 
+                            data['success'] + 
+                            ' Time Taken(pre DB): ' + data['timea'] +
+                            ' Time Taken(DB): ' + data['timeb'] +
+                            '<br>');
                         ajaxProcess({simid : {/literal}{$smarty.get.simid}{literal}, agent : data['nextAgent'], agentno : data['totalAgents']});
                     } else {
                         $("#progressbar").width(100+'%');
