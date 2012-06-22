@@ -73,7 +73,7 @@
     <script type="text/javascript">
     window.geochart = {};
     window.options = {};
-    google.load('visualization', '1', {packages: ['geochart']});
+    google.load('visualization', '1', {packages: ['geochart', 'corechart']});
 
     //google.setOnLoadCallback(updateGeochart);
         
@@ -92,9 +92,22 @@
         var geochart = new google.visualization.GeoChart(document.getElementById('geo_chart'));
         geochart.draw(data, options);
     }
+       
 
-    //GOOGLE LINE CHART CODE HERE!!!!!!!!
-       // target div =  credit_cost_chart
+// target div =  credit_cost_chart
+           
+      function updateLineChart() {
+        var data = google.visualization.arrayToDataTable([
+
+        ]);
+
+        var options = {
+          //title: ''
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('credit_cost_chart'));
+        chart.draw(data, options);
+      }
     
     {/literal}    
 </script>
