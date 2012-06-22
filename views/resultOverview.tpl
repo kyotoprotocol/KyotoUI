@@ -12,7 +12,6 @@
             url: "ajax.php",
             data: {func : 'result', simid : {/literal}{$simid}{literal}},
             success: function(data) {
-                console.log(data);
                 window.data = data;
                 //arrayCountriesTool(data, 'carbonOutput', 'geochart');
                 //  arrayStatsTool(data);
@@ -55,7 +54,7 @@
         };
             
         function arrayTradesTool(data){
-            console.log(data.trades);
+            //console.log(data.trades);
             $.each(data.trades, function(index, element){
                 $('#'+ index).append(element);
             });
@@ -92,7 +91,10 @@
         };
         var geochart = new google.visualization.GeoChart(document.getElementById('geo_chart'));
         geochart.draw(data, options);
-    }        
+    }
+
+    //GOOGLE LINE CHART CODE HERE!!!!!!!!
+       // target div =  credit_cost_chart
     
     {/literal}    
 </script>
@@ -386,8 +388,9 @@
 <div class="row">
     <div class="span12">
         <h2>Global CO2 Emissions VS Global GDP</h2>
-<iframe src="//google-developers.appspot.com/chart/interactive/docs/gallery/linechart_a9fba3b6f44d821a89c71526093a1820.frame" style="border: none;width: 100%; height: 500px;">
-  &lt;p&gt;[This section requires a browser that supports iframes.]&lt;/p&gt;
-</iframe>
     </div>
 </div>
+
+
+<!-- TRADE OUTPUT HERE -->
+<div id="credit_cost_chart"></div>
