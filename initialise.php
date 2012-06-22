@@ -24,6 +24,13 @@ try {
     
     // V rough implementation of making a full default simulation, or a baby one
     if (isset($_POST['filename'])) {    
+        if (substr($_POST['filename'], -4)=='.new'){
+           $_POST['filename'] = substr($_POST['filename'], 0, -4);
+           $newidplease=true;
+           //echo $_POST['filename'];
+        } else {
+           $newidplease=false;
+        }
             $notices[] = 'Importing: '.$_POST['filename'];
             
             $tag = substr($_POST['filename'],0,-7);
@@ -60,7 +67,7 @@ try {
          * If defaultsimulation previously existed, it will keep the ID name but be overwritten
          * If it doesnt exist then it will be given an autoincremented ID
          */
-        if ($defaultsim == NULL){
+        if ($defaultsim == NULL || $newidplease){
     //        $notices[] = 'not found '.DEFAULTSIM;
     //        $notices[] = 'create new '.DEFAULTSIM;
             
@@ -161,7 +168,7 @@ try {
                 $defaultsim->save();
 
          
-            $notices[] = 'inserted '.DEFAULTSIM;
+            $notices[] = 'inserted '.DEFAULTSIM.' '.$useid;
 
             $environmentState = new EnvironmentStateModel();
        

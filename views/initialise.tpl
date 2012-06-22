@@ -58,6 +58,7 @@
                 <form name="input" action="initialise.php" method="post">
                 {if isset($file['installed'])}
                 <button name="filename" value="{$file['file']}" type="submit" class="btn btn-danger"><i class="icon-exclamation-sign"></i>reinstall</button>
+                <button name="filename" value="{$file['file']}.new" type="submit" class="btn btn-danger"><i class="icon-exclamation-sign"></i>ADD AS NEW ID</button>
                 {else}
                 <button name="filename" value="{$file['file']}"  type="submit" class="btn btn-success"><i class="icon-plus"></i>install</button>
                 {/if}
