@@ -68,10 +68,13 @@ if (isset($_GET['simid'])) {
     
     $tickquarter = ((int)TICK_YEAR)/4;
     
-    $quarter[0] = array ('offset' => (int)0, 'limit' => (int)floor($tickquarter));
-    $quarter[1] = array ('offset' => (int)floor($tickquarter), 'limit' =>(int)floor($tickquarter));
-    $quarter[2] = array ('offset' => (int)(floor($tickquarter)*2), 'limit' =>(int)floor($tickquarter));
-    $quarter[3] = array ('offset' => (int)(floor($tickquarter)*3), 'limit' =>(int)(TICK_YEAR-(floor($tickquarter)*3)));
+    
+    for ($year = 0; $year<YEARS; $year++) {
+    $quarter[$year][0] = array ('offset' => ($year*TICK_YEAR)+(int)0, 'limit' => (int)floor($tickquarter));
+    $quarter[$year][1] = array ('offset' => ($year*TICK_YEAR)+(int)floor($tickquarter), 'limit' =>(int)floor($tickquarter));
+    $quarter[$year][2] = array ('offset' => ($year*TICK_YEAR)+(int)(floor($tickquarter)*2), 'limit' =>(int)floor($tickquarter));
+    $quarter[$year][3] = array ('offset' => ($year*TICK_YEAR)+(int)(floor($tickquarter)*3), 'limit' =>(int)(TICK_YEAR-(floor($tickquarter)*3)));
+    }
     
     if (CRAPOUT) var_dump($quarter);
     if (isset($_GET['agent'])) {
@@ -84,6 +87,17 @@ if (isset($_GET['simid'])) {
         if (CRAPOUT) echo 'Number of steps: '.$steps .'<br>';
         if (CRAPOUT) echo 'Agent Number: '.$agentOffset .'<br>';
         if (CRAPOUT) echo 'CurrentQuarter '.$currentQuarter.'<br>';
+        
+        
+        $aCount = (int)floor($steps/(YEARS*4));
+        echo "AHOLE ".$aCount . "# <br>";    
+
+        echo "CURRENT AGENT ".$agentOffset . "# <br>";    
+        $agentSteps = $aCount*4;
+        echo "AGENT STEPS".$agentSteps . "# <br>";    
+
+        $year = (int)floor($currentQuarter%((4*YEARS)));
+        echo "YEAR ".$year . "# dave<br>"; die();
         
         $agentslist = $agents->find(array("simID" => (float) $_GET['simid']),array('sort' => array('_id' => 1), 'offset' => $agentOffset, 'limit' => 1));
         $progressCount = ((int)$_GET['agent']);
@@ -111,7 +125,6 @@ if (isset($_GET['simid'])) {
             $agentProperties = $agent->getProperties();
             $iso = $agentProperties['ISO'];
             $kyotostate = 'undefined';
-            $year = 0;
                 $time2 = getTime(); 
             $outputARY['timea'] = number_format(($time2-$time1),2);
 $finishloop = false;
@@ -127,27 +140,44 @@ $finishloop = false;
             echo 'Record Exists!';
             die();
             } */
-            
+          //  $currentQuarter++;
     $as = new AgentStateModel();    // instantiate collection model
                 $agentstate = $as->find(
                                         array("aid"=>$agent->getAid()),
-                                        array('limit'=>10,
-                                              'offset' => (int)$quarter[$currentQuarter]['offset'],
+                                        array('sort' => array('_id' => 1),
+                                              'offset' => $quarter[$currentQuarter]['offset'],
                                               'limit' => (int)$quarter[$currentQuarter]['limit']
                                               )
                                         );
+                 /*               foreach ($agentstate as $ag) {
+                  echo '<br>'.$ag->getTime().'GOTTIME<br>';
+                                }
+die();*/
+
+               // /*$ag = $agentstate->current();
+     /*           for ($off = 0; $off < $quarter[$currentQuarter]['offset']; $off++) {
+                  $ag =   $agentstate->next();
+                  echo '<br>'.$ag->getTime().'GOTTIME<br>';
+                }
                 if (CRAPOUT) echo 'Current offset '.$quarter[$currentQuarter]['offset'].'<br>';
-                             //   $i=0;
+                             //   $i=0;*/
              /*                   foreach ($agentstate as $ag) {
                                     echo $i++.'<br>';
                                 }*/
                 if (CRAPOUT) echo 'query offset '.$quarter[$currentQuarter]['offset'].'<br>';
                 if (CRAPOUT) echo 'query limit '.$quarter[$currentQuarter]['limit'].'<br>';
         //die();
-                foreach ($agentstate as $ag) {  
+               // for ($lim = 0; $lim < $quarter[$currentQuarter]['limit']; $lim++) {
+                //$ag = $agentstate->current();
+                                foreach ($agentstate as $ag) {
+                  echo '<br>'.$ag->getTime().'GOTTIME<br>';
+                 //   ($agentstate as $ag) 
                 // EACH TICK OF COUNTRY
                 $countryArray = array();
+                                var_dump($ag);
+                                
                 $tick = $ag->getTime();
+                if (CRAPOUT) echo 'FOUND TIME '.$tick.'<br>';
                 $agentTickProperties = $ag->getProperties();
                 if ($agentTickProperties['is_kyoto_member'] != $kyotostate) {
                     if ($kyotostate=='undefined'){
@@ -201,7 +231,7 @@ $finishloop = false;
 //                    echo $tick.'<br>';
                     //var_dump($ag->getAttributes());
                     //$statekeys = array_keys($ag->getProperties());
-                    
+                            //        $ag = $agentstate->next();
                 } //End of DAYs
                 //AT END O' DAY
             $time3 = getTime(); 
@@ -227,8 +257,8 @@ $finishloop = false;
                                 if ($tick == (TICK_LENGTH-1)) {
                                   $finishloop = true;
                                 }
-unset($agentstate);
-unset($as);
+//unset($agentstate);
+//unset($as);
                     } // end of while time loop
             }//END OF AGENT
  
