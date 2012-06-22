@@ -81,6 +81,7 @@ if (isset($_GET['simid'])) {
         
         $agentCount = $_GET['agentno'];
         $steps = $_GET['agentno'];
+        $step = $_GET['agent'];
         $currentQuarter = ((int)$_GET['agent']%4);
         $agentOffset = floor((int)$_GET['agent']/(4*YEARS));
         if (CRAPOUT) echo 'Number of agents: '.$agentCount .'<br>';
@@ -96,8 +97,6 @@ if (isset($_GET['simid'])) {
         $agentSteps = $aCount*4;
         echo "AGENT STEPS".$agentSteps . "# <br>";    
 
-        $year = (int)floor($currentQuarter%((4*YEARS)));
-        echo "YEAR ".$year . "# dave<br>"; die();
         
         $agentslist = $agents->find(array("simID" => (float) $_GET['simid']),array('sort' => array('_id' => 1), 'offset' => $agentOffset, 'limit' => 1));
         $progressCount = ((int)$_GET['agent']);
@@ -107,6 +106,8 @@ if (isset($_GET['simid'])) {
 //        $steps = $count->count();
         $agentCount = $count->count();
         $steps = $agentCount*4*YEARS;
+                $agentSteps = $aCount*4;
+
         if (CRAPOUT) echo 'Number of agents: '.$agentCount .'<br>';
         if (CRAPOUT) echo 'Number of steps: '.$steps .'<br>';
         $currentQuarter = 0;
@@ -115,7 +116,9 @@ if (isset($_GET['simid'])) {
         $progressCount = 0;
         //$offset = 0;
     }
-    define("TICKS_IN_QUARTER", $quarter[$currentQuarter]['limit']);
+        $year = (int)floor((($progressCount)%($agentSteps)/4));
+        echo "YEAR ".$year . "# dave<br>"; 
+    $ticksInQuarter = $quarter[$year][$currentQuarter]['limit'];
 
     //echo $steps .'<br>';
     $outputARY = array();
@@ -130,6 +133,10 @@ if (isset($_GET['simid'])) {
 $finishloop = false;
             //CHECK FOR RECORD ALREADY INCASE ACCIDENTALLY REPEAT REQUEST:
                     while (($looptimer-$time1 < 20) ){//&& (!$finishloop)) {
+        $year = (int)floor((($progressCount)%($agentSteps)/4));
+        echo "YEAR ".$year . "# dave<br>"; //die();
+    $ticksInQuarter = $quarter[$year][$currentQuarter]['limit'];
+
             $notices = array();
 
             $resultcheckq = new ResultModel();    // instantiate collection model
@@ -145,8 +152,8 @@ $finishloop = false;
                 $agentstate = $as->find(
                                         array("aid"=>$agent->getAid()),
                                         array('sort' => array('_id' => 1),
-                                              'offset' => $quarter[$currentQuarter]['offset'],
-                                              'limit' => (int)$quarter[$currentQuarter]['limit']
+                                              'offset' => $quarter[$year][$currentQuarter]['offset'],
+                                              'limit' => (int)$quarter[$year][$currentQuarter]['limit']
                                               )
                                         );
                  /*               foreach ($agentstate as $ag) {
@@ -164,8 +171,8 @@ die();*/
              /*                   foreach ($agentstate as $ag) {
                                     echo $i++.'<br>';
                                 }*/
-                if (CRAPOUT) echo 'query offset '.$quarter[$currentQuarter]['offset'].'<br>';
-                if (CRAPOUT) echo 'query limit '.$quarter[$currentQuarter]['limit'].'<br>';
+                if (CRAPOUT) echo 'query offset '.$quarter[$year][$currentQuarter]['offset'].'<br>';
+                if (CRAPOUT) echo 'query limit '.$quarter[$year][$currentQuarter]['limit'].'<br>';
         //die();
                // for ($lim = 0; $lim < $quarter[$currentQuarter]['limit']; $lim++) {
                 //$ag = $agentstate->current();
@@ -188,15 +195,15 @@ die();*/
                     }
                         $kyotostate = $agentTickProperties['is_kyoto_member'];
                 }
-                if (CRAPOUT) echo 'Ticks in Quarter'.TICKS_IN_QUARTER.'<br>';
-                if (CRAPOUT) echo 'Ticks in Quarter -1:'.(int)(TICKS_IN_QUARTER-1).'<br>';
+                if (CRAPOUT) echo 'Ticks in Quarter'.$ticksInQuarter.'<br>';
+                if (CRAPOUT) echo 'Ticks in Quarter -1:'.(int)($ticksInQuarter-1).'<br>';
                 if (CRAPOUT) echo 'Ticks'.$tick.'<br>';
 
                     if ($tick  == 0) {
                        //FIRST DAY
                         
-                    } elseif ($tick % (TICKS_IN_QUARTER) == (TICKS_IN_QUARTER-1)) {
-                        echo 'MODRESULT:'.$tick % (TICKS_IN_QUARTER-1).'<br>';
+                    } elseif ($tick % ($ticksInQuarter) == ($ticksInQuarter-1)) {
+                        echo 'MODRESULT:'.$tick % ($ticksInQuarter-1).'<br>';
                         // Last Day of the quarter
                         // Here is the year round up. Save and ting
                         if (CRAPOUT) echo 'Save the damn record';
