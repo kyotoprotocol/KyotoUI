@@ -4,49 +4,55 @@
 
 <script type="text/javascript" src="http://www.google.com/jsapi"></script>
 <script type="text/javascript">
-    {literal}   
+    {literal}
+    google.load('visualization', '1', {packages:["corechart"]});
     $(document).ready(function() {
         $(".nav-tabs").button();
+        $("#loading").show();    
         $.ajax({
             type: "GET",
             url: "ajax.php",
             data: {func : 'result', simid : {/literal}{$simid}{literal}},
             success: function(data) {
-                window.data = data;
-                //arrayCountriesTool(data, 'carbonOutput', 'geochart');
-                //  arrayStatsTool(data);
+                $("#loading").delay(100).slideUp('slow');
+                console.log(data);
+                arrayCountriesTool(data, 'carbonOutput', 'geochart');
+                arrayStatsTool(data);
                 arrayTradesTool(data);
+                updateLineChart(data);  //pass some useful data here parameters = data: ..., options:....
+                addNotices(data);
             }
-        });            
+        });
             
-        function arrayCountriesTool(data, field, chart){
+            
+        function arrayCountriesTool(data, field){
             var newArray = [];
             $.each(data, function(index, element){
                 if(index == 'countries'){
                     newArray.push(['Country', field]);
                     $.each(element, function(index, output){
                         newArray.push([output['ISO2'], parseInt(output[field])]);
+                        $.each(output['notices'], function(ind, op){
+                            console.log(ind);
+                                console.log(op);
+                            $("#simulationNotices").append(ind+' : '+op);    
+                        });    
                     });
-                    if(chart == 'geochart'){
-                        //updateGeochart(newArray);
-                    } else {
-                        //add more - look into passing the chart?
-                    }
+                        
+                    return newArray;
                 }
             });
         };
             
         function arrayStatsTool(data){
             //iterate through the stats array 
-                console.log(data.stats);
             $.each(data.stats, function(index, element){
-                console.log(index);
                 if(index == 'globalCarbonChangePercentage'){
                     $('#'+ index).text(element.toFixed(0) + '%'); //billion tonnes
                 } else if(index == 'carbonOutput') {
-                    console.log('carbonOutput');
-                        console.log(element);
                     $('#'+ index).text((element/1000000).toFixed(0));
+                } else if(index == 'finalYearGlobalEmissionTarget'){
+                    $('#' + index).text((element/1000000).toFixed(1));
                 } else {
                     $('#'+ index).text(element);
                 }
@@ -54,7 +60,6 @@
         };
             
         function arrayTradesTool(data){
-            //console.log(data.trades);
             $.each(data.trades, function(index, element){
                 $('#'+ index).append(element);
             });
@@ -63,51 +68,55 @@
             
         // specific functionality (data array is available here)
         $(".geochart_buttons").children().click( function(e) {
-            console.log($(this).attr('id'));
             arrayCountriesTool(data, $(this).attr('id'), 'geochart');
         });
             
     });
-    </script>
-    
-    <script type="text/javascript">
-    window.geochart = {};
-    window.options = {};
-    google.load('visualization', '1', {packages: ['geochart', 'corechart']});
-
-    //google.setOnLoadCallback(updateGeochart);
         
     function updateGeochart(parameters){
-        if(geochart) {
-            geochart.clearChart();  // make chart ready for re-population
+        if(window.geochart.ready()) {
+            window.geochart.clearChart();  // make chart ready for re-population
+        } else {
+            window.geochart = new google.visualization.GeoChart(document.getElementById('geo_chart'));
         }
-        var data = google.visualization.arrayToDataTable(parameters); // set parameters as data
-        window.options = {
-            colorAxis: { colors: ['#c5e5c5', '#2c662c']},
-            datalessRegionColor: ['#da4f49'],
-            width: 960,
-            height: 500,
-            magnifyingGlass: {enable: true, zoomFactor: 100.0}
-        };
-        var geochart = new google.visualization.GeoChart(document.getElementById('geo_chart'));
-        geochart.draw(data, options);
+            
+        var data = google.visualization.arrayToDataTable(parameters.data); // set parameters as data
+        
+        if(parameters.options){
+            var options = parameters.options;
+        } else { //default set up    
+            var options = {
+                colorAxis: { colors: ['#c5e5c5', '#2c662c']},
+                datalessRegionColor: ['#da4f49'],
+                width: 960,
+                height: 500,
+                magnifyingGlass: {enable: true, zoomFactor: 100.0}
+            };
+        }
+        //draw the chart    
+        window.geochart.draw(data, options);
     }
-       
 
-// target div =  credit_cost_chart
-           
-      function updateLineChart() {
-        var data = google.visualization.arrayToDataTable([
+    function updateLineChart(parameters) {
+        if(window.linechart){
+            window.linechart.clearChart();
+        } else {
+            window.linechart = new google.visualization.LineChart(document.getElementById('credit_cost_chart'));
+        }
 
-        ]);
+        var data = google.visualization.arrayToDataTable(parameters.data);
 
-        var options = {
-          //title: ''
-        };
+        if(parameters.options){
+            var options = parameters.options;
+        } else { //default options
+            var options = { 
+                title: 'Company Performance'
+            };
+        }
 
-        var linechart = new google.visualization.LineChart(document.getElementById('credit_cost_chart'));
-        linechart.draw(data, options);
-      }
+        //draw the chart    
+        window.linechart.draw(data, options);
+    }
     
     {/literal}    
 </script>
@@ -116,7 +125,14 @@
 
 {block name=body}
 
-
+    <div id="loading" class='modal hide'>
+        <div class="modal-body">
+            <center><img src="includes/img/loading2.gif"></center>
+        </div>
+        <div class="modal-footer">
+            <strong>loading...</strong>
+        </div>
+    </div>
 
 <div class="page-header">
     <h1>Simulation {$simid}: {$simname}   <small>{$simdescription}</small></h1>
@@ -124,8 +140,8 @@
 <div class="row">
     <div class="span3">
         <div class="well">
-            <p id="globalCarbonChangePercentage" style="color: green;line-height: 96px;font-size: 96px; font-weight: bold"></p>
-            <h4>Global Reduction of C02</h4>
+            <p id="globalGDPChange" style="color: green;line-height: 96px;font-size: 96px; font-weight: bold"></p>
+            <h4>Global GDP Increase</h4>
         </div>
         <div class="well">
             <p id="numberOfMemberCountries" style="color: green;line-height: 96px;font-size: 96px; font-weight: bold"></p>
@@ -136,7 +152,7 @@
         <table class="table table-bordered">
             <tr>
                 <td style="height: 365px;background-image: url('includes/img/dinero_bg.jpg'); padding-top: 50px;padding-right: 20px;">
-        <p id="carbonOutput" align="right" style="color: white;line-height: 200px;font-size: 256px; font-weight: bold"></p>
+        <p id="carbonReduction" align="right" style="color: white;line-height: 200px;font-size: 256px; font-weight: bold"></p>
         <h1 align="right"style="color: white;">MILLION TONNES OF GLOBAL CO2 REDUCTION</h1>
 
                 </td>
@@ -159,8 +175,8 @@
     </div>
     <div class="span5">
         <div class="well" style="height: 140px;">
-            <p id="dirtyIndustrySpend" style="color: red;line-height: 96px;font-size: 96px; font-weight: bold"></p>
-            <h4>Spent on dirty industry for GDP growth</h4>
+            <p id="finalYearGlobalEmissionTarget" style="color: red;line-height: 96px;font-size: 96px; font-weight: bold"></p>
+            <h4>Million tonnes final year global emission target</h4>
         </div>
     </div>
 </div>
@@ -276,134 +292,22 @@
 <div class="row">
     <div class="span12">
         <h2>Global CO2 Emissions VS Global GDP</h2>
-<!-- some CHART SHIT -->
-    </div>
-</div>
-
-
-
-{/block}
-
-<div class="page-header">
-    <h1>Simulation 5   <small>Designed to observe what happens when bangladesh bloody go for it.</small></h1>
-</div>
-<div class="row">
-    <div class="span3">
-        <div class="well">
-            <p style="color: green;line-height: 96px;font-size: 96px; font-weight: bold">16%</p>
-            <h4>Global Reduction of C02</h4>
-        </div>
-        <div class="well">
-            <p style="color: green;line-height: 96px;font-size: 96px; font-weight: bold">204</p>
-            <h4>Countries remain in Kyoto Protocol</h4>
-        </div>
-    </div>
-    <div class="span9">
-        <table class="table table-bordered">
-            <tr>
-                <td style="height: 365px;background-image: url('includes/img/dinero_bg.jpg'); padding-top: 50px;padding-right: 20px;">
-        <p align="right" style="color: white;line-height: 200px;font-size: 256px; font-weight: bold">160M</p>
-        <h1 align="right"style="color: white;">TONNES OF GLOBAL CO2 REDUCTION</h1>
-
-                </td>
-            </tr>
-        </table>
-    </div>
-</div>
-<div class="row">
-    <div class="span3">
-        <div class="well">
-            <p style="color: black;line-height: 96px;font-size: 96px; font-weight: bold">13K</p>
-            <h4>Credit Trades</h4>
-        </div>
-    </div>
-    <div class="span4">
-        <div class="well">
-            <p style="color: green;line-height: 96px;font-size: 96px; font-weight: bold">199M</p>
-            <h4>Trees planted</h4>
-        </div>
-    </div>
-    <div class="span5">
-        <div class="well">
-            <p style="color: red;line-height: 96px;font-size: 96px; font-weight: bold">$40Bn</p>
-            <h4>Spent on dirty industry for GDP growth</h4>
-        </div>
-    </div>
-</div>
-<hr>
-<div class="row">
-    <div class="span12">
-
-<!-- Add data-toggle="buttons-radio" for radio style toggling on btn-group -->
-            <div class="btn-group" data-toggle="buttons-radio">
-                <button class="btn">CO2 Tonnes</button>
-                <button class="btn">CO2 % Change</button>
-                <button class="btn">Kyoto Members</button>
-                <button class="btn">Cheating Countries</button>
-            </div>
-        <h2>GeoChart of CO2 reduction in Tonnes</h2>
-        <iframe src="//google-developers.appspot.com/chart/interactive/docs/gallery/geochart_06d031f6a0bf088f1320a975cdefa0e3.frame" style="border: none;width: 100%; height: 550px;">
-  &lt;p&gt;[This section requires a browser that supports iframes.]&lt;/p&gt;
-        </iframe>
-
-        
-    </div>
-</div>
-<hr>
-<div class="row">
-    <div class="span6">
-        <h2>Top Performers</h2>
-            <table class="table table-bordered table-striped">
-                <thead>
-                <th>Name</th>
-                <th>CO2 Change</th>
-                <th>GDP Change</th>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Leesville</td>
-                        <td>- 345453</td>
-                        <td>+ -5%</td>
-                    </tr>
-                    <tr>
-                        <td>Winstonscin</td>
-                        <td>- 345453</td>
-                        <td>+ -5%</td>
-                    </tr>
-                </tbody>
-            </table>
-    </div>
-    <div class="span6">
-        <h2>Worst Performers</h2>
-            <table class="table table-bordered table-striped">
-                <thead>
-                <th>Name</th>
-                <th>CO2 Change</th>
-                <th>GDP Change</th>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Leesville</td>
-                        <td>- 345453</td>
-                        <td>+ -5%</td>
-                    </tr>
-                    <tr>
-                        <td>Winstonscin</td>
-                        <td>- 345453</td>
-                        <td>+ -5%</td>
-                    </tr>
-                </tbody>
-            </table>
-        
-    </div>
-</div>
-<hr>
-<div class="row">
-    <div class="span12">
-        <h2>Global CO2 Emissions VS Global GDP</h2>
     </div>
 </div>
 
 
 <!-- TRADE OUTPUT HERE -->
-<div id="credit_cost_chart"></div>
+<div id="credit_cost_chart" style="width: 900px; height: 500px;"></div>
+
+
+
+<div class="row">
+    <div class="span12">
+        <h2>Simulation Notices Output</h2>
+        <div id="simulationNotices" class="container">
+            
+        </div>
+    </div>
+</div>
+
+{/block}
