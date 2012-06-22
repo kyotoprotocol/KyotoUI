@@ -8,7 +8,7 @@ $time1 = getTime();
 $time2 = 0; 
 $time3 = 0;
 $looptimer = getTime(); 
-
+        
 /* THIS IS A COPY OF ESSENTIALS FROM CONFIG.PHP IN ORDER TO MINIMISE PAGE LOAD TIME ON THIS FILE.*/
 include('libs/mongorecord/BaseMongoRecord.php');
 include('models/SimulationModel.php');
@@ -81,7 +81,7 @@ if (isset($_GET['simid'])) {
     $quarter[$year][2] = array ('offset' => ($year*TICK_YEAR)+(int)(floor($tickquarter)*2), 'limit' =>(int)floor($tickquarter));
     $quarter[$year][3] = array ('offset' => ($year*TICK_YEAR)+(int)(floor($tickquarter)*3), 'limit' =>(int)(TICK_YEAR-(floor($tickquarter)*3)));
     }
-    //if (CRAPOUT) var_dump($quarter); //Shows the database queries to be made against agents.
+    if (CRAPOUT) var_dump($quarter); //Shows the database queries to be made against agents.
     
     if (isset($_GET['agent'])) { //All steps after the first step.
         $agentCount = $_GET['agentno'];                         // Old Agent Count - now total steps in sim.
@@ -113,12 +113,15 @@ if (isset($_GET['simid'])) {
         if (CRAPOUT) echo 'CurrentQuarter '.$currentQuarter.'<br>';
         $agentslist = $agents->find(array("simID" => (float) $_GET['simid']),array('sort' => array('_id' => 1), 'offset' => 0, 'limit' => 1));
         $progressCount = 0;                                     // Current Step
+        $ensureAgentState = new AgentStateModel();    // instantiate collection model
+        $ensureAgentState->ensureIndex(array('aid'=>1));
     }
+    if (CRAPOUT) "HELLO<br>";              
     $year = (int)floor((($progressCount)%($agentSteps)/4)); // Calculate the current year
     if (CRAPOUT) "YEAR ".$year . "# dave<br>";              
     $ticksInQuarter = $quarter[$year][$currentQuarter]['limit']; // Set how many ticks are in this quarter.
 
-
+    
     $outputARY = array();
         foreach ($agentslist as $agent) {
             // EACH COUNTRY AS AGENT
@@ -129,31 +132,47 @@ if (isset($_GET['simid'])) {
             $outputARY['timea'] = number_format(($time2-$time1),2);
             $finishloop = false;
             //CHECK FOR RECORD ALREADY INCASE ACCIDENTALLY REPEAT REQUEST:
-                while (($looptimer-$time1 < 20) ){//&& (!$finishloop)) {
+
+            $counter = 0;
+            $totalASQ = new AgentStateModel();    // instantiate collection model
+            $totalAS = $totalASQ->find(array("aid"=>$agent->getAid()));
+            $totalticks = $totalAS->count();
+            
+            
+                    //Implement check here asap
+                    $resultcheckq = new ResultModel();    // instantiate collection model
+                    $resultcheck = $resultcheckq->findOne(array("simID" => (int)$_GET['simid'], "ISO" => $iso, 'year'=> (int)$year,'quarter'=> (int)$currentQuarter));
+                    if (is_null($resultcheck)) {
+                        //echo 'no record exists<bR>';
+                    } else {            
+                        echo 'Record Exists!';
+                        die();
+                    } 
+            
+            
+            /*
+             *  BEGIN LOOPING UNTIL FINISHED OR THE AGENT HAS COMPLETED
+             */
+            while (($looptimer-$time1 < 20) && $counter < $totalticks){//&& (!$finishloop)) {
                     $year = (int)floor((($progressCount)%($agentSteps)/4));
                     if (CRAPOUT) "YEAR ".$year . "# dave<br>"; //die();
                     $ticksInQuarter = $quarter[$year][$currentQuarter]['limit'];
                     $notices = array();
-                    //Implement check here asap
-                    //$resultcheckq = new ResultModel();    // instantiate collection model
-                    //$resultcheck = $resultcheckq->findOne(array("simID" => (int)$_GET['simid'], "ISO" =>$iso));
-                    /*   if (is_null($resultcheck)) {
-                        //echo 'no record exists<bR>';
-                        } else {            
-                        echo 'Record Exists!';
-                        die();
-                        } */
+
                     $as = new AgentStateModel();    // instantiate collection model
-                    $agentstate = $as->find(
+                        $agentstate = $as->find(
                                         array("aid"=>$agent->getAid()),
                                         array('sort' => array('_id' => 1),
                                               'offset' => $quarter[$year][$currentQuarter]['offset'],
                                               'limit' => (int)$quarter[$year][$currentQuarter]['limit']
                                               )
                                         );      // Sets up query to process a quarter
+                
                 if (CRAPOUT) echo 'query offset '.$quarter[$year][$currentQuarter]['offset'].'<br>';
                 if (CRAPOUT) echo 'query limit '.$quarter[$year][$currentQuarter]['limit'].'<br>';
                     foreach ($agentstate as $ag) {
+                    $counter++;
+
                     if (CRAPOUT) '<br>'.$ag->getTime().'GOTTIME<br>';
                         $countryArray = array();
                         $tick = $ag->getTime();
@@ -180,7 +199,7 @@ if (isset($_GET['simid'])) {
                             // Last Day of the quarter
                             // Here is the year round up. Save and ting
                             if (CRAPOUT) echo 'Save the damn record';
-                            $countryArray['simID']             = 9;//$simID;
+                            $countryArray['simID']             = (int)$_GET['simid'];//$simID;
                             $countryArray['GDP']               = $agentTickProperties['gdp'];
                             $countryArray['tick']              = $tick;
                             $countryArray['quarter']           = $currentQuarter;
