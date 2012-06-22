@@ -62,9 +62,19 @@ switch ($_GET['func']) {
         $trade = new TradeModel();
         $tradeArray = $trade->find(array("simID" => (string)$id));
         
+        //Generate global data
+        
+        foreach($result as $res){
+            //blap blap blap
+        }
+
+        //Generate trades data
+        
+        $trades['totalTradeValue'] = 0;
         $trades['tradeCount'] = $tradeArray->count();
         $trades['buyCount'] = 0;
         $trades['cdmCount'] = 0;
+        $trades['averageCreditValue'] = 0;
         
         $minCreditValue = 100000000000000000000;
         $maxCreditValue = 0;
@@ -117,6 +127,12 @@ switch ($_GET['func']) {
     
     default : echo 'error';
 }
+
+
+
+
+
+
 
 
 // send ajax data to success function as json
