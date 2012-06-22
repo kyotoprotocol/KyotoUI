@@ -1,5 +1,10 @@
 <?php
-
+function getTime()
+    {
+    $a = explode (' ',microtime());
+    return(double) $a[0] + $a[1];
+    }
+$time1 = getTime(); 
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -106,6 +111,7 @@ if (isset($_GET['simid'])) {
                 if (CRAPOUT) echo 'query offset '.$quarter[$currentQuarter]['offset'].'<br>';
                 if (CRAPOUT) echo 'query limit '.$quarter[$currentQuarter]['limit'].'<br>';
         //die();
+                $time2 = getTime(); 
                 foreach ($agentstate as $ag) {
                 // EACH DAY OF COUNTRY
                 $countryArray = array();
@@ -158,6 +164,7 @@ if (isset($_GET['simid'])) {
                     //var_dump($ag->getAttributes());
                     //$statekeys = array_keys($ag->getProperties());
                 } //End of DAY
+                                $time3 = getTime(); 
 
             $outputARY['ISO'] = $iso;
             $outputARY['totalAgents'] = $steps;
@@ -165,6 +172,8 @@ if (isset($_GET['simid'])) {
             if ($progressCount==$steps) {
             $outputARY['success'] = 'complete';
             } else {
+            $outputARY['timea'] = $time2-$time1;
+            $outputARY['timeb'] = $time3-$time2;
             $outputARY['success'] = 'true';
             $outputARY['nextAgent'] = $progressCount;
             $outputARY['percentage'] = (int)(($progressCount/$steps)*100);
