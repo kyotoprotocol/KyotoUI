@@ -20,22 +20,26 @@
                 arrayStatsTool(data);
                 arrayTradesTool(data);
                 updateLineChart(data);  //pass some useful data here parameters = data: ..., options:....
+                addNotices(data);
             }
         });
             
-        function arrayCountriesTool(data, field, chart){
+            
+        function arrayCountriesTool(data, field){
             var newArray = [];
             $.each(data, function(index, element){
                 if(index == 'countries'){
                     newArray.push(['Country', field]);
                     $.each(element, function(index, output){
                         newArray.push([output['ISO2'], parseInt(output[field])]);
+                        $.each(output['notices'], function(ind, op){
+                            console.log(ind);
+                                console.log(op);
+                            $("#simulationNotices").append(ind+' : '+op);    
+                        });    
                     });
-                    if(chart == 'geochart'){
-                        //updateGeochart(newArray);
-                    } else {
-                        //add more - look into passing the chart?
-                    }
+                        
+                    return newArray;
                 }
             });
         };
@@ -288,12 +292,22 @@
 <div class="row">
     <div class="span12">
         <h2>Global CO2 Emissions VS Global GDP</h2>
-<!-- some CHART SHIT -->
     </div>
 </div>
 
 
 <!-- TRADE OUTPUT HERE -->
 <div id="credit_cost_chart" style="width: 900px; height: 500px;"></div>
+
+
+
+<div class="row">
+    <div class="span12">
+        <h2>Simulation Notices Output</h2>
+        <div id="simulationNotices" class="container">
+            
+        </div>
+    </div>
+</div>
 
 {/block}

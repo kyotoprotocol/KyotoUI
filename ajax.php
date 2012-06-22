@@ -89,7 +89,13 @@ switch ($_GET['func']) {
         //Calculations here
         $global['carbonReduction'] = $last['totalCarbonOutput'] - $first['totalCarbonOutput'];
         $global['globalGDPChange'] = $last['globalGDP'] - $first['globalGDP'];
-        //Generate trades data
+        
+
+
+//Generate country data
+        //params[] = blip blap
+
+//Generate trades data
         
         $trades['totalTradeValue'] = 0;
         $trades['tradeCount'] = $tradeArray->count();
