@@ -37,6 +37,9 @@ if(isset($_SESSION['database'])) {
     } catch(MongoConnectionException $e) {
         //var_dump($e);
     }
+    
+define ("NOTICE_1", "change in kyoto state, before, after, ticknumber");
+
 /* END OF ESSENTIALS FROM CONFIG.PHP IN ORDER TO MINIMISE PAGE LOAD TIME ON THIS FILE.*/
     
     /*
@@ -66,7 +69,7 @@ if (isset($_GET['simid'])) {
     define ("YEARS", (int)TICK_LENGTH/TICK_YEAR);
     //define ("OUTPUTFORM", 'HTTPREQUEST');
     define ("OUTPUTFORM", 'JSON');
-    define ("CRAPOUT", true);
+    define ("CRAPOUT", false);
 
     //Float variable of how many ticks in a quarter
     $tickquarter = ((int)TICK_YEAR)/4;
@@ -173,7 +176,7 @@ if (isset($_GET['simid'])) {
                         //FIRST DAY
 
                         } elseif ($tick % ($ticksInQuarter) == ($ticksInQuarter-1)) {
-                            echo 'MODRESULT:'.$tick % ($ticksInQuarter-1).'<br>';
+                            if (CRAPOUT) echo  'MODRESULT:'.$tick % ($ticksInQuarter-1).'<br>';
                             // Last Day of the quarter
                             // Here is the year round up. Save and ting
                             if (CRAPOUT) echo 'Save the damn record';
@@ -224,26 +227,9 @@ if (isset($_GET['simid'])) {
 }
 
                 
-                IF (OUTPUTFORM == 'JSON') {
-                    //header('content-type: application/json');
-                    echo json_encode($outputARY);
-
-                    //echo '<a href="process.php?simid='.$simID.'&agent='.$offset.'&agentno='.$steps.'">NEXT</a>';
-                }
-                
-                
-                
-                
-               /* $properties = $ag->getProperties();
-                //prepopulates the array with lots of fake year data.
-                for ($m=5; $m<760; $m++) {
-                unset($as1);
-                $as1 = new AgentStateModel();    // instantiate collection model
-                $as1->setAid($agent->getAid());
-                $as1->setProperties($properties);
-                $as1->setTime($m);
-                $as1->save();
-                }*/
-
+IF (OUTPUTFORM == 'JSON') {
+    header('content-type: application/json');
+    echo json_encode($outputARY);
+}
 
 ?>
