@@ -172,8 +172,8 @@ if (isset($_GET['simid'])) {
             if ($progressCount==$steps) {
             $outputARY['success'] = 'complete';
             } else {
-            $outputARY['timea'] = $time2-$time1;
-            $outputARY['timeb'] = $time3-$time2;
+            $outputARY['timea'] = number_format(($time2-$time1),2);
+            $outputARY['timeb'] = number_format(($time32-$time2),2);
             $outputARY['success'] = 'true';
             $outputARY['nextAgent'] = $progressCount;
             $outputARY['percentage'] = (int)(($progressCount/$steps)*100);
