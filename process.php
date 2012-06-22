@@ -21,9 +21,11 @@ if (isset($_GET['simid'])) {
     
     $simprop = $sim->getParameters();
     define ("TICK_YEAR", $simprop['TICK_YEAR']);
+    define ("TICK_LENGTH", $simprop['finishTime']);
+    define ("YEARS", (int)TICK_LENGTH/TICK_YEAR);
     //define ("OUTPUTFORM", 'HTTPREQUEST');
     define ("OUTPUTFORM", 'JSON');
-    define ("CRAPOUT", true);
+    define ("CRAPOUT", false);
 
 //FIRST FIND LIST OF ALL AGENTS PROCESSED
     
@@ -38,13 +40,14 @@ if (isset($_GET['simid'])) {
     if (isset($_GET['agent'])) {
         
         $agentCount = $_GET['agentno'];
-        $steps = $agentCount*4;
+        $steps = $_GET['agentno'];
         $currentQuarter = ((int)$_GET['agent']%4);
         $agentOffset = floor((int)$_GET['agent']/4);
         if (CRAPOUT) echo 'Number of agents: '.$agentCount .'<br>';
         if (CRAPOUT) echo 'Number of steps: '.$steps .'<br>';
         if (CRAPOUT) echo 'Agent Number: '.$agentOffset .'<br>';
         if (CRAPOUT) echo 'CurrentQuarter '.$currentQuarter.'<br>';
+        
         $agentslist = $agents->find(array("simID" => (float) $_GET['simid']),array('sort' => array('_id' => 1), 'offset' => $agentOffset, 'limit' => 1));
         $progressCount = ((int)$_GET['agent']);
     } else {
@@ -52,7 +55,7 @@ if (isset($_GET['simid'])) {
         $count = $agents->find(array("simID"=>$simID));
 //        $steps = $count->count();
         $agentCount = $count->count();
-        $steps = $agentCount*4;
+        $steps = $agentCount*4*YEARS;
         if (CRAPOUT) echo 'Number of agents: '.$agentCount .'<br>';
         if (CRAPOUT) echo 'Number of steps: '.$steps .'<br>';
         $currentQuarter = 0;
@@ -187,7 +190,7 @@ if (isset($_GET['simid'])) {
 
                 
                 IF (OUTPUTFORM == 'JSON') {
-                  //  header('content-type: application/json');
+                    header('content-type: application/json');
                     echo json_encode($outputARY);
 
                     //echo '<a href="process.php?simid='.$simID.'&agent='.$offset.'&agentno='.$steps.'">NEXT</a>';
