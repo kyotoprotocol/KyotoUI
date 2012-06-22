@@ -31,9 +31,6 @@ if(isset($_SESSION['database'])) {
         $_SESSION['database']='local';
         define ("HOST", LOCAL_HOST);    
 }
-
-
-
     try {
         BaseMongoRecord::$connection = new Mongo(HOST);
         BaseMongoRecord::$database = 'presage';
@@ -41,22 +38,29 @@ if(isset($_SESSION['database'])) {
         //var_dump($e);
     }
 /* END OF ESSENTIALS FROM CONFIG.PHP IN ORDER TO MINIMISE PAGE LOAD TIME ON THIS FILE.*/
-
-//require('libs/Smarty.class.php');
-//$smarty = new Smarty;
-//include('admin/config.php');
-//$smarty->caching = false;
-//$smarty->assign('simList',simulationList());
-
-//GET SIM ID
+    
+    /*
+     * Some essential items:
+     * 
+     *      tick - each row of an agent's agentstate
+     *      year - starts at 0
+     *      quarter - { 0 , 1 , 2 , 3 }
+     * 
+     */
+    
+    
+    
+//Load SIM ID
 if (isset($_GET['simid'])) {
    
+    //Get simulation parameters
     $simulation = new SimulationModel();    // instantiate collection model
     $agents = new AgentsModel();    // instantiate collection model
     $sim = $simulation->findOne(array("_id" => (int)$_GET['simid']));
     $simID = new MongoInt64($sim->getID()); // ensure simID is of the correct type
-    
     $simprop = $sim->getParameters();
+
+    //Process-wide definitions
     define ("TICK_YEAR", $simprop['TICK_YEAR']);
     define ("TICK_LENGTH", $simprop['finishTime']);
     define ("YEARS", (int)TICK_LENGTH/TICK_YEAR);
@@ -64,188 +68,142 @@ if (isset($_GET['simid'])) {
     define ("OUTPUTFORM", 'JSON');
     define ("CRAPOUT", true);
 
-//FIRST FIND LIST OF ALL AGENTS PROCESSED
-    
+    //Float variable of how many ticks in a quarter
     $tickquarter = ((int)TICK_YEAR)/4;
     
-    
+    //Define the database queries by using the following loops.
     for ($year = 0; $year<YEARS; $year++) {
     $quarter[$year][0] = array ('offset' => ($year*TICK_YEAR)+(int)0, 'limit' => (int)floor($tickquarter));
     $quarter[$year][1] = array ('offset' => ($year*TICK_YEAR)+(int)floor($tickquarter), 'limit' =>(int)floor($tickquarter));
     $quarter[$year][2] = array ('offset' => ($year*TICK_YEAR)+(int)(floor($tickquarter)*2), 'limit' =>(int)floor($tickquarter));
     $quarter[$year][3] = array ('offset' => ($year*TICK_YEAR)+(int)(floor($tickquarter)*3), 'limit' =>(int)(TICK_YEAR-(floor($tickquarter)*3)));
     }
+    //if (CRAPOUT) var_dump($quarter); //Shows the database queries to be made against agents.
     
-    if (CRAPOUT) var_dump($quarter);
-    if (isset($_GET['agent'])) {
+    if (isset($_GET['agent'])) { //All steps after the first step.
+        $agentCount = $_GET['agentno'];                         // Old Agent Count - now total steps in sim.
+        $steps = $_GET['agentno'];                              // Total Steps in simulation - could save a few lookups in future.
+        $step = $_GET['agent'];                                 // Current Step
+        $progressCount = ((int)$_GET['agent']);                 // Same as above
+        $currentQuarter = ((int)$_GET['agent']%4);              // Decides what quarter we've been asked to start calculating
+        $agentOffset = floor((int)$_GET['agent']/(4*YEARS));    // Grabs agent from URL to obtain binary UUID
         
-        $agentCount = $_GET['agentno'];
-        $steps = $_GET['agentno'];
-        $step = $_GET['agent'];
-        $currentQuarter = ((int)$_GET['agent']%4);
-        $agentOffset = floor((int)$_GET['agent']/(4*YEARS));
-        if (CRAPOUT) echo 'Number of agents: '.$agentCount .'<br>';
-        if (CRAPOUT) echo 'Number of steps: '.$steps .'<br>';
-        if (CRAPOUT) echo 'Agent Number: '.$agentOffset .'<br>';
-        if (CRAPOUT) echo 'CurrentQuarter '.$currentQuarter.'<br>';
+            if (CRAPOUT) echo 'Number of agents: '.$agentCount .'<br>';
+            if (CRAPOUT) echo 'Number of steps: '.$steps .'<br>';
+            if (CRAPOUT) echo 'Agent Number: '.$agentOffset .'<br>';
+            if (CRAPOUT) echo 'CurrentQuarter '.$currentQuarter.'<br>';
         
         
-        $aCount = (int)floor($steps/(YEARS*4));
-        echo "AHOLE ".$aCount . "# <br>";    
-
-        echo "CURRENT AGENT ".$agentOffset . "# <br>";    
-        $agentSteps = $aCount*4;
-        echo "AGENT STEPS".$agentSteps . "# <br>";    
-
-        
+        $aCount = (int)floor($steps/(YEARS*4));                 //Agent count
+        $agentSteps = $aCount*4;                                //How many steps an agent requires
         $agentslist = $agents->find(array("simID" => (float) $_GET['simid']),array('sort' => array('_id' => 1), 'offset' => $agentOffset, 'limit' => 1));
-        $progressCount = ((int)$_GET['agent']);
     } else {
-        // Choose the first agent
+        // Very first simulation query, initialise everything.
         $count = $agents->find(array("simID"=>$simID));
-//        $steps = $count->count();
-        $agentCount = $count->count();
-        $steps = $agentCount*4*YEARS;
-                $agentSteps = $aCount*4;
+        $agentCount = $count->count();                          // How many agents we have
+        $steps = $agentCount*4*YEARS;                           // Total Steps in simulation - could save a few lookups in future.
+        $agentSteps = YEARS*4;                                  // How many steps each agent takes
 
         if (CRAPOUT) echo 'Number of agents: '.$agentCount .'<br>';
         if (CRAPOUT) echo 'Number of steps: '.$steps .'<br>';
-        $currentQuarter = 0;
+        $currentQuarter = 0;                                    // Initialise first quarter.
         if (CRAPOUT) echo 'CurrentQuarter '.$currentQuarter.'<br>';
         $agentslist = $agents->find(array("simID" => (float) $_GET['simid']),array('sort' => array('_id' => 1), 'offset' => 0, 'limit' => 1));
-        $progressCount = 0;
-        //$offset = 0;
+        $progressCount = 0;                                     // Current Step
     }
-        $year = (int)floor((($progressCount)%($agentSteps)/4));
-        echo "YEAR ".$year . "# dave<br>"; 
-    $ticksInQuarter = $quarter[$year][$currentQuarter]['limit'];
+    $year = (int)floor((($progressCount)%($agentSteps)/4)); // Calculate the current year
+    if (CRAPOUT) "YEAR ".$year . "# dave<br>";              
+    $ticksInQuarter = $quarter[$year][$currentQuarter]['limit']; // Set how many ticks are in this quarter.
 
-    //echo $steps .'<br>';
+
     $outputARY = array();
-                        
         foreach ($agentslist as $agent) {
             // EACH COUNTRY AS AGENT
             $agentProperties = $agent->getProperties();
             $iso = $agentProperties['ISO'];
             $kyotostate = 'undefined';
-                $time2 = getTime(); 
+            $time2 = getTime(); 
             $outputARY['timea'] = number_format(($time2-$time1),2);
-$finishloop = false;
+            $finishloop = false;
             //CHECK FOR RECORD ALREADY INCASE ACCIDENTALLY REPEAT REQUEST:
-                    while (($looptimer-$time1 < 20) ){//&& (!$finishloop)) {
-        $year = (int)floor((($progressCount)%($agentSteps)/4));
-        echo "YEAR ".$year . "# dave<br>"; //die();
-    $ticksInQuarter = $quarter[$year][$currentQuarter]['limit'];
-
-            $notices = array();
-
-            $resultcheckq = new ResultModel();    // instantiate collection model
-            $resultcheck = $resultcheckq->findOne(array("simID" => (int)$_GET['simid'], "ISO" =>$iso));
-         /*   if (is_null($resultcheck)) {
-            //echo 'no record exists<bR>';
-            } else {            
-            echo 'Record Exists!';
-            die();
-            } */
-          //  $currentQuarter++;
-    $as = new AgentStateModel();    // instantiate collection model
-                $agentstate = $as->find(
+                while (($looptimer-$time1 < 20) ){//&& (!$finishloop)) {
+                    $year = (int)floor((($progressCount)%($agentSteps)/4));
+                    if (CRAPOUT) "YEAR ".$year . "# dave<br>"; //die();
+                    $ticksInQuarter = $quarter[$year][$currentQuarter]['limit'];
+                    $notices = array();
+                    //Implement check here asap
+                    //$resultcheckq = new ResultModel();    // instantiate collection model
+                    //$resultcheck = $resultcheckq->findOne(array("simID" => (int)$_GET['simid'], "ISO" =>$iso));
+                    /*   if (is_null($resultcheck)) {
+                        //echo 'no record exists<bR>';
+                        } else {            
+                        echo 'Record Exists!';
+                        die();
+                        } */
+                    $as = new AgentStateModel();    // instantiate collection model
+                    $agentstate = $as->find(
                                         array("aid"=>$agent->getAid()),
                                         array('sort' => array('_id' => 1),
                                               'offset' => $quarter[$year][$currentQuarter]['offset'],
                                               'limit' => (int)$quarter[$year][$currentQuarter]['limit']
                                               )
-                                        );
-                 /*               foreach ($agentstate as $ag) {
-                  echo '<br>'.$ag->getTime().'GOTTIME<br>';
-                                }
-die();*/
-
-               // /*$ag = $agentstate->current();
-     /*           for ($off = 0; $off < $quarter[$currentQuarter]['offset']; $off++) {
-                  $ag =   $agentstate->next();
-                  echo '<br>'.$ag->getTime().'GOTTIME<br>';
-                }
-                if (CRAPOUT) echo 'Current offset '.$quarter[$currentQuarter]['offset'].'<br>';
-                             //   $i=0;*/
-             /*                   foreach ($agentstate as $ag) {
-                                    echo $i++.'<br>';
-                                }*/
+                                        );      // Sets up query to process a quarter
                 if (CRAPOUT) echo 'query offset '.$quarter[$year][$currentQuarter]['offset'].'<br>';
                 if (CRAPOUT) echo 'query limit '.$quarter[$year][$currentQuarter]['limit'].'<br>';
-        //die();
-               // for ($lim = 0; $lim < $quarter[$currentQuarter]['limit']; $lim++) {
-                //$ag = $agentstate->current();
-                                foreach ($agentstate as $ag) {
-                  echo '<br>'.$ag->getTime().'GOTTIME<br>';
-                 //   ($agentstate as $ag) 
-                // EACH TICK OF COUNTRY
-                $countryArray = array();
-                                var_dump($ag);
-                                
-                $tick = $ag->getTime();
-                if (CRAPOUT) echo 'FOUND TIME '.$tick.'<br>';
-                $agentTickProperties = $ag->getProperties();
-                if ($agentTickProperties['is_kyoto_member'] != $kyotostate) {
-                    if ($kyotostate=='undefined'){
-                        //Initialise kyotostate so do nothing
-                    } else {
-                        // A legitimate change so make a record of this
-                        $notices[] = array(NOTICE_1, $kyotostate, $agentTickProperties['is_kyoto_member'], $tick);
-                    }
-                        $kyotostate = $agentTickProperties['is_kyoto_member'];
-                }
-                if (CRAPOUT) echo 'Ticks in Quarter'.$ticksInQuarter.'<br>';
-                if (CRAPOUT) echo 'Ticks in Quarter -1:'.(int)($ticksInQuarter-1).'<br>';
-                if (CRAPOUT) echo 'Ticks'.$tick.'<br>';
+                    foreach ($agentstate as $ag) {
+                    if (CRAPOUT) '<br>'.$ag->getTime().'GOTTIME<br>';
+                        $countryArray = array();
+                        $tick = $ag->getTime();
+                        if (CRAPOUT) echo 'FOUND TIME '.$tick.'<br>';
+                        $agentTickProperties = $ag->getProperties();    //Get the tick specific agent data
+                        if ($agentTickProperties['is_kyoto_member'] != $kyotostate) {
+                            if ($kyotostate=='undefined'){
+                                //Initialise kyotostate so do nothing
+                            } else {
+                                // A legitimate change so make a record of this
+                                $notices[] = array(NOTICE_1, $kyotostate, $agentTickProperties['is_kyoto_member'], $tick);
+                            }
+                                $kyotostate = $agentTickProperties['is_kyoto_member'];
+                        }
+                        if (CRAPOUT) echo 'Ticks in Quarter'.$ticksInQuarter.'<br>';
+                        if (CRAPOUT) echo 'Ticks in Quarter -1:'.(int)($ticksInQuarter-1).'<br>';
+                        if (CRAPOUT) echo 'Ticks'.$tick.'<br>';
 
-                    if ($tick  == 0) {
-                       //FIRST DAY
-                        
-                    } elseif ($tick % ($ticksInQuarter) == ($ticksInQuarter-1)) {
-                        echo 'MODRESULT:'.$tick % ($ticksInQuarter-1).'<br>';
-                        // Last Day of the quarter
-                        // Here is the year round up. Save and ting
-                        if (CRAPOUT) echo 'Save the damn record';
-                        $countryArray['simID']             = 9;//$simID;
-                        $countryArray['GDP']               = $agentTickProperties['gdp'];
-                        $countryArray['tick']              = $tick;
-                        $countryArray['quarter']           = $currentQuarter;
-                        $countryArray['ISO']               = $iso;
-                        $countryArray['year']              = $year;
-                        $countryArray['GDPRate']           = $agentTickProperties['gdp_rate'];
-                        $countryArray['availableToSpend']  = $agentTickProperties['available_to_spend'];
-                        $countryArray['emissionsTarget']   = $agentTickProperties['emission_target'];
-                        $countryArray['carbonOffset']      = $agentTickProperties['carbon_offset'];
-                        $countryArray['carbonOutput']      = $agentTickProperties['carbon_output'];
-                        $countryArray['isKyotoMember']     = $agentTickProperties['is_kyoto_member'];
-                        $countryArray['notices']           = $notices;
-                        $notices = array();
-                        $result = new ResultModel($countryArray);    // instantiate collection model
-                        $result->save();
+                        if ($tick  == 0) {
+                        //FIRST DAY
 
-                        
-                  //  } elseif ($tick % TICK_YEAR == 1) {
-                        //First day of the year 
-                    } elseif ($tick % (TICK_YEAR) == TICK_YEAR-1) {
-                            echo 'DAVE TICK'.$tick . '}{' .(TICK_YEAR-1) .'#' ;
-                            $year++;
-                            echo 'YEAR SHITOUT'.$year;
-                       
-                    } else {
-                        // All other days of the quarter (perhaps adding and shit)
-                    }                   
-//                    echo $tick.'<br>';
-                    //var_dump($ag->getAttributes());
-                    //$statekeys = array_keys($ag->getProperties());
-                            //        $ag = $agentstate->next();
+                        } elseif ($tick % ($ticksInQuarter) == ($ticksInQuarter-1)) {
+                            echo 'MODRESULT:'.$tick % ($ticksInQuarter-1).'<br>';
+                            // Last Day of the quarter
+                            // Here is the year round up. Save and ting
+                            if (CRAPOUT) echo 'Save the damn record';
+                            $countryArray['simID']             = 9;//$simID;
+                            $countryArray['GDP']               = $agentTickProperties['gdp'];
+                            $countryArray['tick']              = $tick;
+                            $countryArray['quarter']           = $currentQuarter;
+                            $countryArray['ISO']               = $iso;
+                            $countryArray['year']              = $year;
+                            $countryArray['GDPRate']           = $agentTickProperties['gdp_rate'];
+                            $countryArray['availableToSpend']  = $agentTickProperties['available_to_spend'];
+                            $countryArray['emissionsTarget']   = $agentTickProperties['emission_target'];
+                            $countryArray['carbonOffset']      = $agentTickProperties['carbon_offset'];
+                            $countryArray['carbonOutput']      = $agentTickProperties['carbon_output'];
+                            $countryArray['isKyotoMember']     = $agentTickProperties['is_kyoto_member'];
+                            $countryArray['notices']           = $notices;
+                            $notices = array();
+                            $result = new ResultModel($countryArray);    // instantiate collection model
+                            $result->save();
+                        } else {
+                            // All other days of the quarter (perhaps adding and shit)
+                        }                   
                 } //End of DAYs
                 //AT END O' DAY
             $time3 = getTime(); 
 
+            //Make JSON response
             $outputARY['ISO'] = $iso;
             $outputARY['totalAgents'] = $steps;
-            $progressCount++;
+            $progressCount++;                                           //Increment the step counter
             if ($progressCount===$steps) {
             $outputARY['success'] = 'complete';
             } else {
@@ -255,30 +213,11 @@ die();*/
             $outputARY['percentage'] = (int)(($progressCount/$steps)*100);
             }
         $looptimer = getTime(); 
-        echo 'CURRENT QUARTER PRE '.$currentQuarter;
-        $currentQuarter = $progressCount%4;
-        echo 'CURRENT QUARTER POST'.$currentQuarter;
-
-        //echo "ticks:".$tick.'/'.(TICK_LENGTH-1).'<br>';
-       // die();
-                                if ($tick == (TICK_LENGTH-1)) {
-                                  $finishloop = true;
-                                }
-//unset($agentstate);
-//unset($as);
-                    } // end of while time loop
-            }//END OF AGENT
- 
-        
-
-                IF (OUTPUTFORM == 'HTTPREQUEST') {
-                //echo '<a href="process.php?simid='.$simID.'&agent='.$offset.'&agentno='.$steps.'">NEXT</a>';
-                    if ($offset>$steps){
-                        echo 'finished'; die();
-                    }
-                header("Location: process.php?simid=".$simID."&agent=".$offset."&agentno=".$steps); /* Redirect browser */
-                }
-
+        if (CRAPOUT) echo 'CURRENT QUARTER PRE '.$currentQuarter;
+        $currentQuarter = $progressCount%4; 
+        if (CRAPOUT) echo 'CURRENT QUARTER POST'.$currentQuarter;
+            } // end of while time loop
+    }//END OF AGENT
 
 } else {
    echo 'No sim ID mate.';
