@@ -42,15 +42,13 @@
             
         function arrayStatsTool(data){
             //iterate through the stats array 
-                console.log(data.stats);
             $.each(data.stats, function(index, element){
-                console.log(index);
                 if(index == 'globalCarbonChangePercentage'){
                     $('#'+ index).text(element.toFixed(0) + '%'); //billion tonnes
                 } else if(index == 'carbonOutput') {
-                    console.log('carbonOutput');
-                        console.log(element);
                     $('#'+ index).text((element/1000000).toFixed(0));
+                } else if(index == 'finalYearGlobalEmissionTarget'){
+                    $('#' + index).text((element/1000000).toFixed(1));
                 } else {
                     $('#'+ index).text(element);
                 }
@@ -58,7 +56,6 @@
         };
             
         function arrayTradesTool(data){
-            //console.log(data.trades);
             $.each(data.trades, function(index, element){
                 $('#'+ index).append(element);
             });
@@ -67,7 +64,6 @@
             
         // specific functionality (data array is available here)
         $(".geochart_buttons").children().click( function(e) {
-            console.log($(this).attr('id'));
             arrayCountriesTool(data, $(this).attr('id'), 'geochart');
         });
             
@@ -140,8 +136,8 @@
 <div class="row">
     <div class="span3">
         <div class="well">
-            <p id="globalCarbonChangePercentage" style="color: green;line-height: 96px;font-size: 96px; font-weight: bold"></p>
-            <h4>Global Reduction of C02</h4>
+            <p id="globalGDPChange" style="color: green;line-height: 96px;font-size: 96px; font-weight: bold"></p>
+            <h4>Global GDP Increase</h4>
         </div>
         <div class="well">
             <p id="numberOfMemberCountries" style="color: green;line-height: 96px;font-size: 96px; font-weight: bold"></p>
@@ -152,7 +148,7 @@
         <table class="table table-bordered">
             <tr>
                 <td style="height: 365px;background-image: url('includes/img/dinero_bg.jpg'); padding-top: 50px;padding-right: 20px;">
-        <p id="carbonOutput" align="right" style="color: white;line-height: 200px;font-size: 256px; font-weight: bold"></p>
+        <p id="carbonReduction" align="right" style="color: white;line-height: 200px;font-size: 256px; font-weight: bold"></p>
         <h1 align="right"style="color: white;">MILLION TONNES OF GLOBAL CO2 REDUCTION</h1>
 
                 </td>
@@ -175,8 +171,8 @@
     </div>
     <div class="span5">
         <div class="well" style="height: 140px;">
-            <p id="dirtyIndustrySpend" style="color: red;line-height: 96px;font-size: 96px; font-weight: bold"></p>
-            <h4>Spent on dirty industry for GDP growth</h4>
+            <p id="finalYearGlobalEmissionTarget" style="color: red;line-height: 96px;font-size: 96px; font-weight: bold"></p>
+            <h4>Million tonnes final year global emission target</h4>
         </div>
     </div>
 </div>

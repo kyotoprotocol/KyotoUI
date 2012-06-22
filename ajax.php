@@ -57,17 +57,38 @@ switch ($_GET['func']) {
         $id = new MongoInt64($sim->getId());
         
         $result = new ResultModel();
-        $results = $result->find(array("simID" => $id));
         
         $trade = new TradeModel();
         $tradeArray = $trade->find(array("simID" => (string)$id));
         
         //Generate global data
         
-        foreach($result as $res){
-            //blap blap blap
-        }
+        $params = array();
+        $global = array();
+        
+        $finalYearResultsQuery = $result->findOne(array("simID" => $id, "quarter" => (int)3), array("sort" => array("year" => "-1")));
+        $finalYear = $finalYearResultsQuery->getYear();
 
+        $finalYearResults = $result->find(array("simID" => $id), array("sort" => array("year" => $finalYear)));
+
+        $firstYearResults = $result->find(array("simID" => $id), array("sort" => array("year" => "0")));
+        
+        foreach($finalYearResults as $f){
+            //final year totals here
+            $last['totalCarbonOutput'] += $f->getCarbonOutput();
+            $last['globalGDP'] += $f->getGdp();
+            if(($f->getIsKyotoMember() == 'ANNEXONE') OR ($f->getIsKyotoMember() == 'NONANNEXONE')){ $global['numberOfMemberCountries']++;}
+            $global['finalYearGlobalEmissionTarget'] += $f->getEmissionsTarget();
+        }
+        foreach($firstYearResults as $r){
+            //first year totals here
+            $first['totalCarbonOutput'] += $f->getCarbonOutput();
+            $first['globalGDP'] += $f->getGdp();
+        }
+        
+        //Calculations here
+        $global['carbonReduction'] = $last['totalCarbonOutput'] - $first['totalCarbonOutput'];
+        $global['globalGDPChange'] = $last['globalGDP'] - $first['globalGDP'];
         //Generate trades data
         
         $trades['totalTradeValue'] = 0;
@@ -106,20 +127,7 @@ switch ($_GET['func']) {
         $trades['minCreditValue'] = '$'.(int)$minCreditValue;
         $trades['averageCreditValue'] = '$'.$trades['averageCreditValue']/$trades['tradeCount'];
         
-              
-        $params = array();
-        $global = array();
-        
-        foreach($results as $res){
-            $attributes = $res->getAttributes();
-
-            if($attributes['ISO']){
-                $params[$attributes['ISO']] = $attributes;
-            } else {    //if no isos - useless in reality but good for debugging at this stage
-                ajaxSend(array('error', 'No country ISOs'));
-            }
-        }
-         
+        //Bundle output and send to the page      
         $output = array('stats' => $global, 'countries' => $params, 'trades' => $trades);
         
         ajaxSend($output);
