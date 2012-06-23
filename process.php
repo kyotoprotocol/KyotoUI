@@ -163,6 +163,7 @@ if (isset($_GET['simid'])) {
                         $outputARY['success'] = 'alreadycomplete';
                         $outputARY['nextAgent'] = $progressCount;
                         $outputARY['percentage'] = (int)(($progressCount/$steps)*100);
+                        }
                         header('content-type: application/json');
                         echo json_encode($outputARY);
                         die();
