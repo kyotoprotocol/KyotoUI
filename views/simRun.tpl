@@ -11,6 +11,7 @@
             url: "process.php",
             data: data,
             success: function(data){
+                console.log(data);
                 console.log(data['timea']);
                     console.log(data['timeb']);
                 if(data == 'Record Exists!'){
