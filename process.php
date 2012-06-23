@@ -15,6 +15,7 @@ include('models/SimulationModel.php');
 include('models/AgentsModel.php');
 include('models/AgentStateModel.php');
 include('models/ResultModel.php');
+
 define ("DB", "presage");
 define ("SIMTREE", "simulations");
 define ("LOCAL_HOST", "127.0.0.1:27017");
@@ -70,7 +71,7 @@ if (isset($_GET['simid'])) {
     //define ("OUTPUTFORM", 'HTTPREQUEST');
     define ("OUTPUTFORM", 'JSON');
     define ("CRAPOUT", false);
-
+            if (CRAPOUT) echo 'Number of YEARS: '.YEARS .'<br>';
     //Float variable of how many ticks in a quarter
     $tickquarter = ((int)TICK_YEAR)/4;
     
@@ -98,7 +99,10 @@ if (isset($_GET['simid'])) {
         
         
         $aCount = (int)floor($steps/(YEARS*4));                 //Agent count
-        $agentSteps = $aCount*4;                                //How many steps an agent requires
+        if (CRAPOUT) echo 'Agent count: '.$aCount .'<br>';
+        
+        $agentSteps = YEARS*4;                                //How many steps an agent requires
+        if (CRAPOUT) echo 'Agent steps: '.$agentSteps .'<br>';
         $agentslist = $agents->find(array("simID" => (float) $_GET['simid']),array('sort' => array('_id' => 1), 'offset' => $agentOffset, 'limit' => 1));
     } else {
         // Very first simulation query, initialise everything.
@@ -116,9 +120,13 @@ if (isset($_GET['simid'])) {
         $ensureAgentState = new AgentStateModel();    // instantiate collection model
         $ensureAgentState->ensureIndex(array('aid'=>1));
     }
-    if (CRAPOUT) "HELLO<br>";              
+    
+    
+    
+    if (CRAPOUT) echo "HELLO<br>";              
     $year = (int)floor((($progressCount)%($agentSteps)/4)); // Calculate the current year
-    if (CRAPOUT) "YEAR ".$year . "# dave<br>";              
+    if (CRAPOUT) echo "agentsteps ".$agentSteps . "#  progresscount#".$progressCount."<br>";              
+    if (CRAPOUT) echo "YEAR ".$year . "# Quarter #".$currentQuarter."<br>";              
     $ticksInQuarter = $quarter[$year][$currentQuarter]['limit']; // Set how many ticks are in this quarter.
 
     
@@ -144,8 +152,17 @@ if (isset($_GET['simid'])) {
                     $resultcheck = $resultcheckq->findOne(array("simID" => (int)$_GET['simid'], "ISO" => $iso, 'year'=> (int)$year,'quarter'=> (int)$currentQuarter));
                     if (is_null($resultcheck)) {
                         //echo 'no record exists<bR>';
-                    } else {            
-                        echo 'Record Exists!';
+                    } else {
+                        $outputARY['totalAgents'] = $steps;
+                        $progressCount++;                                           //Increment the step counter
+                        if ($progressCount===$steps) {
+                        $outputARY['success'] = 'complete';
+                        } else {
+                        $outputARY['success'] = 'alreadycomplete';
+                        $outputARY['nextAgent'] = $progressCount;
+                        $outputARY['percentage'] = (int)(($progressCount/$steps)*100);
+                        header('content-type: application/json');
+                        echo json_encode($outputARY);
                         die();
                     } 
             
@@ -158,8 +175,9 @@ if (isset($_GET['simid'])) {
                     if (CRAPOUT) "YEAR ".$year . "# dave<br>"; //die();
                     $ticksInQuarter = $quarter[$year][$currentQuarter]['limit'];
                     $notices = array();
-
-                    $as = new AgentStateModel();    // instantiate collection model
+                    $cheated = false;
+                    
+                    $as = new AgentStateModel();  // instantiate collection model
                         $agentstate = $as->find(
                                         array("aid"=>$agent->getAid()),
                                         array('sort' => array('_id' => 1),
@@ -168,16 +186,18 @@ if (isset($_GET['simid'])) {
                                               )
                                         );      // Sets up query to process a quarter
                 
-                if (CRAPOUT) echo 'query offset '.$quarter[$year][$currentQuarter]['offset'].'<br>';
-                if (CRAPOUT) echo 'query limit '.$quarter[$year][$currentQuarter]['limit'].'<br>';
+                    if (CRAPOUT) echo 'query offset '.$quarter[$year][$currentQuarter]['offset'].'<br>';
+                    if (CRAPOUT) echo 'query limit '.$quarter[$year][$currentQuarter]['limit'].'<br>';
                     foreach ($agentstate as $ag) {
                     $counter++;
-
-                    if (CRAPOUT) '<br>'.$ag->getTime().'GOTTIME<br>';
+                 
+                        if (CRAPOUT) '<br>'.$ag->getTime().'GOTTIME<br>';
                         $countryArray = array();
                         $tick = $ag->getTime();
                         if (CRAPOUT) echo 'FOUND TIME '.$tick.'<br>';
                         $agentTickProperties = $ag->getProperties();    //Get the tick specific agent data
+                        
+                        // Kyoto MEMBER LEAVE OR CHANGE?
                         if ($agentTickProperties['is_kyoto_member'] != $kyotostate) {
                             if ($kyotostate=='undefined'){
                                 //Initialise kyotostate so do nothing
@@ -186,6 +206,11 @@ if (isset($_GET['simid'])) {
                                 $notices[] = array(NOTICE_1, $kyotostate, $agentTickProperties['is_kyoto_member'], $tick);
                             }
                                 $kyotostate = $agentTickProperties['is_kyoto_member'];
+                        }
+                        
+                        // Cheating?
+                        if ($agentTickProperties['cheated']='cheated') {
+                            $cheated = true;
                         }
                         if (CRAPOUT) echo 'Ticks in Quarter'.$ticksInQuarter.'<br>';
                         if (CRAPOUT) echo 'Ticks in Quarter -1:'.(int)($ticksInQuarter-1).'<br>';
@@ -200,17 +225,21 @@ if (isset($_GET['simid'])) {
                             // Here is the year round up. Save and ting
                             if (CRAPOUT) echo 'Save the damn record';
                             $countryArray['simID']             = (int)$_GET['simid'];//$simID;
-                            $countryArray['GDP']               = $agentTickProperties['gdp'];
                             $countryArray['tick']              = $tick;
                             $countryArray['quarter']           = $currentQuarter;
                             $countryArray['ISO']               = $iso;
                             $countryArray['year']              = $year;
+                            $countryArray['GDP']               = $agentTickProperties['gdp'];
                             $countryArray['GDPRate']           = $agentTickProperties['gdp_rate'];
                             $countryArray['availableToSpend']  = $agentTickProperties['available_to_spend'];
                             $countryArray['emissionsTarget']   = $agentTickProperties['emission_target'];
                             $countryArray['carbonOffset']      = $agentTickProperties['carbon_offset'];
                             $countryArray['carbonOutput']      = $agentTickProperties['carbon_output'];
+                            $countryArray['energyOutput']      = $agentTickProperties['energy_output'];
+                            $countryArray['arableLandArea']    = $agentTickProperties['arable_land_area'];
+                            $countryArray['carbonAbsorption']  = $agentTickProperties['carbon_absorption'];
                             $countryArray['isKyotoMember']     = $agentTickProperties['is_kyoto_member'];
+                            $countryArray['cheated']           = $cheated;
                             $countryArray['notices']           = $notices;
                             $notices = array();
                             $result = new ResultModel($countryArray);    // instantiate collection model
@@ -238,6 +267,7 @@ if (isset($_GET['simid'])) {
         if (CRAPOUT) echo 'CURRENT QUARTER PRE '.$currentQuarter;
         $currentQuarter = $progressCount%4; 
         if (CRAPOUT) echo 'CURRENT QUARTER POST'.$currentQuarter;
+        $cheated = false;
             } // end of while time loop
     }//END OF AGENT
 
