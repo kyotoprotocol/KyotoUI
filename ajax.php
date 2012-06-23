@@ -55,6 +55,7 @@ switch ($_GET['func']) {
     
     case 'result' :
         $id = new MongoInt64($sim->getId());
+        $intid = (int)$sim->getId();
         
         $result = new ResultModel();
         
@@ -66,9 +67,11 @@ switch ($_GET['func']) {
         $params = array();
         $global = array();
         
-        $finalYearResultsQuery = $result->findOne(array("simID" => $id, "quarter" => (int)3), array("sort" => array("year" => "-1")));
+        $finalYearResultsQuery = $result->findOne(array("simID" => $intid, "quarter" => (int)3), array("sort" => array("year" => -1)));
         $finalYear = $finalYearResultsQuery->getYear();
 
+        $params['finalYear'] = $finalYear;
+        
         $finalYearResults = $result->find(array("simID" => $id), array("sort" => array("year" => $finalYear)));
 
         $firstYearResults = $result->find(array("simID" => $id), array("sort" => array("year" => "0")));
@@ -94,7 +97,7 @@ switch ($_GET['func']) {
 
 //Generate country data
         //params[] = blip blap
-
+            
 //Generate trades data
         
         $trades['totalTradeValue'] = 0;
@@ -141,12 +144,6 @@ switch ($_GET['func']) {
     
     default : echo 'error';
 }
-
-
-
-
-
-
 
 
 // send ajax data to success function as json
