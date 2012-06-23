@@ -38,16 +38,20 @@
                         <a href="https://github.com/kyotoprotocol/KyotoUI/wiki/KyotoUIHelp" target="_blank" class="btn btn-large btn-primary">Help</a >
                    </div>
                     <div class="btn-group">
-                            {if ($setdb=='local')}
-                                <a href="#" class="btn btn-large btn-success disabled">Using local db</a >
+                            {if $server==true}
+                                    <a href="#" class="btn btn-large btn-success disabled">Using local db on ise.buildr.com</a >
                             {else}
-                                <a href="index.php?database=local" class="btn btn-large btn-info">Switch to local db</a >
-                            {/if}
-                            {if ($setdb=='remote')}
-                                <a href="#" class="btn btn-large btn-success disabled">Using remote db</a >
-                            {else}
-                                <a href="index.php?database=remote" class="btn btn-large btn-info">Switch to remote db</a >
-                            {/if}
+                                {if ($setdb=='local')}
+                                    <a href="#" class="btn btn-large btn-success disabled">Using local db</a >
+                                {else}
+                                    <a href="index.php?database=local" class="btn btn-large btn-info">Switch to local db</a >
+                                {/if}
+                                {if ($setdb=='remote')}
+                                    <a href="#" class="btn btn-large btn-success disabled">Using remote db</a >
+                                {else}
+                                    <a href="index.php?database=remote" class="btn btn-large btn-info">Switch to remote db</a >
+                                {/if}
+                            {/if}    
                    </div>        
              </div>
         </div>
