@@ -36,6 +36,7 @@
                             data['success'] + 
                             ' Time Taken(pre DB): ' + data['timea'] +
                             ' Time Taken(DB): ' + data['timeb'] +
+                            ' Info: ' + data['info']+
                             '<br>');
                         ajaxProcess({simid : {/literal}{$smarty.get.simid}{literal}, agent : data['nextAgent'], agentno : data['totalAgents']});
                     } else {
