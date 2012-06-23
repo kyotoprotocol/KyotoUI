@@ -34,9 +34,10 @@ jQuery(function($) {
     <div class="span12">
      
       <form class="well form-inline" name="dave" action="simulations.php" method="post" style="margin-top:5px;padding: 2px;">
-            <div class="btn-group span3" data-toggle-name="state" data-toggle="buttons-radio" >
+            <div class="btn-group span4" data-toggle-name="state" data-toggle="buttons-radio" >
                 <button type="button" value="all" class="btn" data-toggle="button">All</button>
                 <button type="button" value="notstarted" class="btn" data-toggle="button">Not Started</button>
+                <button type="button" value="running" class="btn" data-toggle="button">Running</button>
                 <button type="button" value="complete" class="btn" data-toggle="button">Complete</button>
             </div>
             <input type="hidden" name="state" value="{$smarty.session.simfilterstate}" />
@@ -148,6 +149,8 @@ jQuery(function($) {
                         <span class="label label-inverse">{$s["state"]}</span>
                         {else if $s["state"] == "AUTO START" }
                         <span class="label label-important">{$s["state"]}</span>
+                        {else if $s["state"] == "RUNNING" }
+                        <span class="label label-warning">{$s["state"]} [{$s["currentTime"]}/{$s["finishTime"]}]</span>
                         {else}
                         <span class="label">{$s["state"]}</span>
                         {/if}

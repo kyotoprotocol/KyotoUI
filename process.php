@@ -124,7 +124,7 @@ if (isset($_GET['simid'])) {
     }
     
     
-    
+    $info = array();
     if (CRAPOUT) echo "HELLO<br>";              
     $year = (int)floor((($progressCount)%($agentSteps)/4)); // Calculate the current year
     if (CRAPOUT) echo "agentsteps ".$agentSteps . "#  progresscount#".$progressCount."<br>";              
@@ -152,7 +152,7 @@ if (isset($_GET['simid'])) {
                     //Implement check here asap
                     $resultcheckq = new ResultModel();    // instantiate collection model
                     $resultcheck = $resultcheckq->findOne(array("simID" => (int)$_GET['simid'], "ISO" => $iso, 'year'=> (int)$year,'quarter'=> (int)$currentQuarter));
-                    if (is_null($resultcheck)) {
+               /*     if (is_null($resultcheck)) {
                         //echo 'no record exists<bR>';
                     } else {
                         $outputARY['totalAgents'] = $steps;
@@ -163,10 +163,11 @@ if (isset($_GET['simid'])) {
                         $outputARY['success'] = 'alreadycomplete';
                         $outputARY['nextAgent'] = $progressCount;
                         $outputARY['percentage'] = (int)(($progressCount/$steps)*100);
+                        }
                         header('content-type: application/json');
                         echo json_encode($outputARY);
                         die();
-                    } 
+                    } */
             
             
             /*
@@ -243,6 +244,7 @@ if (isset($_GET['simid'])) {
                             $countryArray['isKyotoMember']     = $agentTickProperties['is_kyoto_member'];
                             $countryArray['cheated']           = $cheated;
                             $countryArray['notices']           = $notices;
+                            $info[] = 'Created row: '.$iso.' Y:'.$year.' Q:'.$currentQuarter;
                             $notices = array();
                             $result = new ResultModel($countryArray);    // instantiate collection model
                             $result->save();
@@ -276,7 +278,7 @@ if (isset($_GET['simid'])) {
 } else {
    echo 'No sim ID mate.';
 }
-
+$outputARY['info']=$info;
                 
 IF (OUTPUTFORM == 'JSON') {
     header('content-type: application/json');

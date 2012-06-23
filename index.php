@@ -36,9 +36,15 @@ if (!extension_loaded('mongo')) {
     $smarty->assign('remote', 'enabled');
     }
 */
-    
-    
 }
+
+    if (substr_count($_SERVER['SERVER_NAME'],'buildr')>0) {
+        // Must be on remote server on buildr domain
+   $smarty->assign('server', true);
+    } else {
+   $smarty->assign('server', false);
+    }
+
 
     if (isset($_GET['database'])) {
             $_SESSION['database']=$_GET['database'];

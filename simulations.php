@@ -76,6 +76,8 @@ if (isset($_POST['simulationcopy'])) {
         $state = array();
     } elseif ($_SESSION['simfilterstate'] == 'notstarted') {
         $state = array('state'=>'NOT STARTED');
+    } elseif ($_SESSION['simfilterstate'] == 'running') {
+        $state = array('state'=>'RUNNING');
     } elseif ($_SESSION['simfilterstate'] == 'complete') {
         $state = array('state'=>'COMPLETE');
     }
