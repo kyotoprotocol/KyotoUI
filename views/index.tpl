@@ -29,7 +29,7 @@
 {/if} 
 <div class="row">
     <div class="span12">
-        <div class="hero-unit" style="height: 600px; {*background-image: url('includes/img/penguins2.jpg');*} background-position: center;">
+        <div class="hero-unit" style="height: 600px; background-image: url('includes/img/penguins2.jpg'); background-position: center;">
             <h1>Welcome to KyotoUI!</h1>
             <p>This is the web interface for the <a href="https://github.com/farhanrahman/kyoto">Kyoto Protocol</a> simulator built upon <a href="http://www.presage2.info/">Presage</a>. </p>
             <div class="btn-toolbar">
