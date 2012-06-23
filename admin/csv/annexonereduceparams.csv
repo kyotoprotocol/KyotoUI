@@ -1,8 +1,8 @@
-name,Default Simulation Data
+name,Annex One Reduce only
 classname,uk.ac.ic.kyoto.simulations.Simulation
-finishTime,10
-description,This is a default class. Ideally all countries are included and it is designed to demonstrate how beautiful the economic models are that we have created.
-author,"JW, Max + Khadivi"
+finishTime,202
+description,Inserts a singular country for testing
+author,CT
 param.GROWTH_MARKET_STATE,1
 param.STABLE_MARKET_STATE,0.5
 param.RECESSION_MARKET_STATE,0.1
@@ -26,3 +26,4 @@ param.MINIMUM_KYOTO_REJOIN_TIME,4
 param.MINIMUM_KYOTO_MEMBERSHIP_DURATION,10
 param.TICK_YEAR,20
 param.START_YEAR,1990
+
