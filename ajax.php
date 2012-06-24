@@ -77,10 +77,12 @@ switch ($_GET['func']) {
         $firstYearResults = $result->find(array("simID" => $id), array("sort" => array("year" => "0")));
         
         $global['finalYearGlobalEmissionTarget'] = 0;
+        $global['numberOfMemberCountries'] = 0;
         $last['totalCarbonOutput'] = 0;
         $last['globalGDP'] = 0;
         $first['totalCarbonOutput'] = 0;
         $first['globalGDP'] = 0;
+        
         
         foreach($finalYearResults as $f){
             //final year totals here
