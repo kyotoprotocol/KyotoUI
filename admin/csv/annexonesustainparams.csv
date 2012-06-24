@@ -1,7 +1,7 @@
 name,Annex One Sustain only
 classname,uk.ac.ic.kyoto.simulations.Simulation
 finishTime,202
-description,Inserts 4 annex one reduce countries
+description,Inserts 4 annex one sustain countries
 author,CT
 param.GROWTH_MARKET_STATE,1
 param.STABLE_MARKET_STATE,0.5
