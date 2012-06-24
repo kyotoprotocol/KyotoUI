@@ -1,8 +1,8 @@
-name,Default Mini Simulation Data
+name,All Annex One
 classname,uk.ac.ic.kyoto.simulations.Simulation
 finishTime,202
-description,"Mini Class, made from a subset of the country data. Used to get started, tries one or two instances of each agent."
-author,"JW, Max + Khadivi"
+description,Inserts all the annexOne countries.
+author,CT
 param.GROWTH_MARKET_STATE,1
 param.STABLE_MARKET_STATE,0.5
 param.RECESSION_MARKET_STATE,0.1
