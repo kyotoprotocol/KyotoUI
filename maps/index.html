@@ -54,17 +54,17 @@
     <p style="font-size:13px;padding: 2px 0px 0px 0px;">Tradings</p>
 </div>
 
-<div id="social">
+<!--<div id="social">
 <iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fmigrationsmap.net&amp;send=false&amp;layout=button_count&amp;width=100&amp;show_faces=true&amp;action=like&amp;colorscheme=dark&amp;font=arial&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:200px; height:21px; padding-top:10px;" allowTransparency="true"></iframe>
 <div id="plusone"><g:plusone size="medium"></g:plusone></div>
-</div>
+</div>-->
 <div id="country_select_div">
     <span id="explanation">Click on the map or pick a country here:</span>
     <select id="country_select">
     </select>
 </div>
 <div id="inorout">
-    <span id="in" class="on"><a href="#" class="blackLink">Bought from</a></span> <span id="out"><a href="#" class="blackLink">Sold to</a></span>
+    <span id="in" class="on"><a href="#" class="blackLink">Bought from</a></span> <span id="out"><a href="#" class="blackLink">Sold to</a></span><span id="all"><a href="#" class="blackLink">All</a></span>
 </div>
 
 <div id="canvas_container">
@@ -296,7 +296,7 @@
         function draw_arrows_and_paint_countries()
         {
 
-            $.getJSON("test.php?direction="+direction+"&country="+currentCountry+"", function(data) {
+            $.getJSON("test.php?simid=3&direction="+direction+"&country="+currentCountry+"", function(data) {
                 var countries_div = $("#countries");
                 var country_name_div = $("#country_name");
                 countries_div.empty();
@@ -415,6 +415,12 @@
                e.preventDefault();
 
                direction='in';
+               redraw();
+            });
+            $("#all").click(function(e){
+               e.preventDefault();
+
+               direction='all';
                redraw();
             });
             $("#geoloc_me").click(function(e){
