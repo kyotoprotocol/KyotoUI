@@ -138,11 +138,15 @@ switch ($_GET['func']) {
                 $trades['cdmCount']++;
             }
         }
-        
+
         $trades['totalTradeValue'] = '$'.$trades['totalTradeValue'];
         $trades['maxCreditValue'] = '$'.(int)$maxCreditValue;
         $trades['minCreditValue'] = '$'.(int)$minCreditValue;
-        $trades['averageCreditValue'] = '$'.$trades['averageCreditValue']/$trades['tradeCount'];
+        
+        if($trades['averageCreditValue'] != 0 && $trades['tradeCount'] != 0){
+            $trades['averageCreditValue'] = '$'.$trades['averageCreditValue']/$trades['tradeCount'];
+        } else $trades['averageCreditValue'] = 0;
+        
         
         //Bundle output and send to the page      
         $output = array('stats' => $global, 'countries' => $params, 'trades' => $trades);
