@@ -110,7 +110,7 @@ switch ($_GET['func']) {
 
 
 //Generate country data
-        $countries = $result->find(array("simID" => (string)$id));
+        $countries = $result->find(array("simID" => (string)$id), array());
             
 //Generate trades data
         
