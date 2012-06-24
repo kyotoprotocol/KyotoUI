@@ -88,7 +88,13 @@ switch ($_GET['func']) {
             //final year totals here
             $last['totalCarbonOutput'] += $f->getCarbonOutput();
             $last['globalGDP'] += $f->getGdp();
-            if(($f->getIsKyotoMember() == 'ANNEXONE') OR ($f->getIsKyotoMember() == 'NONANNEXONE')){ $global['numberOfMemberCountries']++;}
+            
+            if(($f->getIsKyotoMember() == 'ANNEXONE') OR ($f->getIsKyotoMember() == 'NONANNEXONE')){ 
+                if($f->getQuarter() == 3){
+                    $global['numberOfMemberCountries']++;
+                }
+            }
+            
             $global['finalYearGlobalEmissionTarget'] += $f->getEmissionsTarget();
         }
         foreach($firstYearResults as $r){
@@ -104,7 +110,7 @@ switch ($_GET['func']) {
 
 
 //Generate country data
-        $countries = $result->find(array("simID" => (string)$id));
+        $countries = $result->find(array("simID" => (string)$id), array());
             
 //Generate trades data
         
