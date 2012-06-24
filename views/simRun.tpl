@@ -78,7 +78,7 @@
        style="width: 0%"></div>
 </div>
  
-<div class="span8 offset2">
+<div class="span10 offset2">
     <div id="progressoutput" class="well">
     
     </div>
