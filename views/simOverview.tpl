@@ -185,7 +185,7 @@
                                {if $c == 0}
                                    <td>Not Set</td>
                                {else}
-                                <td>{date("M j, Y  g:i a", substr($c, 0, -3))}</td>
+                                <td>{date("M j, Y  g:i a", (int)substr($c, 0, -3))}</td>
                                 {/if}
                                 </tr>
                     {elseif $key == 'parameters'}
