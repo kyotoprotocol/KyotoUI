@@ -1,13 +1,12 @@
 <?php
 
-class ResultModel extends BaseMongoRecord 
+class CountryTotalsModel extends BaseMongoRecord 
 {
-    protected static $collectionName = 'results';
+    protected static $collectionName = 'countrytotals';
     
     public function beforeSave()
     {
         $this->setGDP(new MongoInt64($this->getGDP()));
-        $this->setGDPRate(new MongoInt64($this->getGDPRate()));
         $this->setArableLandArea(new MongoInt64($this->getArableLandArea()));
         $this->setAvailableToSpend(new MongoInt64($this->getAvailableToSpend()));
         $this->setCarbonAbsorption(new MongoInt64($this->getCarbonAbsorption()));
@@ -15,6 +14,8 @@ class ResultModel extends BaseMongoRecord
         $this->setCarbonOutput(new MongoInt64($this->getCarbonOutput()));
         $this->setEmissionsTarget(new MongoInt64($this->getEmissionsTarget()));
         $this->setEnergyOutput(new MongoInt64($this->getEnergyOutput()));
+    
+        //may need to add more here
     }
 }
 ?>

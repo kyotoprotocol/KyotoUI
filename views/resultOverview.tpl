@@ -10,40 +10,34 @@
         $(".nav-tabs").button();
         $("#loading").show();    
         $.ajax({
-            type: "GET",
+            type:  "GET",
             url: "ajax.php",
             data: {func : 'result', simid : {/literal}{$simid}{literal}},
             success: function(data) {
                 $("#loading").delay(100).slideUp('slow');
                 console.log(data);
-                updateMotionChart(data.countries);
-                //arrayCountriesTool(data, 'carbonOutput', 'geochart');
+                window.glbldata = data;
+                updateMotionChart(data);
+                arrayCountriesTool(data, 'carbonOutput', 'geochart');
                 arrayStatsTool(data);
                 arrayTradesTool(data);
-                    arrayParamsTool(data);
-                updateLineChart(data);  //pass some useful data here parameters = data: ..., options:....
-                addNotices(data);
+                //updateLineChart(data);  //pass some useful data here parameters = data: ..., options:....
+                //addNotices(data);
             }
         });
             
             
         function arrayCountriesTool(data, field){
             var newArray = [];
-            $.each(data, function(index, element){
-                if(index == 'countries'){
-                    newArray.push(['Country', field]);
-                    $.each(element, function(index, output){
-                        newArray.push([output['ISO2'], parseInt(output[field])]);
-                        $.each(output['notices'], function(ind, op){
-                            console.log(ind);
-                                console.log(op);
-                            $("#simulationNotices").append(ind+' : '+op);    
-                        });    
-                    });
-                        
-                    return newArray;
-                }
+            newArray.push(['Country', field]);
+            $.each(data.totals, function(index, element){
+                        newArray.push([element['ISO2'], parseInt(element[field])]);
+                        //$.each(output['notices'], function(ind, op){
+                         //   $("#simulationNotices").append(ind+' : '+op);    
+                        //});    
             });
+                console.log(newArray);
+                updateGeochart(newArray);
         };
             
         function arrayStatsTool(data){
@@ -63,13 +57,16 @@
             
         function arrayTradesTool(data){
             $.each(data.trades, function(index, element){
-                $('#'+ index).append(element);
+                if(index == "totalTradeValue"){
+                    $('#'+ index).append((element/1000000000).toFixed(1)+'B');
+                } else {
+                    $('#'+ index).append((element).toFixed(0));
+                }
             });
         }
             
         function arrayParamsTool(data){
             $.each(data.params, function(index, element){
-                console.log('hello');
                 $('#' + index).append(element);
             });
         }
@@ -77,30 +74,27 @@
             
         // specific functionality (data array is available here)
         $(".geochart_buttons").children().click( function(e) {
-            arrayCountriesTool(data, $(this).attr('id'), 'geochart');
+            arrayCountriesTool(glbldata, $(this).attr('id'), 'geochart');
         });
             
     });
         
     function updateGeochart(parameters){
-        if(window.geochart.ready()) {
+        if(window.geochart) {
             window.geochart.clearChart();  // make chart ready for re-population
         } else {
             window.geochart = new google.visualization.GeoChart(document.getElementById('geo_chart'));
         }
-        var data = google.visualization.arrayToDataTable(parameters.data); // set parameters as data
-        if(parameters.options){
-            var options = parameters.options;
-        } else { //default set up    
-            var options = {
-                colorAxis: { colors: ['#c5e5c5', '#2c662c']},
-                datalessRegionColor: ['#da4f49'],
-                width: 960,
-                height: 500,
-                magnifyingGlass: {enable: true, zoomFactor: 100.0}
-            };
+        var data = google.visualization.arrayToDataTable(parameters); // set parameters as data
+        var options = {
+            colorAxis: { colors: ['#c5e5c5', '#2c662c']},
+            datalessRegionColor: ['#da4f49'],
+            width: 960,
+            height: 500,
+            magnifyingGlass: {enable: true, zoomFactor: 100.0}
         }
-        //draw the chart    
+        //draw the chart   
+            console.log(data);
         window.geochart.draw(data, options);
     }
 
@@ -125,12 +119,9 @@
     function updateMotionChart(parameters){
         var data = new google.visualization.DataTable();
         var rows = [];
-        $.each(parameters, function(index, output){
-            //console.log(index);
-            //console.log(output['ISO']);
-            rows.push([output['ISO'], new Date(index,1,1), parseInt(output['carbonOutput']), parseInt(output['GDP']), output['isKyotoMember']]);
+        $.each(parameters.countries, function(index, output){
+            rows.push([output['ISO'], new Date(output['year'],0,1), parseInt(output['carbonOutput']), parseInt(output['GDP']), output['isKyotoMember']]);
         });
-            console.log(rows);
         data.addColumn('string', 'Country');
         data.addColumn('date', 'Date');
         data.addColumn('number', 'Carbon Output');
@@ -210,6 +201,7 @@
         <div class="well" style="font-size:11px;">
         <strong>Total Trade Value:</strong>
         <div id="totalTradeValue" style="font-size:32px;">
+            $
         </div>
         </div>
     </div>
@@ -217,6 +209,7 @@
         <div class="well" style="font-size:11px;">
         <strong>Max. Credit Value:</strong>
         <div id="maxCreditValue" style="font-size:32px;">
+            $
         </div>
         </div>
     </div>
@@ -224,6 +217,7 @@
         <div class="well" style="font-size:11px;">
         <strong>Min. Credit Value:</strong>
         <div id="minCreditValue" style="font-size:32px;">
+            $
         </div>
         </div>
     </div>
@@ -231,6 +225,7 @@
         <div class="well" style="font-size:11px;">
         <strong>Ave. Credit Value:</strong>
         <div id="averageCreditValue" style="font-size:32px;">
+            $
         </div>
         </div>
     </div>
@@ -316,7 +311,7 @@
 
 <div class="row">
     <div class="span12">
-        <h2>Motion Chart (the bellex)</h2>
+        <h2>GDP and Carbon Output Over Time</h2>
     </div>
 </div>
 
@@ -330,7 +325,7 @@
     </div>
 </div>
 
-
+<br>
 <!-- TRADE OUTPUT HERE -->
 <div id="credit_cost_chart" style="width: 900px; height: 500px;"></div>
 

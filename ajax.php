@@ -59,6 +59,8 @@ switch ($_GET['func']) {
         
         $result = new ResultModel();
         
+        $countrytotals = new CountryTotalsModel();
+        
         $trade = new TradeModel();
         $tradeArray = $trade->find(array("simID" => (string)$id));
         
@@ -111,9 +113,11 @@ switch ($_GET['func']) {
 
 //Generate country data
         $countries = $result->findAll(array('simID' => $intid));
-        foreach($countries as $country){
-            $params[] = $country->getAttributes();
+        foreach($countries as $key => $country){
+            $params[$key] = $country->getAttributes();
+            $params[$key]['ISO2'] = toISO2($params[$key]['ISO']); 
         }
+        
         
 //Generate trades data
         
@@ -148,17 +152,17 @@ switch ($_GET['func']) {
             }
         }
 
-        $trades['totalTradeValue'] = '$'.$trades['totalTradeValue'];
-        $trades['maxCreditValue'] = '$'.(int)$maxCreditValue;
-        $trades['minCreditValue'] = '$'.(int)$minCreditValue;
+        $trades['totalTradeValue'] = (int)$trades['totalTradeValue'];
+        $trades['maxCreditValue'] = (int)$maxCreditValue;
+        $trades['minCreditValue'] = (int)$minCreditValue;
         
         if($trades['averageCreditValue'] != 0 && $trades['tradeCount'] != 0){
-            $trades['averageCreditValue'] = '$'.$trades['averageCreditValue']/$trades['tradeCount'];
+            $trades['averageCreditValue'] = (int)$trades['averageCreditValue']/$trades['tradeCount'];
         } else $trades['averageCreditValue'] = 0;
         
         
         //Bundle output and send to the page      
-        $output = array('stats' => $global, 'countries' => $params, 'trades' => $trades);
+        $output = array('stats' => $global, 'totals' => $totals, 'countries' => $params, 'trades' => $trades);
         
         ajaxSend($output);
         break;
