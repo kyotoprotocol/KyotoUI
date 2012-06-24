@@ -1,7 +1,7 @@
 name,Non Annex One Sim
 classname,uk.ac.ic.kyoto.simulations.Simulation
 finishTime,202
-description,A simulation filled with 20 non Annex One Countries
+description,A simulation filled with 20+ non Annex One Countries
 author,CT
 param.GROWTH_MARKET_STATE,1
 param.STABLE_MARKET_STATE,0.5
@@ -19,7 +19,7 @@ param.CARBON_ABSORPTION_PRICE_MAX,750
 param.FOREST_CARBON_ABSORPTION,0.0156
 param.MONITOR_COST_PERCENTAGE,0.00025
 param.SANCTION_RATE,0.0025
-param.MONITORING_PRICE,850
+param.MONITORING_PRICE,300000000
 param.YEARS_IN_SESSION,10
 param.TARGET_REDUCTION,0.95
 param.MINIMUM_KYOTO_REJOIN_TIME,4
