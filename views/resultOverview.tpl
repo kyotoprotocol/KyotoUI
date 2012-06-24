@@ -127,11 +127,11 @@
         var rows = [];
         $.each(parameters, function(index, output){
             $.each(output, function(ind, op){
-               console.log(ind);
-                   console.log(op);
+               //console.log(ind);
+                 //  console.log(op);
             });
-            //console.log(index);
-              //  console.log(output);
+            console.log(index);
+            console.log(output);
             //rows.push([index], new Date();
         });
         data.addColumn('string', 'Country');
