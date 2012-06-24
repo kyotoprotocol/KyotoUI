@@ -110,7 +110,7 @@ switch ($_GET['func']) {
 
 
 //Generate country data
-        $countries = $result->findAll();
+        $countries = $result->findAll(array('simID' => $intid));
         foreach($countries as $country){
             $params[] = $country->getAttributes();
         }
