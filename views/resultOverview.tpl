@@ -54,7 +54,7 @@
                 } else if(index == 'carbonOutput') {
                     $('#'+ index).text((element/1000000).toFixed(0));
                 } else if(index == 'finalYearGlobalEmissionTarget'){
-                    $('#' + index).text((element/1000000).toFixed(1));
+                    $('#' + index).text((element/1000000).toFixed(0));
                 } else {
                     $('#'+ index).text(element);
                 }
@@ -126,29 +126,17 @@
         var data = new google.visualization.DataTable();
         var rows = [];
         $.each(parameters, function(index, output){
-            $.each(output, function(ind, op){
-               //console.log(ind);
-                 //  console.log(op);
-            });
-            console.log(index);
-            console.log(output);
-            //rows.push([index], new Date();
+            //console.log(index);
+            //console.log(output['ISO']);
+            rows.push([output['ISO'], new Date(index), parseInt(output['carbonOutput']), parseInt(output['GDP']), output['isKyotoMember']]);
         });
+            console.log(rows);
         data.addColumn('string', 'Country');
         data.addColumn('date', 'Date');
         data.addColumn('number', 'Carbon Output');
         data.addColumn('number', 'GDP');
         data.addColumn('string', 'Annex');
-        data.addRows([
-            //foreach countries as country...
-            //get its gdp and its 
-            ['Apples', new Date(1988,0,1), 1000, 300, 'East'],
-            ['Oranges', new Date(1988,0,1), 950, 200, 'West'],
-            ['Bananas', new Date(1988,0,1), 300, 250, 'West'],
-            ['Apples', new Date(1988,1,1), 1200, 400, 'East'],
-            ['Oranges', new Date(1988,1,1), 900, 150, 'West'],
-            ['Bananas', new Date(1988,1,1), 788, 617, 'West']
-        ]);
+        data.addRows(rows);
 
         var motionchart = new google.visualization.MotionChart(
             document.getElementById('motion_chart'));
