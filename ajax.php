@@ -93,8 +93,8 @@ switch ($_GET['func']) {
         }
         foreach($firstYearResults as $r){
             //first year totals here
-            $first['totalCarbonOutput'] += $f->getCarbonOutput();
-            $first['globalGDP'] += $f->getGdp();
+            $first['totalCarbonOutput'] += $r->getCarbonOutput();
+            $first['globalGDP'] += $r->getGdp();
         }
         
         //Calculations here
