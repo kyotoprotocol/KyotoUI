@@ -212,6 +212,8 @@ jQuery(function($) {
                                 <li><a href="export.php?simid={$s["_id"]}">Export to CSV</a></li>
                                 <li><a href="simEdit.php?simid={$s["_id"]}">Edit</a></li>
                                 <li><a href="rawResultOutput.php?simid={$s["_id"]}">Raw RESULTS</a></li>
+                                <li><a href="maps.php?simid={$s["_id"]}">MAPS TEMP</a></li>
+
                                 <li><a data-toggle="modal" href="#sim{$s["_id"]}">Copy</a></li>
                                 <li><a data-toggle="modal" href="#simdel{$s["_id"]}">Delete</a></li>
                                 <!--            <li class="divider"></li>
@@ -236,6 +238,7 @@ jQuery(function($) {
                                 <li><a href="export.php?simid={$s["_id"]}">Export to CSV</a></li>
                                 <li><a href="simEdit.php?simid={$s["_id"]}">Edit</a></li>
                                 <li><a href="rawResultOutput.php?simid={$s["_id"]}">Raw RESULTS</a></li>
+                                <li><a href="maps.php?simid={$s["_id"]}">MAPS TEMP</a></li>
                                 <li><a data-toggle="modal" href="#sim{$s["_id"]}">Copy</a></li>
                                 <li><a data-toggle="modal" href="#simdel{$s["_id"]}">Delete</a></li>
                                 <!--            <li class="divider"></li>

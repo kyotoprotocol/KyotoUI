@@ -5,38 +5,13 @@
  * and open the template in the editor.
  */
 
-define ("DB", "presage");
-define ("SIMTREE", "simulations");
-define ("LOCAL_HOST", "127.0.0.1:27017");
-include('../libs/mongorecord/BaseMongoRecord.php');
-include('../models/TradeModel.php');
-session_start();
-if(isset($_SESSION['database'])) {
-    if($_SESSION['database']=='remote') {
-        define ("HOST", REMOTE_HOST);
-    } else {
-        $_SESSION['database']='local';
-        define ("HOST", LOCAL_HOST);
-    }
-} else {
-        $_SESSION['database']='local';
-        define ("HOST", LOCAL_HOST);    
-}
+include('admin/config.php');
 
-try {
-BaseMongoRecord::$connection = new Mongo(HOST);
-BaseMongoRecord::$database = 'presage';
-    } catch(MongoConnectionException $e) {
-        //var_dump($e);
-    }
-
-
-// INCLUDE CONFIG LATER
 //$_GET['direction']
 $country = $_GET['country'];
 $simID = $_GET['simid'];
 
-$filename = "code_to_coordinates.json";
+$filename = "maps/code_to_coordinates.json";
 $handle = fopen($filename, "r");
 $contents = fread($handle, filesize($filename));
 fclose($handle);
@@ -45,7 +20,7 @@ unset($handle);
 unset($contents);
 unset($filename);
 
-$filename = "code_to_name.json";
+$filename = "maps/code_to_name.json";
 $handle = fopen($filename, "r");
 $contents = fread($handle, filesize($filename));
 fclose($handle);
