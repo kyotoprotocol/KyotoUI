@@ -124,11 +124,11 @@
         
     function updateMotionChart(parameters){
         var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Fruit');
+        data.addColumn('string', 'Country');
         data.addColumn('date', 'Date');
-        data.addColumn('number', 'Sales');
-        data.addColumn('number', 'Expenses');
-        data.addColumn('string', 'Location');
+        data.addColumn('number', 'Carbon Output');
+        data.addColumn('number', 'GDP');
+        data.addColumn('string', 'Annex');
         data.addRows([
             ['Apples', new Date(1988,0,1), 1000, 300, 'East'],
             ['Oranges', new Date(1988,0,1), 950, 200, 'West'],
@@ -140,7 +140,7 @@
 
         var motionchart = new google.visualization.MotionChart(
             document.getElementById('motion_chart'));
-        motionchart.draw(data, {'width': 800, 'height': 400});
+        motionchart.draw(data, {'width': 960, 'height': 500});
     }
     
     {/literal}    
@@ -313,16 +313,6 @@
         
     </div>
 </div>
-<hr>
-<div class="row">
-    <div class="span12">
-        <h2>Global CO2 Emissions VS Global GDP</h2>
-    </div>
-</div>
-
-
-<!-- TRADE OUTPUT HERE -->
-<div id="credit_cost_chart" style="width: 900px; height: 500px;"></div>
 
 <div class="row">
     <div class="span12">
@@ -333,6 +323,16 @@
 
 <!-- TRADE OUTPUT HERE -->
 <div id="motion_chart"></div>
+
+<div class="row">
+    <div class="span12">
+        <h2>Global CO2 Emissions VS Global GDP</h2>
+    </div>
+</div>
+
+
+<!-- TRADE OUTPUT HERE -->
+<div id="credit_cost_chart" style="width: 900px; height: 500px;"></div>
 
 <div class="row">
     <div class="span12">
