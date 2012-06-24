@@ -16,7 +16,7 @@
             success: function(data) {
                 $("#loading").delay(100).slideUp('slow');
                 console.log(data);
-                updateMotionChart();
+                updateMotionChart(data);
                 //arrayCountriesTool(data, 'carbonOutput', 'geochart');
                 arrayStatsTool(data);
                 arrayTradesTool(data);
@@ -124,12 +124,20 @@
         
     function updateMotionChart(parameters){
         var data = new google.visualization.DataTable();
+        var rows = [];
+        $.each(parameters.countries, function(index, output){
+            console.log(index);
+                console.log(output);
+            //rows.push([index], new Date();
+        });
         data.addColumn('string', 'Country');
         data.addColumn('date', 'Date');
         data.addColumn('number', 'Carbon Output');
         data.addColumn('number', 'GDP');
         data.addColumn('string', 'Annex');
         data.addRows([
+            //foreach countries as country...
+            //get its gdp and its 
             ['Apples', new Date(1988,0,1), 1000, 300, 'East'],
             ['Oranges', new Date(1988,0,1), 950, 200, 'West'],
             ['Bananas', new Date(1988,0,1), 300, 250, 'West'],

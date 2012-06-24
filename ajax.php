@@ -64,7 +64,7 @@ switch ($_GET['func']) {
         
         //Generate global data
         
-        $params = array();
+        $countries = array();
         $global = array();
         
         $finalYearResultsQuery = $result->findOne(array("simID" => $intid, "quarter" => (int)3), array("sort" => array("year" => -1)));
@@ -104,7 +104,7 @@ switch ($_GET['func']) {
 
 
 //Generate country data
-        //params[] = blip blap
+        $countries = $result->find(array("simID" => (string)$id));
             
 //Generate trades data
         
@@ -149,7 +149,7 @@ switch ($_GET['func']) {
         
         
         //Bundle output and send to the page      
-        $output = array('stats' => $global, 'countries' => $params, 'trades' => $trades);
+        $output = array('stats' => $global, 'countries' => $countries, 'trades' => $trades);
         
         ajaxSend($output);
         break;
