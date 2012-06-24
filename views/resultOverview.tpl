@@ -10,7 +10,7 @@
         $(".nav-tabs").button();
         $("#loading").show();    
         $.ajax({
-            type: "GET",
+            type:  "GET",
             url: "ajax.php",
             data: {func : 'result', simid : {/literal}{$simid}{literal}},
             success: function(data) {
@@ -30,7 +30,7 @@
         function arrayCountriesTool(data, field){
             var newArray = [];
             newArray.push(['Country', field]);
-            $.each(data.countries, function(index, element){
+            $.each(data.totals, function(index, element){
                         newArray.push([element['ISO2'], parseInt(element[field])]);
                         //$.each(output['notices'], function(ind, op){
                          //   $("#simulationNotices").append(ind+' : '+op);    
