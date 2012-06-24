@@ -6,11 +6,13 @@ class SimulationModel extends BaseMongoRecord
     
     public function beforeSave()
     {
-        $this->setFinishedAt(new MongoInt32($this->getFinishedAt()));
+        $this->setID(new MongoInt64($this->getID()));
+        $this->setFinishedAt(new MongoInt64($this->getFinishedAt()));
         $this->setCreatedAt(new MongoInt64($this->getCreatedAt()));
         $this->setParent(new MongoInt64($this->getParent()));
-        $this->setFinishTime(new MongoInt64($this->getFinishTime()));
+        $this->setFinishTime(new MongoInt32($this->getFinishTime()));
         $this->setCurrentTime(new MongoInt32($this->getCurrentTime()));
+        $this->setStartedAt(new MongoInt64($this->getStartedAt()));
     }
 }
 
