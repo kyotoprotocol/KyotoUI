@@ -59,6 +59,8 @@ switch ($_GET['func']) {
         
         $result = new ResultModel();
         
+        $countrytotals = new CountryTotalsModel();
+        
         $trade = new TradeModel();
         $tradeArray = $trade->find(array("simID" => (string)$id));
         
@@ -160,7 +162,7 @@ switch ($_GET['func']) {
         
         
         //Bundle output and send to the page      
-        $output = array('stats' => $global, 'countries' => $params, 'trades' => $trades);
+        $output = array('stats' => $global, 'totals' => $totals, 'countries' => $params, 'trades' => $trades);
         
         ajaxSend($output);
         break;
