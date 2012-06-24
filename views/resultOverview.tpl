@@ -128,7 +128,7 @@
         $.each(parameters, function(index, output){
             //console.log(index);
             //console.log(output['ISO']);
-            rows.push([output['ISO'], new Date(index), parseInt(output['carbonOutput']), parseInt(output['GDP']), output['isKyotoMember']]);
+            rows.push([output['ISO'], new Date(index,1,1), parseInt(output['carbonOutput']), parseInt(output['GDP']), output['isKyotoMember']]);
         });
             console.log(rows);
         data.addColumn('string', 'Country');
