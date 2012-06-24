@@ -124,11 +124,11 @@
         
     function updateMotionChart(parameters){
         var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Fruit');
+        data.addColumn('string', 'Country');
         data.addColumn('date', 'Date');
-        data.addColumn('number', 'Sales');
-        data.addColumn('number', 'Expenses');
-        data.addColumn('string', 'Location');
+        data.addColumn('number', 'Carbon Output');
+        data.addColumn('number', 'GDP');
+        data.addColumn('string', 'Annex');
         data.addRows([
             ['Apples', new Date(1988,0,1), 1000, 300, 'East'],
             ['Oranges', new Date(1988,0,1), 950, 200, 'West'],
@@ -140,7 +140,7 @@
 
         var motionchart = new google.visualization.MotionChart(
             document.getElementById('motion_chart'));
-        motionchart.draw(data, {'width': 800, 'height': 400});
+        motionchart.draw(data, {'width': 960, 'height': 500});
     }
     
     {/literal}    
