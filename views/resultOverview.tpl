@@ -120,7 +120,7 @@
         var data = new google.visualization.DataTable();
         var rows = [];
         $.each(parameters.countries, function(index, output){
-            rows.push([output['ISO'], new Date(index,0,1), parseInt(output['carbonOutput']), parseInt(output['GDP']), output['isKyotoMember']]);
+            rows.push([output['ISO'], new Date(output['year'],0,1), parseInt(output['carbonOutput']), parseInt(output['GDP']), output['isKyotoMember']]);
         });
         data.addColumn('string', 'Country');
         data.addColumn('date', 'Date');
