@@ -1,7 +1,7 @@
 name,Non Annex One Sim
 classname,uk.ac.ic.kyoto.simulations.Simulation
 finishTime,202
-description,A simulation filled with 20 non Annex One Countries
+description,A simulation filled with 20+ non Annex One Countries
 author,CT
 param.GROWTH_MARKET_STATE,1
 param.STABLE_MARKET_STATE,0.5
