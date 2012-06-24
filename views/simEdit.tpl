@@ -107,7 +107,7 @@
                         {if $s == '0'}
                             <td><input type="text" name="{$k}" value="{$s}" readonly="true"></td>
                         {else}
-                        <td><input type="text" name="{$k}" value="{$s}" readonly="true">  ({date("M j, Y  g:i a", substr($s, 0, -3))})</td>
+                        <td><input type="text" name="{$k}" value="{$s}" readonly="true">  ({date("M j, Y  g:i a", (int)substr($s, 0, -3))})</td>
                         {/if}
                     </tr>
                     {else if $k == "name" or $k=='author' or $k=='description'}
