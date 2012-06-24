@@ -110,8 +110,11 @@ switch ($_GET['func']) {
 
 
 //Generate country data
-        $countries = $result->find(array("simID" => (string)$id), array());
-            
+        $countries = $result->findAll();
+        foreach($countries as $country){
+            $params[] = $country->getAttributes();
+        }
+        
 //Generate trades data
         
         $trades['totalTradeValue'] = 0;
@@ -155,7 +158,7 @@ switch ($_GET['func']) {
         
         
         //Bundle output and send to the page      
-        $output = array('stats' => $global, 'countries' => $countries, 'trades' => $trades);
+        $output = array('stats' => $global, 'countries' => $params, 'trades' => $trades);
         
         ajaxSend($output);
         break;

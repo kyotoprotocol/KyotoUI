@@ -16,7 +16,7 @@
             success: function(data) {
                 $("#loading").delay(100).slideUp('slow');
                 console.log(data);
-                updateMotionChart(data);
+                updateMotionChart(data.countries);
                 //arrayCountriesTool(data, 'carbonOutput', 'geochart');
                 arrayStatsTool(data);
                 arrayTradesTool(data);
@@ -125,9 +125,13 @@
     function updateMotionChart(parameters){
         var data = new google.visualization.DataTable();
         var rows = [];
-        $.each(parameters.countries, function(index, output){
-            console.log(index);
-                console.log(output);
+        $.each(parameters, function(index, output){
+            $.each(output, function(ind, op){
+               console.log(ind);
+                   console.log(op);
+            });
+            //console.log(index);
+              //  console.log(output);
             //rows.push([index], new Date();
         });
         data.addColumn('string', 'Country');
