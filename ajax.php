@@ -74,9 +74,9 @@ switch ($_GET['func']) {
 
         $global['finalYear'] = $finalYear;
         
-        $finalYearResults = $result->find(array("simID" => $id), array("sort" => array("year" => $finalYear)));
+        //$finalYearResults = $result->find(array("simID" => $id), array("sort" => array("year" => $finalYear)));
 
-        $firstYearResults = $result->find(array("simID" => $id), array("sort" => array("year" => "0")));
+       // $firstYearResults = $result->find(array("simID" => $id), array("sort" => array("year" => "0")));
         
         $global['finalYearGlobalEmissionTarget'] = 0;
         $global['numberOfMemberCountries'] = 0;
@@ -86,7 +86,7 @@ switch ($_GET['func']) {
         $first['globalGDP'] = 0;
         
         
-        foreach($finalYearResults as $f){
+     /*   foreach($finalYearResults as $f){
             //final year totals here
             $last['totalCarbonOutput'] += $f->getCarbonOutput();
             $last['globalGDP'] += $f->getGdp();
@@ -109,14 +109,36 @@ switch ($_GET['func']) {
         $global['carbonReduction'] = $last['totalCarbonOutput'] - $first['totalCarbonOutput'];
         $global['globalGDPChange'] = $last['globalGDP'] - $first['globalGDP'];
         
-
+*/
 
 //Generate country data
         $countries = $result->findAll(array('simID' => $intid, 'quarter' => (int)3));
         foreach($countries as $key => $country){
+            if ($key->getYear()==$finalYear) {
+            $last['totalCarbonOutput'] += $key->getCarbonOutput();
+            $last['globalGDP'] += $key->getGdp();
+            
+            if(($key->getIsKyotoMember() == 'ANNEXONE') OR ($key->getIsKyotoMember() == 'NONANNEXONE')){ 
+                if($key->getQuarter() == 3){
+                    $global['numberOfMemberCountries']++;
+                }
+            }
+            
+            
+            }
+            if ($key->getYear()==0) {
+            $first['totalCarbonOutput'] += $key->getCarbonOutput();
+            $first['globalGDP'] += $key->getGdp();
+            }
+            
             $params[$key] = $country->getAttributes();
             $params[$key]['ISO2'] = toISO2($params[$key]['ISO']); 
+            
+            
+            
         }
+        $global['carbonReduction'] = $last['totalCarbonOutput'] - $first['totalCarbonOutput'];
+        $global['globalGDPChange'] = $last['globalGDP'] - $first['globalGDP'];
         
         
 //Generate trades data
