@@ -167,8 +167,8 @@
 <div class="row">
     <div class="span3">
         <div class="well">
-            <p id="globalGDPChange" style="color: green;line-height: 96px;font-size: 96px; font-weight: bold"></p>
-            <h4>Global GDP Increase</h4>
+            <p id="globalGDPChange" style="color: green;line-height: 96px;font-size: 28px; font-weight: bold"></p>
+            <h4>Global GDP Change</h4>
         </div>
         <div class="well">
             <p id="numberOfMemberCountries" style="color: green;line-height: 96px;font-size: 96px; font-weight: bold"></p>
