@@ -4,7 +4,7 @@
   <meta charset="utf-8">   
   <title>{block name=title}Kyoto Web App{/block}</title>
   </html>
-        {*<link rel=StyleSheet href="includes/css/bootstrap.css" type="text/css">*}
+        <link rel=StyleSheet href="includes/css/bootstrap.css" type="text/css">
         <link rel=StyleSheet href="includes/css/kyoto.css" type="text/css"> 
     <script src="includes/js/bootstrap.js"></script>
     <script type="text/javascript">
@@ -88,9 +88,9 @@
                 {$error}
             </div>
         {/if}
-        {block name=body}     
+        {block name=body}
         {/block}
     </div>
-        {block name=mapbody}     
-        {/block}
+    {block name=mapbody}
+    {/block}
 </body>

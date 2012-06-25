@@ -30,7 +30,7 @@
      overflow: -moz-scrollbars-vertical;
      overflow: scroll;
     }
-    #container{
+    #container2{
     margin: auto;
     width:1200px;
     position: relative;
@@ -44,24 +44,25 @@
 {/block}
 {block name=body}
 <h1>flapsicles</h1>
-{/block}
-{block name=mapbody}
-<div id="container">
-
-<div id="country_select_div">
-    <span id="explanation">Click on the map or pick a country here:</span>
-
-    <select id="country_select">
-    </select>
+<div class="row">
+    <div class="span4">
+        <select style="display: inline" class="span4" id="country_select">
+        </select>
+    </div>
+    <div class="span6">
+        <div  style="display: inline" class="btn-group" data-toggle="buttons-radio">
+            <button href="#" id="in"  class="btn">Buyer</button>
+            <button href="#" id="out" class="btn">Seller</button>
+            <button href="#" id="both" class="btn">Both</button>
+            <button href="#" id="all" class="btn">All Trades, All Countries</button>
+        </div>
+    </div>
 </div>
 
+{/block}
+{block name=mapbody}
 
-    <div class="btn-group" data-toggle="buttons-radio">
-        <a href="#" id="in"  class="btn">Bought from</a>
-        <a href="#" id="out" class="btn">Sold to</a>
-        <a href="#" id="all" class="btn">All</a>
-    </div>
-
+<div id="container2">
 
 <div id="canvas_container">
     {literal}
@@ -419,6 +420,12 @@
                e.preventDefault();
 
                direction='all';
+               redraw();
+            });
+            $("#both").click(function(e){
+               e.preventDefault();
+
+               direction='both';
                redraw();
             });
             $("#geoloc_me").click(function(e){
