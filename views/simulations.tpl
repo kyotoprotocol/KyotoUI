@@ -18,6 +18,7 @@ jQuery(function($) {
       if(button.val() == hidden.val()) {
         button.addClass('active');
       }
+      $('dave').submit();
     });
   });
 });
