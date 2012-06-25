@@ -17,25 +17,34 @@
                 $("#loading").delay(100).slideUp('slow');
                 window.glbldata = data;
                 updateMotionChart(data);
-                arrayCountriesTool(data, 'carbonOutput', 'geochart');
+                arrayCountriesTool(data, 'Country', 'carbonOutput', 'geochart');
                 arrayStatsTool(data);
                 arrayTradesTool(data);
+                    
                 //updateLineChart(data);  //pass some useful data here parameters = data: ..., options:....
                 //addNotices(data);
             }
         });
             
             
-        function arrayCountriesTool(data, field){
+        function arrayCountriesTool(data, key, field, chart){
             var newArray = [];
-            newArray.push(['Country', field]);
+            if(chart == 'geochart'){
+                newArray.push([key, field]);
+            } else if (chart == 'linechart'){
+                newArray.push([key, field]);
+            }
             $.each(data.countries, function(index, element){
                         newArray.push([element['ISO2'], parseInt(element[field])]);
                         //$.each(output['notices'], function(ind, op){
                          //   $("#simulationNotices").append(ind+' : '+op);    
                         //});    
             });
-            updateGeochart(newArray);
+            if(chart == 'geochart'){
+                updateGeochart(newArray);
+            } else if(chart == 'linechart') {
+                updateLineChart(newArray);  
+            }  
         };
             
         function arrayStatsTool(data){
