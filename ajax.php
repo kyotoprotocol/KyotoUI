@@ -132,7 +132,7 @@ switch ($_GET['func']) {
                 $first['totalCarbonOutput'] = $country->getCarbonOutput();
                 $first['totalCarbonAbsorption'] = $country->getCarbonAbsorption();
                 $first['globalGDP'] = $country->getGDP();
-                var_dump($country->getGDP());
+                //var_dump($country->getGDP());
             }
             
             $params[$key] = $country->getAttributes();
