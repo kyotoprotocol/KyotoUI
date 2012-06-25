@@ -59,13 +59,20 @@ $jsonOut = array();
         $trades = $tradeQ->find(array('simID'=>$simID));
         $lines = array();
         foreach ($trades as $trade){
-            if (isset($lines[$trade->getInitiator()][$trade->getBroadcaster()])){
-                $lines[$trade->getInitiator()][$trade->getBroadcaster()]['value'] += (int)$trade->getQuantity();
+            if (isset($lines[$trade->getInitiator()])){
+                if (isset($lines[$trade->getInitiator()][$trade->getBroadcaster()])){
+                    $lines[$trade->getInitiator()][$trade->getBroadcaster()]['value'] += (int)$trade->getQuantity();
+                }else{
+                    $lines[$trade->getInitiator()][$trade->getBroadcaster()]['value'] = (int)$trade->getQuantity();
+                }
             } else {
                 $lines[$trade->getInitiator()][$trade->getBroadcaster()]['value'] = (int)$trade->getQuantity();
             }
+                
+            
         }
-        arsort($lines);
+        //arsort($lines);
+        var_dump($lines);
         foreach ($lines as $key => $value){
             foreach ($value as $country => $cost) {
                 $jsonOut[$key] = generateFlightPathArray($country, $key, (int)$cost, $countries, $names);
@@ -76,7 +83,7 @@ $jsonOut = array();
         $trades = $tradeQ->find(array('simID'=>$simID,'broadcaster'=>$country));
         $lines = array();
         foreach ($trades as $trade){
-        var_dump($trade);
+       // var_dump($trade);
             if (isset($lines[$trade->getInitiator()])){
                 $lines[$trade->getInitiator()] += (int)$trade->getQuantity();
             } else {
@@ -86,7 +93,7 @@ $jsonOut = array();
         unset($trades);
         $trades = $tradeQ->find(array('simID'=>$simID,'initiator'=>$country));
         foreach ($trades as $trade){
-        var_dump($trades);
+        //var_dump($trades);
             if (isset($lines[$trade->getBroadcaster()])){
                 $lines[$trade->getBroadcaster()] += (int)$trade->getQuantity();
             } else {
@@ -115,7 +122,7 @@ $jsonOut = array();
     }
 
 //var_dump($jsonOut);
-//header('content-type: application/json');
+header('content-type: application/json');
 echo json_encode($jsonOut);
 
 ?>
