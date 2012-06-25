@@ -59,23 +59,51 @@ $jsonOut = array();
         $trades = $tradeQ->find(array('simID'=>$simID));
         $lines = array();
         foreach ($trades as $trade){
-            if (isset($lines[$trade->getInitiator()])){
-                if (isset($lines[$trade->getInitiator()][$trade->getBroadcaster()])){
-                    $lines[$trade->getInitiator()][$trade->getBroadcaster()]['value'] += (int)$trade->getQuantity();
-                }else{
-                    $lines[$trade->getInitiator()][$trade->getBroadcaster()]['value'] = (int)$trade->getQuantity();
-                }
+            $iso1 = $trade->getInitiator();
+            $iso2 = $trade->getBroadcaster();
+            // CHECK ISO1
+            if (isset($lines[$iso1])){
+                // ISO1 EXISTS
+                    if (isset($lines[$iso1][$iso2])){
+                        // ISO1 ISO2 EXISTS
+                        $lines[$iso1][$iso2] += (int)$trade->getQuantity();
+                    }else{
+                        // DOES ISO2 ISO1 EXIST
+                        if (isset($lines[$iso2][$iso1])){
+                            //ISO2 ISO1 EXISTS
+                            $lines[$iso2][$iso1] += (int)$trade->getQuantity();
+                        } else {
+                            // MAKE ISO1 ISO2
+                            $lines[$iso1][$iso2] = (int)$trade->getQuantity();
+                        }
+                    }
             } else {
-                $lines[$trade->getInitiator()][$trade->getBroadcaster()]['value'] = (int)$trade->getQuantity();
+                // ISO1 DOESNT EXIST
+                if (isset($lines[$iso1])){
+                    //ISO2 EXISTS
+                        if (isset($lines[$iso2][$iso1])){
+                            //ISO2 ISO1 EXISTS
+                                $lines[$iso2][$iso1] += (int)$trade->getQuantity();
+                        } else {
+                            //ISO2 ISO1 DOESNT EXIST
+                                $lines[$iso1][$iso2] = (int)$trade->getQuantity();
+                        }
+                } else {
+                    //ISO2 DOESNT EXIST
+                            $lines[$iso1][$iso2] = (int)$trade->getQuantity();
+                }
             }
         }
         
         //arsort($lines);
-        var_dump($lines);
+        //var_dump($lines);
         foreach ($lines as $key => $value){
             foreach ($value as $country => $cost) {
-                echo ' Country: '. $country .' Country 2 '.$key .' Cost'.$cost .''
-                $jsonOut[$key] = generateFlightPathArray($country, $key, (int)$cost, $countries, $names);
+            /*   echo ' Country: '. 
+                        (string)$country .' Country 2 '.
+                        (string)$key .' Cost'.
+                        (string)$cost['value'].'<br>';*/
+                $jsonOut[$key] = generateFlightPathArray($country, $key, (int)$cost['value'], $countries, $names);
             }
         }
     } elseif ($_GET['direction']=='both') {
@@ -122,7 +150,7 @@ $jsonOut = array();
     }
 
 //var_dump($jsonOut);
-//header('content-type: application/json');
+header('content-type: application/json');
 echo json_encode($jsonOut);
 
 ?>
