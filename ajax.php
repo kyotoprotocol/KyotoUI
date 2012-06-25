@@ -116,6 +116,7 @@ switch ($_GET['func']) {
         foreach($countries as $key => $country){
             if ($country->getYear()==$finalYear) {
             $last['totalCarbonOutput'] = $country->getCarbonOutput();
+            $last['totalCarbonAbsorption'] = $country->getCarbonAbsorption();
             $last['globalGDP'] = $country->getGdp();
             
             if(($country->getIsKyotoMember() == 'ANNEXONE') OR ($country->getIsKyotoMember() == 'NONANNEXONE')){ 
@@ -128,6 +129,7 @@ switch ($_GET['func']) {
             }
             if ($country->getYear()==0) {
             $first['totalCarbonOutput'] = $country->getCarbonOutput();
+            $first['totalCarbonAbsorption'] = $country->getCarbonAbsorption();
             $first['globalGDP'] = $country->getGdp();
             }
             
@@ -137,7 +139,7 @@ switch ($_GET['func']) {
             
             
         }
-        $global['carbonReduction'] = $last['totalCarbonOutput'] - $first['totalCarbonOutput'];
+        $global['carbonReduction'] = ($last['totalCarbonOutput'] - $last['totalCarbonAbsorption'])- ($first['totalCarbonOutput'] - $first['totalCarbonAbsorption']);
         $global['globalGDPChange'] = $last['globalGDP'] - $first['globalGDP'];
         
         
