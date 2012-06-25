@@ -170,9 +170,9 @@ switch ($_GET['func']) {
         $cwd = getcwd();
         chdir('../kyoto/kyoto/');
         $cwd2 = getcwd();
-        $command = ('./sim-run.sh run '.(string)$sim->getID().' > /var/log/kyoto/log'.(string)$sim->getID().'.txt');
+        $command = ('sh sim-run.sh run '.(string)$sim->getID().' > /var/log/kyoto/log'.(string)$sim->getID().'.txt');
         exec($command, $output, $return);
-        chdir($cwd);
+        //chdir($cwd);
         ajaxSend(array($command, $output, $return, $cwd2));
         break;
     default : echo 'error';
