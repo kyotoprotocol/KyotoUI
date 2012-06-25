@@ -30,14 +30,14 @@
         function arrayCountriesTool(data, field){
             var newArray = [];
             newArray.push(['Country', field]);
-            $.each(data.totals, function(index, element){
+            $.each(data.countries, function(index, element){
                         newArray.push([element['ISO2'], parseInt(element[field])]);
                         //$.each(output['notices'], function(ind, op){
                          //   $("#simulationNotices").append(ind+' : '+op);    
                         //});    
             });
                 console.log(newArray);
-                updateGeochart(newArray);
+                //updateGeochart(newArray);
         };
             
         function arrayStatsTool(data){
@@ -94,7 +94,6 @@
             magnifyingGlass: {enable: true, zoomFactor: 100.0}
         }
         //draw the chart   
-            console.log(data);
         window.geochart.draw(data, options);
     }
 
