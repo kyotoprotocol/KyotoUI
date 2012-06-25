@@ -440,7 +440,7 @@
                 function() { $(this).addClass('ui-state-hover'); },
                 function() { $(this).removeClass('ui-state-hover'); }
             );
-            $('#legend').draggable();
+            /*$('#legend').draggable();*/
             $("#legend").delegate(".country_name","click",function(e){
                 previousCountry = currentCountry;
                 currentCountry = $(this).attr("value");
