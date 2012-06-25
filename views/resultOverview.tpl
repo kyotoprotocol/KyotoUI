@@ -35,7 +35,7 @@
                          //   $("#simulationNotices").append(ind+' : '+op);    
                         //});    
             });
-                //updateGeochart(newArray);
+            updateGeochart(newArray);
         };
             
         function arrayStatsTool(data){

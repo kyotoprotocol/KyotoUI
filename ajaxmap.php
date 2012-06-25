@@ -72,7 +72,7 @@ $jsonOut = array();
             
         }
         //arsort($lines);
-        var_dump($lines);
+        //var_dump($lines);
         foreach ($lines as $key => $value){
             foreach ($value as $country => $cost) {
                 $jsonOut[$key] = generateFlightPathArray($country, $key, (int)$cost, $countries, $names);
