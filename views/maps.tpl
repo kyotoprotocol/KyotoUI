@@ -43,7 +43,7 @@
 
 {/block}
 {block name=body}
-<h1>JW WOZ ERE 2012</h1>
+<h1>{$simName}</h1>
 <div class="row">
     <div class="span4">
         <select style="display: inline" class="span4" id="country_select">
@@ -67,7 +67,7 @@
 <div id="canvas_container">
     {literal}
     <script type="text/javascript">
-        var ten_colors = ["#67000D" , "#67000D" , "#67000D" , "#67000D" , "#67000D" , "#A50F15","#CB181D", "#EF3B2C", "#FB6A4A","#FC9272","#FCBBA1", "#FEE0D2", "#FFF5F0","#FFFFFF"];
+        var ten_colors = ["#2F692F" , "#376F37" , "#397139" , "#3C733C" , "#3F763F" , "#427842" , "#467C46" , "#477D47" , "#4B804B" , "#4E824E" , "#548754" , "#578A57" , "#5B8D5B" , "#5E905E" , "#609160" , "#639463" , "#669666" , "#699969" , "#6C9B6C" , "#6E9D6E" , "#719F71" , "#75A375" , "#78A578" , "#7BA77B" , "#7EAA7E" , "#81AD81" , "#84AF84" , "#87B287" , "#8AB48A" , "#8DB68D" , "#90B990" , "#93BC93" , "#96BE96" , "#99C099" , "#9CC39C" , "#9FC59F" , "#A2C8A2" , "#A5CBA5" , "#A8CDA8" , "#ABCFAB" , "#AFD2AF" , "#B1D4B1" , "#B5D7B5" , "#B7D9B7" , "#BADCBA" , "#BDDFBD" , "#C0E1C0" , "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3", "#C3E4C3"];
         var svg_borders;
         var current_arrows=[];
         var current_countries=[];
@@ -75,10 +75,11 @@
         var currentCountry="USA";
         var previousCountry = "USA";
         var direction = "out";
-        var unselected_color = "#515151";
-        var selected_color = "#999";//"#67E667" ;//"#87ceeb";
-        var border_color = "#999";
+        var unselected_color = "#eeeeee"; //http://www.colorhexa.com/c7c7c7
+        var selected_color = "#D1E8FA";//"#67E667" ;//"#87ceeb";
+        var border_color = "#a0a0a0";
         var arrow_color = "#009CFF"//"#add8e6"; //"#fafad2";
+        var selected_border = "#75B9F0"//"#add8e6"; //"#fafad2";
         var code_to_name ;
         var name_to_code;
         var code_to_coordinates;
@@ -216,31 +217,31 @@
                 if (!pop || pop=="NaN")
                     pop = "no data";
                 
-                country_name.append("<tr><th>Population</th><td style='text-align:right;'>" + pop+'</td></tr>');
+                country_name.append("<tr><th>CO2 Emissions</th><td style='text-align:right;'>" + pop+'</td></tr>');
                 var gdp = insertDecimalPoints(parseFloat(GDP[country]).toFixed(0)) ;
                 if (gdp && !isNaN(gdp))
                     gdp = '$ '+gdp;
                 else
                     gdp ="no data";
-                country_name.append("<tr><th>GDP per capita</th><td style='text-align:right;'>" + gdp+'</td></tr>');
+                country_name.append("<tr><th>GDP</th><td style='text-align:right;'>" + gdp+'</td></tr>');
                 var hiv = HIV[country];
                 if (hiv && !isNaN(hiv))
                     hiv = hiv + ' %';
                 else
                     hiv = "no data"
-                country_name.append("<tr><th>HIV Prevalence (age 15-49)</th><td style='text-align:right;'>" + hiv+'</td></tr>');
+                country_name.append("<tr><th>C02 Reduction</th><td style='text-align:right;'>" + hiv+'</td></tr>');
                 var tb = parseFloat(TUBERCULOSIS[country]/1000).toFixed(2);
                 if (tb && !isNaN(tb))
                     tb = tb + ' %';
                 else
                     tb = "no data";
-                country_name.append("<tr><th>Tuberculosis Prevalence</th><td style='text-align:right;'>" + tb +'</td></tr>');
+                country_name.append("<tr><th>C02 Absorption</th><td style='text-align:right;'>" + tb +'</td></tr>');
                 var mortality =  parseFloat(UNDER_FIVE_MORTALITY[country]/10).toFixed(2);
                 if (mortality && !isNaN(mortality))
                     mortality = mortality + ' %';
                 else
                     mortality = "no data";
-                country_name.append("<tr><th>Mortality under Five</th><td style='text-align:right;'>" +mortality+'</td></tr></table>' );
+                country_name.append("<tr><th>Cheated?</th><td style='text-align:right;'>" +mortality+'</td></tr></table>' );
 
 
                 country_name.css("display","block");
@@ -283,7 +284,7 @@
                     }
                 }
                 if (country==currentCountry)
-                    color_country(country,selected_color,'yellow');
+                    color_country(country,selected_color,selected_border);
                 else if (found)
                   color_country(country,ten_colors[i])
                 else
@@ -314,7 +315,7 @@
                     var l;
                     var path;
                     line = paper.path(val[0]);
-                    countries_div.append("<tr><td><div class=color_span style='height:1em;width:1em;background-color:"+ten_colors[counter] +" '>&nbsp;&nbsp;&nbsp;</div></td><td class='country_name' value='"+name_to_code[val[1]] +"'>"+val[1]+'</td><td style="text-align: right;">'+insertDecimalPoints(val[2])+"</td></tr>")
+                    countries_div.append("<tr><td><div class='color_span span3' style='height:2em;width:2em;background-color:"+ten_colors[counter] +" '>&nbsp;&nbsp;&nbsp;</div></td><td class='span3' value='"+name_to_code[val[1]] +"'>"+val[1]+'</td><td class="span3" style="text-align: right;">'+insertDecimalPoints(val[2])+"</td></tr>")
                     line.attr({stroke:arrow_color,'stroke-width':2,'opacity':0});
                     line.animate({stroke:arrow_color,'stroke-width':2,'opacity':1},333);
                     current_arrows.push(line);
@@ -328,13 +329,13 @@
                     currentCircles.push(circle);
                     coo = code_to_coordinates[currentCountry];
                     circle = paper.circle(coo[0], coo[1], 2);
-                    circle.attr("stroke", "yellow");
-                    circle.attr("fill", "yellow");
+                    circle.attr("stroke", selected_border);
+                    circle.attr("fill", selected_border);
                     currentCircles.push(circle);
                     counter++;
                 });
 
-                color_country(currentCountry,selected_color,'yellow');
+                color_country(currentCountry,selected_color,selected_border);
             });
         }
 
@@ -498,13 +499,42 @@
         hasher.init(); //start listening for history change
     </script>
 </div>
-<div id="legend">
-    <h2 id="country_name">
-    </h2>
-    <h3 id="popsize">
-    </h3>
-        <table id="countries" width="100%">
-        </table>
+<div class="container">
+    <div id="legend">
+        <div class="row">
+            <div class="span2">
+                .
+            </div>
+            <div class="span8">
+                <h2 id="country_name">
+                </h2>
+                <h3 id="popsize">
+                </h3>
+            </div>
+            <div class="span2">
+                .
+            </div>
+        </div>
+        <div class="row">
+            <div class="span2">
+                .
+            </div>
+            <div class="span8">
+                <table class="table table-condensed table-striped">
+                    <thead>
+                        <th class="span1"></th>
+                        <th class="span3">Name</th>
+                        <th class="span3" style="text-align: right;" >CO2 Total</th>
+                    </thead>
+                    <tbody id="countries">
+                    </tbody>
+                </table>
+            </div>
+            <div class="span2">
+                .
+            </div>
+        </div>   
+    </div>
 </div>
 <div id="country_name_popup">
 </div>
