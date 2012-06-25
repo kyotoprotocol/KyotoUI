@@ -20,7 +20,11 @@
         </blockquote>
     </div>
 </div>                
-
+            <ul>
+                {foreach $list as $li}
+                    <li>{$li}</li>
+                {/foreach}
+            </ul>
 <div class="row">
      <div class="span12">
         <table class="table table-bordered table-condensed">
