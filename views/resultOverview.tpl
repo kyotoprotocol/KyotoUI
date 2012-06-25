@@ -16,8 +16,8 @@
             success: function(data) {
                 $("#loading").delay(100).slideUp('slow');
                 window.glbldata = data;
-                updateMotionChart(data);
-                arrayCountriesTool(data, 'Country', 'carbonOutput', 'geochart');
+                //updateMotionChart(data);
+                arrayCountriesTool(data, 'Country', 'carbonOutput');
                 arrayStatsTool(data);
                 arrayTradesTool(data);
                     
@@ -27,24 +27,16 @@
         });
             
             
-        function arrayCountriesTool(data, key, field, chart){
+        function arrayCountriesTool(data, key, field){
             var newArray = [];
-            if(chart == 'geochart'){
-                newArray.push([key, field]);
-            } else if (chart == 'linechart'){
-                newArray.push([key, field]);
-            }
+            newArray.push([key, field]);
             $.each(data.countries, function(index, element){
-                        newArray.push([element['ISO2'], parseInt(element[field])]);
-                        //$.each(output['notices'], function(ind, op){
-                         //   $("#simulationNotices").append(ind+' : '+op);    
-                        //});    
+                newArray.push([element['ISO2'], parseInt(element[field])]);
+                //$.each(output['notices'], function(ind, op){
+                    //   $("#simulationNotices").append(ind+' : '+op);    
+                //});    
             });
-            if(chart == 'geochart'){
-                updateGeochart(newArray);
-            } else if(chart == 'linechart') {
-                updateLineChart(newArray);  
-            }  
+            updateGeochart(newArray);
         };
             
         function arrayStatsTool(data){
@@ -81,7 +73,7 @@
             
         // specific functionality (data array is available here)
         $(".geochart_buttons").children().click( function(e) {
-            arrayCountriesTool(glbldata, $(this).attr('id'), 'geochart');
+            arrayCountriesTool(glbldata, 'Country', $(this).attr('id'));
         });
             
     });
