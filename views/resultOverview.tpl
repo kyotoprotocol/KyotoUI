@@ -206,7 +206,7 @@
     <div class="span2">
         <div class="well" style="font-size:11px;">
         <strong>Total Trade Value:</strong>
-        <div id="totalTradeValue" style="font-size:32px;">
+        <div id="totalTradeValue" style="font-size:26px;">
             $
         </div>
         </div>
