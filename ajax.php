@@ -114,21 +114,21 @@ switch ($_GET['func']) {
 //Generate country data
         $countries = $result->findAll(array('simID' => $intid, 'quarter' => (int)3));
         foreach($countries as $key => $country){
-            if ($key->getYear()==$finalYear) {
-            $last['totalCarbonOutput'] += $key->getCarbonOutput();
-            $last['globalGDP'] += $key->getGdp();
+            if ($country->getYear()==$finalYear) {
+            $last['totalCarbonOutput'] += $country->getCarbonOutput();
+            $last['globalGDP'] += $country->getGdp();
             
-            if(($key->getIsKyotoMember() == 'ANNEXONE') OR ($key->getIsKyotoMember() == 'NONANNEXONE')){ 
-                if($key->getQuarter() == 3){
+            if(($country->getIsKyotoMember() == 'ANNEXONE') OR ($country->getIsKyotoMember() == 'NONANNEXONE')){ 
+                if($country->getQuarter() == 3){
                     $global['numberOfMemberCountries']++;
                 }
             }
             
             
             }
-            if ($key->getYear()==0) {
-            $first['totalCarbonOutput'] += $key->getCarbonOutput();
-            $first['globalGDP'] += $key->getGdp();
+            if ($country->getYear()==0) {
+            $first['totalCarbonOutput'] += $country->getCarbonOutput();
+            $first['globalGDP'] += $country->getGdp();
             }
             
             $params[$key] = $country->getAttributes();
