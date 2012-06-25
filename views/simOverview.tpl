@@ -11,17 +11,6 @@
             {/literal}
                 window.bigtime = {$countries|@json_encode};     // convert array of countries to JSON
             {literal};
-            $("#runbutton").click(function(){
-                $.ajax({
-                    type: "GET",
-                    url: "ajax.php",
-                    data: {func : 'runsim', simid : {/literal}{$simid}{literal}},
-                    success: function(data){
-                       console.log(data);
-                           console.log('done');
-                    }
-                });
-            });
         });
         $(".params").click(function() {     // when a button is clicked
             var newarray = [];
@@ -33,6 +22,18 @@
             show(newarray); // pass to function in order to show updated geochart
             return false;
         });
+        $("#runbutton").click(function(){
+                console.log('clicked');
+                $.ajax({
+                    type: "GET",
+                    url: "ajax.php",
+                    data: {func : 'run', simid : '{/literal}{$smarty.get.simid}{literal}'},
+                    success: function(data){
+                       console.log(data);
+                       console.log('done');
+                    }
+                });
+            });
     });
 
  </script>
@@ -86,7 +87,7 @@
 {/literal}
 {/block}
 {block name=body}
-
+<button class="btn btn-danger" id="runbutton">RUN SIM</button>     
 <div class="row">
     <div class="span12">
                         <!-- Hover box for copy simulation -->
@@ -163,9 +164,6 @@
         </blockquote>
     </div>
 </div>
-         {if (substr_count($smarty.server.SERVER_NAME,'buildr')>0) }
-                   <button class="btn" id="runbutton">RUN SIM</button>     
-                {/if}
    
 <div class="row">
      <div class="span12">
