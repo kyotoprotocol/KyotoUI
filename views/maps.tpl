@@ -43,7 +43,7 @@
 
 {/block}
 {block name=body}
-<h1>JW WOZ ERE 2012</h1>
+<h1>{$simName}</h1>
 <div class="row">
     <div class="span4">
         <select style="display: inline" class="span4" id="country_select">
@@ -217,31 +217,31 @@
                 if (!pop || pop=="NaN")
                     pop = "no data";
                 
-                country_name.append("<tr><th>Population</th><td style='text-align:right;'>" + pop+'</td></tr>');
+                country_name.append("<tr><th>CO2 Emissions</th><td style='text-align:right;'>" + pop+'</td></tr>');
                 var gdp = insertDecimalPoints(parseFloat(GDP[country]).toFixed(0)) ;
                 if (gdp && !isNaN(gdp))
                     gdp = '$ '+gdp;
                 else
                     gdp ="no data";
-                country_name.append("<tr><th>GDP per capita</th><td style='text-align:right;'>" + gdp+'</td></tr>');
+                country_name.append("<tr><th>GDP</th><td style='text-align:right;'>" + gdp+'</td></tr>');
                 var hiv = HIV[country];
                 if (hiv && !isNaN(hiv))
                     hiv = hiv + ' %';
                 else
                     hiv = "no data"
-                country_name.append("<tr><th>HIV Prevalence (age 15-49)</th><td style='text-align:right;'>" + hiv+'</td></tr>');
+                country_name.append("<tr><th>C02 Reduction</th><td style='text-align:right;'>" + hiv+'</td></tr>');
                 var tb = parseFloat(TUBERCULOSIS[country]/1000).toFixed(2);
                 if (tb && !isNaN(tb))
                     tb = tb + ' %';
                 else
                     tb = "no data";
-                country_name.append("<tr><th>Tuberculosis Prevalence</th><td style='text-align:right;'>" + tb +'</td></tr>');
+                country_name.append("<tr><th>C02 Absorption</th><td style='text-align:right;'>" + tb +'</td></tr>');
                 var mortality =  parseFloat(UNDER_FIVE_MORTALITY[country]/10).toFixed(2);
                 if (mortality && !isNaN(mortality))
                     mortality = mortality + ' %';
                 else
                     mortality = "no data";
-                country_name.append("<tr><th>Mortality under Five</th><td style='text-align:right;'>" +mortality+'</td></tr></table>' );
+                country_name.append("<tr><th>Cheated?</th><td style='text-align:right;'>" +mortality+'</td></tr></table>' );
 
 
                 country_name.css("display","block");
@@ -315,7 +315,7 @@
                     var l;
                     var path;
                     line = paper.path(val[0]);
-                    countries_div.append("<tr><td><div class=color_span style='height:2em;width:2em;background-color:"+ten_colors[counter] +" '>&nbsp;&nbsp;&nbsp;</div></td><td class='country_name' value='"+name_to_code[val[1]] +"'>"+val[1]+'</td><td style="text-align: right;">'+insertDecimalPoints(val[2])+"</td></tr>")
+                    countries_div.append("<tr><td><div class='color_span span3' style='height:2em;width:2em;background-color:"+ten_colors[counter] +" '>&nbsp;&nbsp;&nbsp;</div></td><td class='span3' value='"+name_to_code[val[1]] +"'>"+val[1]+'</td><td class="span3" style="text-align: right;">'+insertDecimalPoints(val[2])+"</td></tr>")
                     line.attr({stroke:arrow_color,'stroke-width':2,'opacity':0});
                     line.animate({stroke:arrow_color,'stroke-width':2,'opacity':1},333);
                     current_arrows.push(line);
@@ -499,13 +499,42 @@
         hasher.init(); //start listening for history change
     </script>
 </div>
-<div id="legend">
-    <h2 id="country_name">
-    </h2>
-    <h3 id="popsize">
-    </h3>
-        <table class="table table-condensed" id="countries" width="100%">
-        </table>
+<div class="container">
+    <div id="legend">
+        <div class="row">
+            <div class="span2">
+                .
+            </div>
+            <div class="span8">
+                <h2 id="country_name">
+                </h2>
+                <h3 id="popsize">
+                </h3>
+            </div>
+            <div class="span2">
+                .
+            </div>
+        </div>
+        <div class="row">
+            <div class="span2">
+                .
+            </div>
+            <div class="span8">
+                <table class="table table-condensed table-striped">
+                    <thead>
+                        <th class="span1"></th>
+                        <th class="span3">Name</th>
+                        <th class="span3" style="text-align: right;" >CO2 Total</th>
+                    </thead>
+                    <tbody id="countries">
+                    </tbody>
+                </table>
+            </div>
+            <div class="span2">
+                .
+            </div>
+        </div>   
+    </div>
 </div>
 <div id="country_name_popup">
 </div>
