@@ -19,10 +19,11 @@
 
     </div>
 {/if} 
+<blockquote>
+Use this page to download the CSV's that are available in the /local folder of the server. Can be used to keep hardcopy backups here, OR to add to git repo (admin/csv) and push for others.
+</blockquote>
 <div class="row">
     <div class="span12">
-
-        
         <table class="table table-striped table-bordered">
         <thead>
           <tr>
