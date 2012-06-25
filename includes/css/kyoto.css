@@ -183,7 +183,7 @@ td.country_name{
 #legend .country_name{
   cursor: pointer;
 }
-
+/*
 #progressbar {
     height : 1em;
     position:absolute;
@@ -202,7 +202,7 @@ td.country_name{
     font-size: 0.75em;
     text-align: center;
 
-}
+}*/
 
 #popup_country_name{
     display:block;

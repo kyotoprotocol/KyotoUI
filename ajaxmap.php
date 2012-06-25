@@ -71,6 +71,32 @@ $jsonOut = array();
                 $jsonOut[$key] = generateFlightPathArray($country, $key, (int)$cost, $countries, $names);
             }
         }
+    } elseif ($_GET['direction']=='both') {
+        $tradeQ = new TradeModel();    // instantiate collection model
+        $trades = $tradeQ->find(array('simID'=>$simID,'broadcaster'=>$country));
+        $lines = array();
+        foreach ($trades as $trade){
+        var_dump($trade);
+            if (isset($lines[$trade->getInitiator()])){
+                $lines[$trade->getInitiator()] += (int)$trade->getQuantity();
+            } else {
+                $lines[$trade->getInitiator()] = (int)$trade->getQuantity();
+            }
+        }
+        unset($trades);
+        $trades = $tradeQ->find(array('simID'=>$simID,'initiator'=>$country));
+        foreach ($trades as $trade){
+        var_dump($trades);
+            if (isset($lines[$trade->getBroadcaster()])){
+                $lines[$trade->getBroadcaster()] += (int)$trade->getQuantity();
+            } else {
+                $lines[$trade->getBroadcaster()] = (int)$trade->getQuantity();
+            }
+        }
+        arsort($lines);
+        foreach ($lines as $key => $value){
+            $jsonOut[$key] = generateFlightPathArray($country, $key, (int)$value, $countries, $names);
+        }
     } else {
         $tradeQ = new TradeModel();    // instantiate collection model
         $trades = $tradeQ->find(array('simID'=>$simID,'broadcaster'=>$country));
@@ -89,7 +115,7 @@ $jsonOut = array();
     }
 
 //var_dump($jsonOut);
-header('content-type: application/json');
+//header('content-type: application/json');
 echo json_encode($jsonOut);
 
 ?>
