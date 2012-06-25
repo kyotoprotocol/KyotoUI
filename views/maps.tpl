@@ -37,8 +37,8 @@
     </style>
 {/literal}
 <script type="text/javascript">
-    /*$('.nav-tabs').button()*/
-    $('.btn-group').button()
+   $('.nav-tabs').button()
+    /*$('.btn-group').button()*/
 </script>
 {/block}
 {block name=body}
