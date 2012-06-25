@@ -167,7 +167,7 @@
 <div class="row">
     <div class="span3">
         <div class="well">
-            <p id="globalGDPChange" style="color: green;line-height: 96px;font-size: 28px; font-weight: bold"></p>
+            <p id="globalGDPChange" style="color: green;line-height: 96px;font-size: 18px; font-weight: bold"></p>
             <h4>Global GDP Change</h4>
         </div>
         <div class="well">
@@ -190,7 +190,7 @@
 <div class="row">
     <div class="span3">
         <div class="well" style="height: 140px;">
-            <p id="tradeCount" style="color: black;line-height: 96px;font-size: 96px; font-weight: bold"></p>
+            <p id="tradeCount" style="color: black;line-height: 96px;font-size: 18px; font-weight: bold"></p>
             <h4>Credit Trades</h4>
         </div>
     </div>
@@ -202,7 +202,7 @@
     </div>
     <div class="span5">
         <div class="well" style="height: 140px;">
-            <p id="finalYearGlobalEmissionTarget" style="color: red;line-height: 96px;font-size: 96px; font-weight: bold"></p>
+            <p id="finalYearGlobalEmissionTarget" style="color: red;line-height: 96px;font-size: 86px; font-weight: bold"></p>
             <h4>Million tonnes final year global emission target</h4>
         </div>
     </div>
@@ -211,7 +211,7 @@
     <div class="span2">
         <div class="well" style="font-size:11px;">
         <strong>Total Trade Value:</strong>
-        <div id="totalTradeValue" style="font-size:26px;">
+        <div id="totalTradeValue" style="font-size:18px;">
             $
         </div>
         </div>
@@ -219,7 +219,7 @@
     <div class="span2">
         <div class="well" style="font-size:11px;">
         <strong>Max. Credit Value:</strong>
-        <div id="maxCreditValue" style="font-size:32px;">
+        <div id="maxCreditValue" style="font-size:22px;">
             $
         </div>
         </div>
@@ -227,7 +227,7 @@
     <div class="span2">
         <div class="well" style="font-size:11px;">
         <strong>Min. Credit Value:</strong>
-        <div id="minCreditValue" style="font-size:32px;">
+        <div id="minCreditValue" style="font-size:22px;">
             $
         </div>
         </div>
@@ -235,7 +235,7 @@
    <div class="span2">
         <div class="well" style="font-size:11px;">
         <strong>Ave. Credit Value:</strong>
-        <div id="averageCreditValue" style="font-size:32px;">
+        <div id="averageCreditValue" style="font-size:22px;">
             $
         </div>
         </div>
@@ -243,14 +243,14 @@
    <div class="span2">
         <div class="well" style="font-size:11px;">
         <strong>Buy Trans. Count:</strong>
-        <div id="buyCount" style="font-size:32px;">
+        <div id="buyCount" style="font-size:22px;">
         </div>
         </div>
     </div>
    <div class="span2">
         <div class="well" style="font-size:11px;">
         <strong>CDM Count:</strong>
-        <div id="cdmCount" style="font-size:32px;">
+        <div id="cdmCount" style="font-size:22px;">
         </div>
         </div>
     </div>
