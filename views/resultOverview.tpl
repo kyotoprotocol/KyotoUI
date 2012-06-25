@@ -272,6 +272,7 @@
     </div>
 </div>
 <hr>
+<!--
 <div class="row">
     <div class="span6">
         <h2>Top Performers</h2>
@@ -319,7 +320,7 @@
         
     </div>
 </div>
-
+-->
 <div class="row">
     <div class="span12">
         <h2>GDP and Carbon Output Over Time</h2>
