@@ -14,11 +14,11 @@ jQuery(function($) {
       var button = $(this);
       button.live('click', function(){
           hidden.val($(this).val());
+          $('#filterForm').submit();
       });
       if(button.val() == hidden.val()) {
         button.addClass('active');
       }
-      $('dave').submit();
     });
   });
 });
@@ -34,7 +34,7 @@ jQuery(function($) {
 <div class="row">
     <div class="span12">
      
-      <form class="well form-inline" name="dave" action="simulations.php" method="post" style="margin-top:5px;padding: 2px;">
+      <form class="well form-inline" id="filterForm" name="dave" action="simulations.php" method="post" style="margin-top:5px;padding: 2px;">
             <div class="btn-group span4" data-toggle-name="state" data-toggle="buttons-radio" >
                 <button type="button" value="all" class="btn" data-toggle="button">All</button>
                 <button type="button" value="notstarted" class="btn" data-toggle="button">Not Started</button>
@@ -52,8 +52,6 @@ jQuery(function($) {
                 <div class="input-prepend input-append span3">
                     <span class="add-on">Limit to</span><input class="span1" name="limit" value="{$smarty.session.simfilterlimit}" type="text"><span class="add-on">sims</span>
                 </div>
-                <button type="submit" class="btn btn-inverse">Filter {$smarty.session.database} DB</button>
-           
       </form>
       
     </div>
