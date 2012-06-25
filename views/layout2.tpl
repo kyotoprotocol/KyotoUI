@@ -114,7 +114,7 @@
                 </div>
             </div>
         {else}
-    <div class="container" style="margin-top: 55px">
+    <div class="container" style="margin-top: 55px;">
         {/if}
         
         {if isset($error)}
@@ -125,4 +125,6 @@
         {block name=body}     
         {/block}
     </div>
+        {block name=mapbody}     
+        {/block}
 </body>
