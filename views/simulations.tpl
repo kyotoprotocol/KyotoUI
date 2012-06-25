@@ -228,7 +228,7 @@ jQuery(function($) {
                     </td>
                 {else}
                 <!--not a kyoto simulation-->
-                <td colspan="3">
+                <td colspan="4">
                     <div class="alert" style="margin-bottom: 2px;">
                         <strong>{$s['name']}</strong> -- Non Kyoto Simulation ({$s['classname']})
                     </div>

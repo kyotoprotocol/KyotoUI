@@ -2,7 +2,6 @@
 {block name=title}Maps{/block}
 {block name=head}
 <html manifest="/cache.manifest" itemscope itemtype="http://schema.org/Visualization">
-    <title>Migrations Map: Where are migrants coming from? Where have migrants left? </title>
     <meta property="og:title" content="MigrationsMap.net"/>
     <meta property="og:type" content="website"/>
     <meta property="og:url" content="http://migrationsmap.net/"/>
