@@ -34,12 +34,13 @@
     margin: auto;
     width:1200px;
     position: relative;
+    }
     </style>
+
+    
+    
 {/literal}
-<script type="text/javascript">
-   $('.nav-tabs').button()
-    /*$('.btn-group').button()*/
-</script>
+
 {/block}
 {block name=body}
 <h1>flapsicles</h1>
@@ -47,18 +48,9 @@
 {block name=mapbody}
 <div id="container">
 
-
-<div id="title">
-    <h1>Map Dave</h1>
-    <p style="font-size:13px;padding: 2px 0px 0px 0px;">Tradings</p>
-</div>
-
-<!--<div id="social">
-<iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fmigrationsmap.net&amp;send=false&amp;layout=button_count&amp;width=100&amp;show_faces=true&amp;action=like&amp;colorscheme=dark&amp;font=arial&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:200px; height:21px; padding-top:10px;" allowTransparency="true"></iframe>
-<div id="plusone"><g:plusone size="medium"></g:plusone></div>
-</div>-->
 <div id="country_select_div">
     <span id="explanation">Click on the map or pick a country here:</span>
+
     <select id="country_select">
     </select>
 </div>
