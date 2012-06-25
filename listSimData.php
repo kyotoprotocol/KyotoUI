@@ -11,17 +11,20 @@ $smarty->assign('simList',simulationList());
         
         $i=0;
         foreach ($simquery as $sim) {
+                    $agents = new AgentsModel();    // instantiate collection model
+                    $co = $agents->find(array('simID'=>$sim->getID()))->count();
+                    $i = $sim->getCurrentTime()*$co;
+            $damageArray[$i]['FAT'] = $i;
+            $damageArray[$i]['agentCount'] = $co;
             $damageArray[$i]['ID'] = $sim->getID();
             $damageArray[$i]['name'] = $sim->getName();
             $damageArray[$i]['description'] = $sim->getDescription();
             $damageArray[$i]['author'] = $sim->getAuthor();
             $damageArray[$i]['currentTime'] = $sim->getCurrentTime();
-                    $agents = new AgentsModel();    // instantiate collection model
-                    $co = $agents->find(array('simID'=>$sim->getID()))->count();
-            $damageArray[$i]['agentCount'] = $sim->getCurrentTime();
-            $damageArray[$i]['FAT'] = $sim->getCurrentTime()*$co;
-            $i++;
+
         }
+        
+        arsort($damageArray);
         $smarty->assign('damagearray',$damageArray);
         $smarty->display('views/listSimData.tpl');
 ?>

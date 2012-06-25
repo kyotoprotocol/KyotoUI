@@ -16,6 +16,7 @@
     <div class="span12">
         <blockquote>
         To identify large sims and to delete redundant ones.
+        <br>Ordered by fattest.
         </blockquote>
     </div>
 </div>                
