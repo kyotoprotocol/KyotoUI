@@ -170,7 +170,7 @@ switch ($_GET['func']) {
         $cwd = getcwd();
         chdir('../kyoto/kyoto/');
         $cwd2 = getcwd();
-        $command = ('sh sim-run.sh run '.(string)$sim->getID().' > /var/log/kyoto/log'.(string)$sim->getID().'.txt');
+        $command = ('sudo sh sim-run.sh run '.(string)$sim->getID().' > /var/log/kyoto/log'.(string)$sim->getID().'.txt');
         exec($command, $output, $return);
         //chdir($cwd);
         ajaxSend(array($command, $output, $return, $cwd2));
