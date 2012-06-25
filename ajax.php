@@ -115,33 +115,32 @@ switch ($_GET['func']) {
         $countries = $result->findAll(array('simID' => $intid, 'quarter' => (int)3));
         foreach($countries as $key => $country){
             if ($country->getYear()==$finalYear) {
-            $last['totalCarbonOutput'] = $country->getCarbonOutput();
-            $last['totalCarbonAbsorption'] = $country->getCarbonAbsorption();
-            $last['globalGDP'] = $country->getGdp();
-            
-            if(($country->getIsKyotoMember() == 'ANNEXONE') OR ($country->getIsKyotoMember() == 'NONANNEXONE')){ 
-                if($country->getQuarter() == 3){
-                    $global['numberOfMemberCountries']++;
+                $last['totalCarbonOutput'] = $country->getCarbonOutput();
+                $last['totalCarbonAbsorption'] = $country->getCarbonAbsorption();
+                $last['globalGDP'] = $country->getGDP();
+
+                if(($country->getIsKyotoMember() == 'ANNEXONE') OR ($country->getIsKyotoMember() == 'NONANNEXONE')){ 
+                    if($country->getQuarter() == 3){
+                        $global['numberOfMemberCountries']++;
+                    }
                 }
-            }
             
+                $global['finalYearGlobalEmissionTarget'] = $country->getEmissionsTarget();
             
             }
             if ($country->getYear()==0) {
-            $first['totalCarbonOutput'] = $country->getCarbonOutput();
-            $first['totalCarbonAbsorption'] = $country->getCarbonAbsorption();
-            $first['globalGDP'] = $country->getGdp();
+                $first['totalCarbonOutput'] = $country->getCarbonOutput();
+                $first['totalCarbonAbsorption'] = $country->getCarbonAbsorption();
+                $first['globalGDP'] = $country->getGDP();
+                //var_dump($country->getGDP());
             }
             
             $params[$key] = $country->getAttributes();
             $params[$key]['ISO2'] = toISO2($params[$key]['ISO']); 
             
-            
-            
         }
         $global['carbonReduction'] = ($first['totalCarbonOutput'] - $first['totalCarbonAbsorption']) - ($last['totalCarbonOutput'] - $last['totalCarbonAbsorption']);
         $global['globalGDPChange'] = $last['globalGDP'] - $first['globalGDP'];
-        
         
 //Generate trades data
         
