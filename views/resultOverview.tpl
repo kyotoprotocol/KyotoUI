@@ -52,7 +52,7 @@
             $.each(data.stats, function(index, element){
                 if(index == 'globalCarbonChangePercentage'){
                     $('#'+ index).text(element.toFixed(0) + '%'); //billion tonnes
-                } else if(index == 'carbonOutput') {
+                } else if(index == 'carbonReduction') {
                     $('#'+ index).text((element/1000000).toFixed(0));
                 } else if(index == 'finalYearGlobalEmissionTarget'){
                     $('#' + index).text((element/1000000).toFixed(0));
