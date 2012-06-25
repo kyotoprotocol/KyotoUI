@@ -11,6 +11,17 @@
             {/literal}
                 window.bigtime = {$countries|@json_encode};     // convert array of countries to JSON
             {literal};
+            $("#runbutton").click(function(){
+                $.ajax({
+                    type: "GET",
+                    url: "ajax.php",
+                    data: {func : 'runsim', simid : {/literal}{$simid}{literal}},
+                    success: function(data){
+                       console.log(data);
+                           console.log('done');
+                    }
+                });
+            });
         });
         $(".params").click(function() {     // when a button is clicked
             var newarray = [];
@@ -151,7 +162,11 @@
         {$simDescription}
         </blockquote>
     </div>
-</div>                
+</div>
+         {if (substr_count($smarty.server.SERVER_NAME,'buildr')>0) }
+                   <button class="btn" id="runbutton">RUN SIM</button>     
+                {/if}
+   
 <div class="row">
      <div class="span12">
         <table class="table table-condensed">
@@ -217,7 +232,6 @@
                 <tr>
              </tbody>
         </table>
-
      </div>
 </div>
 

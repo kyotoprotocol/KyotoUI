@@ -47,7 +47,6 @@ jQuery(function($) {
                 <button type="button" value="kyoto" class="btn" data-toggle="button">kyoto.simulation</button>
             </div>
             <input type="hidden" name="type" value="{$smarty.session.simfiltertype}" />
-
            
                 <div class="input-prepend input-append span3">
                     <span class="add-on">Limit to</span><input class="span1" name="limit" value="{$smarty.session.simfilterlimit}" type="text"><span class="add-on">sims</span>
