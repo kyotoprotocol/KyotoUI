@@ -7,8 +7,7 @@ $smarty->assign('simList',simulationList());
 
     $simulation = new SimulationModel();    // instantiate collection model
     $simulations = $simulation->findAll();
-    
-    // Load specific simulation
+
     if (isset($_GET['simid'])) {
         $sim = $simulation->findOne(array("_id" => (int)$_GET['simid']));
         $postSim = $sim;
@@ -46,10 +45,15 @@ $smarty->assign('simList',simulationList());
         $postSim->save();                               // save changes to database collection
         $smarty->assign('updated', true);
     }
-    
-    if($postSim){
-        $sim = $postSim;
+
+    // Load specific simulation
+    if (isset($_GET['simid'])) {
+        $sim = $simulation->findOne(array("_id" => (int)$_GET['simid']));
+        $postSim = $sim;
+        $simID = new MongoInt64($sim->getID());
     }
+    
+    
     
     $attributes = $sim->getAttributes();
     

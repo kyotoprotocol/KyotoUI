@@ -23,35 +23,33 @@
     <script type="text/javascript" src="maps/signals.js"></script>
     <script type="text/javascript" src="maps/hasher.js"></script>
     <script type="text/javascript" src="maps/modernizr.geoloc.js"></script>
-    <link rel="stylesheet" type="text/css" href="maps/main.css" />
-    <script type="text/javascript">
+    <!--<link rel="stylesheet" type="text/css" href="maps/main.css" />-->
 {literal}
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-1397562-10']);
-      _gaq.push(['_trackPageview']);
-
-      (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();
-
-    </script>
-<script type="text/javascript">
-  (function() {
-    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-    po.src = 'https://apis.google.com/js/plusone.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-  })();
-</script>
+    <style>
+    html {
+     overflow: -moz-scrollbars-vertical;
+     overflow: scroll;
+    }
+    #container{
+    margin: auto;
+    width:1200px;
+    position: relative;
+    </style>
 {/literal}
+<script type="text/javascript">
+   $('.nav-tabs').button()
+    /*$('.btn-group').button()*/
+</script>
 {/block}
 {block name=body}
+<h1>flapsicles</h1>
+{/block}
+{block name=mapbody}
 <div id="container">
 
 
 <div id="title">
-    <h1 style="color:white;">Map Dave</h1>
+    <h1>Map Dave</h1>
     <p style="font-size:13px;padding: 2px 0px 0px 0px;">Tradings</p>
 </div>
 
@@ -64,9 +62,14 @@
     <select id="country_select">
     </select>
 </div>
-<div id="inorout">
-    <span id="in" class="on"><a href="#" class="blackLink">Bought from</a></span> <span id="out"><a href="#" class="blackLink">Sold to</a></span><span id="all"><a href="#" class="blackLink">All</a></span>
-</div>
+
+
+    <div class="btn-group" data-toggle="buttons-radio">
+        <a href="#" id="in"  class="btn">Bought from</a>
+        <a href="#" id="out" class="btn">Sold to</a>
+        <a href="#" id="all" class="btn">All</a>
+    </div>
+
 
 <div id="canvas_container">
     {literal}
@@ -507,9 +510,9 @@
 <div id="country_name_popup">
 </div>
     
-<div id="geoloc_me" class="ui-state-default ui-corner-all">
+<!--<div id="geoloc_me" class="ui-state-default ui-corner-all">
     <span title="Where am I?" class="ui-icon ui-icon-home"></span>
-</div>
+</div>-->
 <div id="progressbar"></div>
 <div id="progressbarMessage"></div>
 </div>
