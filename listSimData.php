@@ -5,6 +5,26 @@ $smarty = new Smarty;
 include('admin/config.php');
 $smarty->assign('simList',simulationList());
         
+    
+    for ($i=1; $i<20; $i++){
+            
+            $agents = new AgentsModel;
+          $agent =  $agents->findOne(array("simID"=>$i));
+          if (!is_null($agent)) {
+                $simulation = new SimulationModel();    // instantiate collection model
+                $simquery = $simulation->findOne(array("_id"=>$i));
+                if (is_null($simquery)) {
+                    $list[]= $i .'Exists in agentstate but not simtable.';
+                }
+              
+          }
+           
+    }
+
+
+
+
+
 
         $simulation = new SimulationModel();    // instantiate collection model
         $simquery = $simulation->find(array(),array(array('sort'=>'currentTime')));
@@ -23,8 +43,8 @@ $smarty->assign('simList',simulationList());
             $damageArray[$i]['currentTime'] = $sim->getCurrentTime();
 
         }
-        
         arsort($damageArray);
         $smarty->assign('damagearray',$damageArray);
+        $smarty->assign('list',$list);
         $smarty->display('views/listSimData.tpl');
 ?>
