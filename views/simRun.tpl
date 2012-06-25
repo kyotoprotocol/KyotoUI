@@ -75,7 +75,7 @@
     <h3>Simulation Data Processing:</h3>
 </div>
     <blockquote>
-This script doesn't work in university firefox (installed circa 1994). (Max made it).
+This script doesn't work in university firefox (installed circa 1994). (Max made it - Webster broke it).
 
     </blockquote>
     {if $completedProcess}
