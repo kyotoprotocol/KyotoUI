@@ -69,7 +69,7 @@ if (isset($_GET['simid'])) {
     //Process-wide definitions
     define ("TICK_YEAR", $simprop['TICK_YEAR']);
     //define ("TICK_LENGTH", $simprop['finishTime']);
-    define ("TICK_LENGTH", $simprop['currentTime']);
+    define ("TICK_LENGTH", $sim->getCurrentTime());
     define ("YEARS", floor(TICK_LENGTH/TICK_YEAR));
     //define ("OUTPUTFORM", 'HTTPREQUEST');
     define ("OUTPUTFORM", 'JSON');
