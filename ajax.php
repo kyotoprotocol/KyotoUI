@@ -168,11 +168,12 @@ switch ($_GET['func']) {
         break;
     case  'run' :
         $cwd = getcwd();
-        $command = ('sh sim-run.sh run '.(string)$sim->getID().' > /var/log/kyoto/log'.(string)$sim->getID().'.txt');
+        $command = ('./sim-run.sh run '.(string)$sim->getID().' > /var/log/kyoto/log'.(string)$sim->getID().'.txt');
         chdir('/root/git/kyoto/kyoto/');
         exec($command, $output, $return);
+        $cw2 = getcwd();
         chdir($cwd);
-        ajaxSend(array($command, $output, $return));
+        ajaxSend(array($command, $output, $return, $cw2));
         break;
     default : echo 'error';
 }
