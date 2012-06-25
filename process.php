@@ -233,8 +233,8 @@ if (isset($_GET['simid'])) {
                             $countryArray['quarter']           = $currentQuarter;
                             $countryArray['ISO']               = $iso;
                             $countryArray['year']              = $year;
-                            $countryArray['GDP']               = (int)$agentTickProperties['gdp'];
-                            $countryArray['GDPRate']           = (int)$agentTickProperties['gdp_rate'];
+                            $countryArray['GDP']               = (double)$agentTickProperties['gdp'];
+                            $countryArray['GDPRate']           = (double)$agentTickProperties['gdp_rate'];
                             $countryArray['availableToSpend']  = (double)$agentTickProperties['available_to_spend'];
                             $countryArray['emissionsTarget']   = (double)$agentTickProperties['emission_target'];
                             $countryArray['carbonOffset']      = (double)$agentTickProperties['carbon_offset'];
