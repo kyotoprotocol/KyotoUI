@@ -11,6 +11,13 @@ class ResultModel extends BaseMongoRecord
         $this->attributes['GDPRate'] = $dave;
     }
     
+    public function getGDP() {
+        return $this->attributes['GDP'];
+    }
+    public function getGDPRate() {
+        return $this->attributes['GDPRate'];
+    }
+    
     public function beforeSave()
     {
         $this->setGDP(new MongoInt64($this->getGDP()));
