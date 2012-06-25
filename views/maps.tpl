@@ -43,7 +43,7 @@
 
 {/block}
 {block name=body}
-<h1>flapsicles</h1>
+<h1>JW WOZ ERE 2012</h1>
 <div class="row">
     <div class="span4">
         <select style="display: inline" class="span4" id="country_select">
@@ -67,7 +67,7 @@
 <div id="canvas_container">
     {literal}
     <script type="text/javascript">
-        var ten_colors = ["#67000D" , "#A50F15","#CB181D", "#EF3B2C", "#FB6A4A","#FC9272","#FCBBA1", "#FEE0D2", "#FFF5F0","#FFFFFF"];
+        var ten_colors = ["#67000D" , "#67000D" , "#67000D" , "#67000D" , "#67000D" , "#A50F15","#CB181D", "#EF3B2C", "#FB6A4A","#FC9272","#FCBBA1", "#FEE0D2", "#FFF5F0","#FFFFFF"];
         var svg_borders;
         var current_arrows=[];
         var current_countries=[];
