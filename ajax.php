@@ -112,7 +112,7 @@ switch ($_GET['func']) {
 */
 
 //Generate country data
-        $countries = $result->findAll(array('simID' => $intid, 'quarter' => (int)3));
+        $countries = $result->findAll(array('simID' => $intid, 'quarter' => (int)3),array('sort'=>array('year'=>1)));
         foreach($countries as $key => $country){
             if ($country->getYear()==$finalYear) {
                 $last['totalCarbonOutput'] = $country->getCarbonOutput();
@@ -124,23 +124,35 @@ switch ($_GET['func']) {
                         $global['numberOfMemberCountries']++;
                     }
                 }
-            
+                
                 $global['finalYearGlobalEmissionTarget'] = $country->getEmissionsTarget();
             
-            }
-            if ($country->getYear()==0) {
+            } elseif ($country->getYear()==0) {
                 $first['totalCarbonOutput'] = $country->getCarbonOutput();
                 $first['totalCarbonAbsorption'] = $country->getCarbonAbsorption();
                 $first['globalGDP'] = $country->getGDP();
                 //var_dump($country->getGDP());
+            } else {
+                if (isset($years[$country->getYear()])){
+                $years[$country->getYear()] += $country->getCarbonOutput();
+                } else {
+                $years[$country->getYear()] = $country->getCarbonOutput();
+                }
             }
-            
             $params[$key] = $country->getAttributes();
             $params[$key]['ISO2'] = toISO2($params[$key]['ISO']); 
             
         }
         $global['carbonReduction'] = ($first['totalCarbonOutput'] - $first['totalCarbonAbsorption']) - ($last['totalCarbonOutput'] - $last['totalCarbonAbsorption']);
         $global['globalGDPChange'] = $last['globalGDP'] - $first['globalGDP'];
+        
+                $timeline[] = array(0, $first['totalCarbonOutput']);
+               foreach ($years as $year => $data) {
+                $timeline[] = array($year, $data);
+               }
+                $timeline[] = array($finalYear, $last['totalCarbonOutput']);
+                //[new Date(2008, 1 ,1), 30000, null, null, 40645, null, null],
+
         
 //Generate trades data
         
@@ -185,7 +197,7 @@ switch ($_GET['func']) {
         
         
         //Bundle output and send to the page      
-        $output = array('stats' => $global, 'countries' => $params, 'trades' => $trades);
+        $output = array('stats' => $global, 'countries' => $params, 'trades' => $trades, 'timeline'=>$timeline);
         //'totals' => $totals,
         ajaxSend($output);
         break;
