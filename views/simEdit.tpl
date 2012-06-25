@@ -5,7 +5,11 @@
     <script type="text/javascript">  
         $(document).ready(function() {
             $('.simwiz').show();
-            $('.alert-info').hide();
+            $('.alert-info').hide(); 
+            
+             console.log($('input[name|="finishTime"]').val());
+            
+            
             $("form :input").change(function() {
                 $(this).closest('form').data('changed', true);
                 $('.alert-info').delay(500).slideDown('slow');
@@ -37,8 +41,8 @@
                 $("h5").text($(this).val());
                 $("h5").show();
             });
-            $("#submit").click(function() {
-                $("#editForm").submit();
+            $("#editForm").submit(function(){
+                $('input[name|="finishTime"]').val(parseInt($('input[name|="param_TICK_YEAR"]').val())* parseInt($('input[name|="finishTime"]').val()));
             });
             $('#name').bind('keypress', function(e) {
                 if(e.keyCode==13){
@@ -78,7 +82,7 @@
         <strong>There are unsaved changes to {$simName}!</strong>
     </div>
 
-<form action="simEdit.php?simid={$simid}" id="editForm" method="post">
+<form action="simEdit.php?simid={$simid}" id="editForm" name="editForm" method="post">
 <div class="row">
     <div class="span12">
         <h1>{$simName}</h1>
@@ -109,6 +113,11 @@
                         {else}
                         <td><input type="text" name="{$k}" value="{$s}" readonly="true">  ({date("M j, Y  g:i a", (int)substr($s, 0, -3))})</td>
                         {/if}
+                    </tr>
+                    {else if $k == 'finishTime'}
+                    <tr>
+                        <td>Run Time (years)</td>
+                        <td id="tickstd"><input type="text" name="{$k}" value="{(int)$s/(int)$attributes['parameters']['TICK_YEAR']}"> (ticks: {$s})</td>
                     </tr>
                     {else if $k == "name" or $k=='author' or $k=='description'}
                     {else if is_array($s)}
@@ -156,7 +165,7 @@
                     {/if}
                 {/foreach}
                 <tr>
-                    <td><button class="btn btn-primary" id="submit"> Save Changes</button></td>
+                    <td><button class="btn btn-primary" id="submit" name="submit-button"> Save Changes</button></td>
                     <td></td>
              </tbody>
         </table>
