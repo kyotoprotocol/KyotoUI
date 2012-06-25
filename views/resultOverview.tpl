@@ -330,15 +330,15 @@
 
 <!-- TRADE OUTPUT HERE -->
 <div id="motion_chart"></div>
-
+<!--
 <div class="row">
     <div class="span12">
         <h2>Global CO2 Emissions VS Global GDP</h2>
     </div>
 </div>
-
+-->
 <br>
-<!-- TRADE OUTPUT HERE -->
+<!-- TRADE OUTPUT HERE
 <div id="credit_cost_chart" style="width: 900px; height: 500px;"></div>
 
 <div class="row">
@@ -349,5 +349,5 @@
         </div>
     </div>
 </div>
-
+-->
 {/block}
