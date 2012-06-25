@@ -115,8 +115,8 @@ switch ($_GET['func']) {
         $countries = $result->findAll(array('simID' => $intid, 'quarter' => (int)3));
         foreach($countries as $key => $country){
             if ($country->getYear()==$finalYear) {
-            $last['totalCarbonOutput'] += $country->getCarbonOutput();
-            $last['globalGDP'] += $country->getGdp();
+            $last['totalCarbonOutput'] = $country->getCarbonOutput();
+            $last['globalGDP'] = $country->getGdp();
             
             if(($country->getIsKyotoMember() == 'ANNEXONE') OR ($country->getIsKyotoMember() == 'NONANNEXONE')){ 
                 if($country->getQuarter() == 3){
@@ -127,8 +127,8 @@ switch ($_GET['func']) {
             
             }
             if ($country->getYear()==0) {
-            $first['totalCarbonOutput'] += $country->getCarbonOutput();
-            $first['globalGDP'] += $country->getGdp();
+            $first['totalCarbonOutput'] = $country->getCarbonOutput();
+            $first['globalGDP'] = $country->getGdp();
             }
             
             $params[$key] = $country->getAttributes();
