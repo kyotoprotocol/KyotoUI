@@ -110,6 +110,11 @@
         } else {
             window.linechart = new google.visualization.LineChart(document.getElementById('credit_cost_chart'));
         }
+        var newArray = [];
+        newArray.push(['Year', 'Carbon Output']);
+        $.each(parameters.countries, function(index, element){
+            newArray.push([element['year'], element['carbonOutput']]);
+        });
         var data = google.visualization.arrayToDataTable(parameters.data);
         if(parameters.options){
             var options = parameters.options;
