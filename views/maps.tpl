@@ -30,46 +30,39 @@
      overflow: -moz-scrollbars-vertical;
      overflow: scroll;
     }
-    #container{
+    #container2{
     margin: auto;
     width:1200px;
     position: relative;
+    }
     </style>
+
+    
+    
 {/literal}
-<script type="text/javascript">
-   $('.nav-tabs').button()
-    /*$('.btn-group').button()*/
-</script>
+
 {/block}
 {block name=body}
 <h1>flapsicles</h1>
+<div class="row">
+    <div class="span4">
+        <select style="display: inline" class="span4" id="country_select">
+        </select>
+    </div>
+    <div class="span6">
+        <div  style="display: inline" class="btn-group" data-toggle="buttons-radio">
+            <button href="#" id="in"  class="btn">Buyer</button>
+            <button href="#" id="out" class="btn">Seller</button>
+            <button href="#" id="both" class="btn">Both</button>
+            <button href="#" id="all" class="btn">All Trades, All Countries</button>
+        </div>
+    </div>
+</div>
+
 {/block}
 {block name=mapbody}
-<div id="container">
 
-
-<div id="title">
-    <h1>Map Dave</h1>
-    <p style="font-size:13px;padding: 2px 0px 0px 0px;">Tradings</p>
-</div>
-
-<!--<div id="social">
-<iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fmigrationsmap.net&amp;send=false&amp;layout=button_count&amp;width=100&amp;show_faces=true&amp;action=like&amp;colorscheme=dark&amp;font=arial&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:200px; height:21px; padding-top:10px;" allowTransparency="true"></iframe>
-<div id="plusone"><g:plusone size="medium"></g:plusone></div>
-</div>-->
-<div id="country_select_div">
-    <span id="explanation">Click on the map or pick a country here:</span>
-    <select id="country_select">
-    </select>
-</div>
-
-
-    <div class="btn-group" data-toggle="buttons-radio">
-        <a href="#" id="in"  class="btn">Bought from</a>
-        <a href="#" id="out" class="btn">Sold to</a>
-        <a href="#" id="all" class="btn">All</a>
-    </div>
-
+<div id="container2">
 
 <div id="canvas_container">
     {literal}
@@ -427,6 +420,12 @@
                e.preventDefault();
 
                direction='all';
+               redraw();
+            });
+            $("#both").click(function(e){
+               e.preventDefault();
+
+               direction='both';
                redraw();
             });
             $("#geoloc_me").click(function(e){
