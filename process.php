@@ -242,7 +242,7 @@ if (isset($_GET['simid'])) {
                             $countryArray['energyOutput']      = (double)$agentTickProperties['energy_output'];
                             $countryArray['arableLandArea']    = (double)$agentTickProperties['arable_land_area'];
                             $countryArray['carbonAbsorption']  = (double)$agentTickProperties['carbon_absorption'];
-                            $countryArray['isKyotoMember']     = (double)$agentTickProperties['is_kyoto_member'];
+                            $countryArray['isKyotoMember']     = $agentTickProperties['is_kyoto_member'];
                             $countryArray['cheated']           = $cheated;
                             $countryArray['notices']           = $notices;
                             if(REPORT>1) echo $dave++.'Created row: '.$iso.' Y:'.$year.' Q:'.$currentQuarter.'<br>';
