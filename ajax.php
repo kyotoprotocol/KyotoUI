@@ -59,7 +59,7 @@ switch ($_GET['func']) {
         
         $result = new ResultModel();
         
-        $countrytotals = new CountryTotalsModel();
+        //$countrytotals = new CountryTotalsModel();
         
         $trade = new TradeModel();
         $tradeArray = $trade->find(array("simID" => (string)$id));
@@ -112,7 +112,7 @@ switch ($_GET['func']) {
 
 
 //Generate country data
-        $countries = $result->findAll(array('simID' => $intid));
+        $countries = $result->findAll(array('simID' => $intid, 'quarter' => (int)3));
         foreach($countries as $key => $country){
             $params[$key] = $country->getAttributes();
             $params[$key]['ISO2'] = toISO2($params[$key]['ISO']); 
@@ -162,15 +162,16 @@ switch ($_GET['func']) {
         
         
         //Bundle output and send to the page      
-        $output = array('stats' => $global, 'totals' => $totals, 'countries' => $params, 'trades' => $trades);
-        
+        $output = array('stats' => $global, 'countries' => $params, 'trades' => $trades);
+        //'totals' => $totals,
         ajaxSend($output);
         break;
+        
     case  'run' :
         $cwd = getcwd();
         chdir('../kyoto/kyoto/');
         $cwd2 = getcwd();
-        $command = ('./sim-run.sh run '.(string)$sim->getID().' > /var/log/kyoto/log'.(string)$sim->getID().'.txt');
+        $command = ('./sim-run.sh run '.(string)$sim->getID().' > /var/log/kyoto/log'.(string)$sim->getID().'.txt $');
         exec($command, $output, $return);
         //chdir($cwd);
         ajaxSend(array($command, $output, $return, $cwd2));
