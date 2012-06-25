@@ -15,7 +15,6 @@
             data: {func : 'result', simid : {/literal}{$simid}{literal}},
             success: function(data) {
                 $("#loading").delay(100).slideUp('slow');
-                console.log(data);
                 window.glbldata = data;
                 updateMotionChart(data);
                 arrayCountriesTool(data, 'carbonOutput', 'geochart');
@@ -36,7 +35,6 @@
                          //   $("#simulationNotices").append(ind+' : '+op);    
                         //});    
             });
-                console.log(newArray);
                 //updateGeochart(newArray);
         };
             

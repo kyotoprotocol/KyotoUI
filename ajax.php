@@ -112,7 +112,7 @@ switch ($_GET['func']) {
 
 
 //Generate country data
-        $countries = $result->findAll(array('simID' => $intid));
+        $countries = $result->findAll(array('simID' => $intid, 'quarter' => (int)3));
         foreach($countries as $key => $country){
             $params[$key] = $country->getAttributes();
             $params[$key]['ISO2'] = toISO2($params[$key]['ISO']); 
