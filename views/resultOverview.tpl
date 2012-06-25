@@ -16,8 +16,8 @@
             success: function(data) {
                 $("#loading").delay(100).slideUp('slow');
                 window.glbldata = data;
-                //updateMotionChart(data);
-                arrayCountriesTool(data, 'Country', 'carbonOutput');
+                updateMotionChart(data);
+                arrayCountriesTool(data, 'carbonOutput');
                 arrayStatsTool(data);
                 arrayTradesTool(data);
                     
@@ -27,11 +27,19 @@
         });
             
             
-        function arrayCountriesTool(data, key, field){
+        function arrayCountriesTool(data, field){
             var newArray = [];
-            newArray.push([key, field]);
+            newArray.push(['Country', field]);
             $.each(data.countries, function(index, element){
-                newArray.push([element['ISO2'], parseInt(element[field])]);
+                if(field == 'isKyotoMember'){
+                    if(element[field] == 'ANNEXONE' || element[field] == 'NONANNEXONE'){
+                        newArray.push([element['ISO2'], parseInt(1)]);
+                    } else {
+                        newArray.push([element['ISO2'], parseInt(0)]);
+                    }
+                } else {
+                    newArray.push([element['ISO2'], parseInt(element[field])]);
+                }
                 //$.each(output['notices'], function(ind, op){
                     //   $("#simulationNotices").append(ind+' : '+op);    
                 //});    
@@ -73,7 +81,7 @@
             
         // specific functionality (data array is available here)
         $(".geochart_buttons").children().click( function(e) {
-            arrayCountriesTool(glbldata, 'Country', $(this).attr('id'));
+            arrayCountriesTool(glbldata, $(this).attr('id'));
         });
             
     });
@@ -251,7 +259,7 @@
             <div class="btn-group geochart_buttons" data-toggle="buttons-radio">
                 <button id="carbonOutput" class="btn active">CO2 Tonnes</button>
                 <button id="carbonChangePercentage" class="btn">CO2 % Change</button>
-                <button id="kyotoMember" class="btn">Kyoto Members</button>
+                <button id="isKyotoMember" class="btn">Kyoto Members</button>
                 <button id="cheat" class="btn">Cheating Countries</button>
             </div>
         <h2>GeoChart of CO2 reduction in Tonnes</h2>
