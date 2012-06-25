@@ -169,7 +169,7 @@ switch ($_GET['func']) {
     case  'run' :
         $command = './~/git/kyoto.kyoto/sim-run.sh run '.$sim->getID().' > /var/log/kyoto/log'.$sim->getID().'.txt &';
         exec($command, $output);
-        echo array($command, $output);
+        ajaxSend(array($command, $output));
         break;
     default : echo 'error';
 }
