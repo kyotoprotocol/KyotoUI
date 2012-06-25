@@ -1,5 +1,5 @@
 {extends file="views/layout.tpl"}
-{block name=title}Simulation Overview - {$simName}{/block}
+{block name=title}Naughty Children page{/block}
 {block name=head}
 {literal}
 
@@ -9,14 +9,13 @@
 
 <div class="row">
     <div class="span8">
-        <h1>{$simName}</h1>
+        <h1>Naughty Children page</h1>
     </div>
-        <div class="span4"><h5>Author: {$simAuthor}</h5></div>
 </div> 
 <div class="row">
     <div class="span12">
         <blockquote>
-        {$simDescription}
+        To identify large sims and to delete redundant ones.
         </blockquote>
     </div>
 </div>                
@@ -26,49 +25,21 @@
         <table class="table table-bordered table-condensed">
             <thead>
                 <tr>
-                    <th rowspan="2">Name</th>
-                    <th colspan="{$propcount}">Properties</th>
- 
-                </tr>
-                <tr>
-                    {foreach $propkeys as $key}
-                    <th>{$key}</th>
-                    {/foreach}
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Author</th>
+                    <th>FAT?</th>
                 </tr>
             </thead>
              <tbody>
-                 {foreach $agents as $agent}
+                 {foreach $damagearray as $naughtysim}
                  <tr>
-                    <td rowspan="2">{($agent['name'])}</td>
-                        {foreach $agent['properties'] as $property}
-                    <td>{$property}</td>
-                        {/foreach}
-                 </tr>
-                 <tr>
-                    <td  colspan="{$propcount+1}" >
-                        <table>
-                            <tbody>
-                                <tr>
-                                    <th>Time</th>
-                                       {foreach $statekeys as $key}
-                                        <th>{$key}</th>
-                                       {/foreach}    
-                                </tr>
-                                {if isset($agent['agentstates'])}
-                                    {foreach $agent['agentstates'] as $state}
-                                        <tr>
-                                                <td>{$state['time']}</td>
-                                        {foreach $state['properties'] as $statey}
-                                            {foreach $statey as $s}
-                                                <td>{$s|print_r}</td>
-                                            {/foreach}
-                                        {/foreach}
-                                        </tr>
-                                    {/foreach}
-                                {/if}
-                            </tbody>
-                        </table>
-                    </td>
+                    <td>{($naughtysim['ID'])}</td>
+                    <td>{($naughtysim['name'])}</td>
+                    <td>{($naughtysim['description'])}</td>
+                    <td>{($naughtysim['author'])}</td>
+                    <td>{($naughtysim['FAT'])}</td>
                  </tr>
                  {/foreach}
              </tbody>
