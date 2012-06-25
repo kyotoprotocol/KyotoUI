@@ -166,7 +166,7 @@
                     {/if}
                 {/foreach}
                 <tr>
-                    <td><button class="btn btn-primary" id="submit" name="submit-button"> Save Changes</button></td>
+                    <td><button class="btn btn-primary" id="submit"> Save Changes</button></td>
                     <td></td>
              </tbody>
         </table>
