@@ -81,8 +81,9 @@ jQuery(function($) {
                 <tr>
                     <th>_id</th>
                     <th>Status</th>
-                    <th style="width:250px;">Name</th>
+                    <th >Name</th>
                     <th>Description</th>
+                    <th>Author</th>
                     <!--<th>Parameters</th>-->
                     <th style="width:120px;">Actions</th>
                 </tr>
@@ -150,13 +151,15 @@ jQuery(function($) {
                         {else if $s["state"] == "AUTO START" }
                         <span class="label label-important">{$s["state"]}</span>
                         {else if $s["state"] == "RUNNING" }
-                        <span class="label label-warning">{$s["state"]} [{$s["currentTime"]}/{$s["finishTime"]}]</span>
+                        <span class="label label-info">{$s["state"]} [{$s["currentTime"]}/{$s["finishTime"]}]</span>
+                        {else if $s["state"] == "COMPLETE" }
+                        <span class="label label-success">{$s["state"]} [{$s["currentTime"]}/{$s["finishTime"]}]</span>
                         {else}
                         <span class="label">{$s["state"]}</span>
                         {/if}
                     </td>
                     <td>
-                        <h3>{$s["name"]}</h3>
+                        <h4>{$s["name"]}</h4>
                     </td>
                     <td>
                         {if isset($s["description"]) }
@@ -167,6 +170,10 @@ jQuery(function($) {
                                 </div>
                         {/if}    
                     </td>
+                    <td>
+                        <h6>{$s["author"]}</h6>
+                    </td>
+
                     {*<td>
                         <dl class="dl-horizontal">
                             
