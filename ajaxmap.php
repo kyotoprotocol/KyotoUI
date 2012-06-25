@@ -68,13 +68,13 @@ $jsonOut = array();
             } else {
                 $lines[$trade->getInitiator()][$trade->getBroadcaster()]['value'] = (int)$trade->getQuantity();
             }
-                
-            
         }
+        
         //arsort($lines);
-        //var_dump($lines);
+        var_dump($lines);
         foreach ($lines as $key => $value){
             foreach ($value as $country => $cost) {
+                echo ' Country: '. $country .' Country 2 '.$key .' Cost'.$cost .''
                 $jsonOut[$key] = generateFlightPathArray($country, $key, (int)$cost, $countries, $names);
             }
         }
@@ -122,7 +122,7 @@ $jsonOut = array();
     }
 
 //var_dump($jsonOut);
-header('content-type: application/json');
+//header('content-type: application/json');
 echo json_encode($jsonOut);
 
 ?>
