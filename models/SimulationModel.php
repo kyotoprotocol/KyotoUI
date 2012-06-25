@@ -14,6 +14,18 @@ class SimulationModel extends BaseMongoRecord
         $this->setCurrentTime(new MongoInt32($this->getCurrentTime()));
         $this->setStartedAt(new MongoInt64($this->getStartedAt()));
     }
+   
+    public function beforeDestroy() {
+        parent::beforeDestroy();
+
+            $agentsQ = new AgentsModel();    // instantiate collection model
+            $agents = $agentsQ->find(array('simID'=>$this->getID()));
+            foreach ($agents as $ag){
+            $ag->destroy();    
+            }
+                 
+        
+    }
 }
 
 ?>

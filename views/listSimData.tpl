@@ -30,7 +30,10 @@
                     <th>Name</th>
                     <th>Description</th>
                     <th>Author</th>
+                    <th>agents</th>
+                    <th>processedticks</th>
                     <th>FAT?</th>
+                    <th>DEL</th>
                 </tr>
             </thead>
              <tbody>
@@ -40,7 +43,10 @@
                     <td>{($naughtysim['name'])}</td>
                     <td>{($naughtysim['description'])}</td>
                     <td>{($naughtysim['author'])}</td>
+                    <td>{($naughtysim['agentCount'])}</td>
+                    <td>{($naughtysim['currentTime'])}</td>
                     <td>{($naughtysim['FAT'])}</td>
+                    <td>Delete</td>
                  </tr>
                  {/foreach}
              </tbody>
