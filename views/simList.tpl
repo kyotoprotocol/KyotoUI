@@ -25,6 +25,11 @@
                         {else}
                             <li class="disabled"><a href="resultOverview.php?simid={$smarty.get.simid}">Results</a></li>
                         {/if}
+                        {if (substr_count($smarty.server.PHP_SELF, 'maps.php')==1)}
+                            <li class="active"><a href="#">Trade Maps</a></li>
+                        {else}
+                            <li class="disabled"><a href="maps.php?simid={$smarty.get.simid}">Trade Maps</a></li>
+                        {/if}
                           <li class="nav-header pull-right ">
                            SIM#{$smarty.get.simid} : 
                                            {if isset($simName)}{$simName}{/if}
