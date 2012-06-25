@@ -139,7 +139,7 @@ switch ($_GET['func']) {
             
             
         }
-        $global['carbonReduction'] = ($last['totalCarbonOutput'] - $last['totalCarbonAbsorption'])- ($first['totalCarbonOutput'] - $first['totalCarbonAbsorption']);
+        $global['carbonReduction'] = ($first['totalCarbonOutput'] - $first['totalCarbonAbsorption']) - ($last['totalCarbonOutput'] - $last['totalCarbonAbsorption']);
         $global['globalGDPChange'] = $last['globalGDP'] - $first['globalGDP'];
         
         
