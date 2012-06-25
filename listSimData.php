@@ -5,6 +5,16 @@ $smarty = new Smarty;
 include('admin/config.php');
 $smarty->assign('simList',simulationList());
         
+            
+            if (isset($_POST['delete'])){
+
+            }
+
+
+
+
+
+
 
         $simulation = new SimulationModel();    // instantiate collection model
         $simquery = $simulation->find(array(),array(array('sort'=>'currentTime')));
@@ -23,7 +33,6 @@ $smarty->assign('simList',simulationList());
             $damageArray[$i]['currentTime'] = $sim->getCurrentTime();
 
         }
-        
         arsort($damageArray);
         $smarty->assign('damagearray',$damageArray);
         $smarty->display('views/listSimData.tpl');
