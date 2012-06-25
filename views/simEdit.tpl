@@ -43,6 +43,7 @@
             });
             $("#editForm").submit(function(){
                 $('input[name|="finishTime"]').val(parseInt($('input[name|="param_TICK_YEAR"]').val())* parseInt($('input[name|="finishTime"]').val()));
+                //maybe make it readonly ?
             });
             $('#name').bind('keypress', function(e) {
                 if(e.keyCode==13){
@@ -117,7 +118,7 @@
                     {else if $k == 'finishTime'}
                     <tr>
                         <td>Run Time (years)</td>
-                        <td id="tickstd"><input type="text" name="{$k}" value="{(int)$s/(int)$attributes['parameters']['TICK_YEAR']}"> (ticks: {$s})</td>
+                        <td id="tickstd"><input type="text" name="{$k}" value="{$s/$attributes['parameters']['TICK_YEAR']}"> (ticks: {$s})</td>
                     </tr>
                     {else if $k == "name" or $k=='author' or $k=='description'}
                     {else if is_array($s)}
