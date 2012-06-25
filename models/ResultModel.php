@@ -4,6 +4,20 @@ class ResultModel extends BaseMongoRecord
 {
     protected static $collectionName = 'results';
     
+    public function setGDP($dave) {
+        $this->attributes['GDP'] = $dave;
+    }
+    public function setGDPRate($dave) {
+        $this->attributes['GDPRate'] = $dave;
+    }
+    
+    public function getGDP() {
+        return $this->attributes['GDP'];
+    }
+    public function getGDPRate() {
+        return $this->attributes['GDPRate'];
+    }
+    
     public function beforeSave()
     {
         $this->setGDP(new MongoInt64($this->getGDP()));
