@@ -51,10 +51,10 @@
     top: 10px;
     left : 110px;
 }
-
+/*
 #countries {
     width: 100%;
-}
+}*/
 
 #country_name_popup {
     color: black;
@@ -71,11 +71,12 @@
     z-index: 102;
 
 }
+/*
 #country_select_div
 {
    padding: 10px;
 }
-/*
+
 #container{
     margin: auto;
     width:1200px;
@@ -113,6 +114,7 @@ h2 {
 a.blackLink {
     color:black
 }
+/*
 #country_select_div{
        color: black;
     border-radius: 5px;
@@ -123,10 +125,10 @@ a.blackLink {
     font-size:0.8em;
     float: left;
     height: 20px;
-    /*position:absolute;*/
-
+  */  /*position:absolute;*/
+/*
 }
-
+*/
 #inorout span {
     margin-left: 10px;
     padding-left: 19px;

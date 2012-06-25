@@ -88,9 +88,9 @@
                 {$error}
             </div>
         {/if}
-        {block name=body}     
+        {block name=body}
         {/block}
     </div>
-        {block name=mapbody}     
-        {/block}
+    {block name=mapbody}
+    {/block}
 </body>
