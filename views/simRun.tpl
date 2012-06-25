@@ -3,8 +3,9 @@
 {block name=head}
 {literal}
     <script type="text/javascript">  
-    
+    {/literal}{if !$completedProcess}{literal}
     $(document).ready(function(){
+        
         function ajaxProcess(data){
         $.ajax({
             type: "GET",
@@ -59,6 +60,7 @@
             ajaxProcess({simid : {/literal}{$smarty.get.simid}{literal}, agent : nextAgent, agentno : totalAgents});
         }
     });    
+    {/literal}{/if}{literal}
     </script>
 {/literal}
 
@@ -72,6 +74,13 @@
 <div>
     <h3>Simulation Data Processing:</h3>
 </div>
+    <blockquote>
+This script doesn't work in university firefox (installed circa 1994). (Max made it).
+
+    </blockquote>
+    {if $completedProcess}
+        Completed processing!
+    {else}
 <div id="progressbarcontainer" class="progress progress-striped
      active">
   <div id="progressbar" class="bar"
@@ -84,4 +93,5 @@
     </div>
 </div>    
 </div>
+    {/if}
 {/block}

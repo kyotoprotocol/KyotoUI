@@ -62,6 +62,7 @@
                 {else}
                 <button name="filename" value="{$file['file']}"  type="submit" class="btn btn-success"><i class="icon-plus"></i>install</button>
                 {/if}
+                </form>
             </td>
           </tr>
             {/foreach}
