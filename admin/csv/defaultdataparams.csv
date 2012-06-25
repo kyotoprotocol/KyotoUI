@@ -1,6 +1,6 @@
 name,Default Simulation Data
 classname,uk.ac.ic.kyoto.simulations.Simulation
-finishTime,5000
+finishTime,5001
 description,This is a default class. Ideally all countries are included and it is designed to demonstrate how beautiful the economic models are that we have created.
 author,"JW, Max + Khadivi"
 param.GROWTH_MARKET_STATE,1
