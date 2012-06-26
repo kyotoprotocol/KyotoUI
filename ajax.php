@@ -82,8 +82,10 @@ switch ($_GET['func']) {
         $global['finalYearGlobalEmissionTarget'] = 0;
         $global['numberOfMemberCountries'] = 0;
         $last['totalCarbonOutput'] = 0;
+        $last['totalCarbonAbsorption'] = 0;
         $last['globalGDP'] = 0;
         $first['totalCarbonOutput'] = 0;
+        $first['totalCarbonAbsorption'] = 0;
         $first['globalGDP'] = 0;
         
         
