@@ -23,8 +23,8 @@
             return false;
         });
         $("#runbutton").click(function(){
-                $(this).append("<img src='/includes/img/ajax-loader.gif'>");
-                    $(this).addClass('active');
+                $(this).hide();
+                $("#runningbutton").show();
                 $.ajax({
                     type: "GET",
                     url: "ajax.php",
@@ -33,7 +33,8 @@
                        console.log(data);
                        if(data == 0){
                            //success
-                            
+                           $(this).show();
+                           $("#runningbutton").hide();
                       } else {
                           //failed
                       }
@@ -146,6 +147,7 @@
                 <a class="btn" href="export.php?simid={$simID}"><i class="icon-download"></i> CSV export</a>
                 <a class="btn" data-toggle="modal" href="#sim{$simID}"><i class="icon-circle-arrow-right"></i> Copy</a>
                 <button class="btn btn-danger" id="runbutton">RUN SIM</button>  
+                <button class="btn btn-danger" id="runningbutton">RUNNING <img src='/includes/img/ajax-loader.gif' width='28' height='28'></button>  
             </div>   
         </div>
     </div>
