@@ -145,6 +145,7 @@
     function updateMotionChart(parameters){
         var data = new google.visualization.DataTable();
         var rows = [];
+        var options = {};
         $.each(parameters.countries, function(index, output){
             rows.push([output['ISO'], new Date(output['year'],0,1), parseInt(output['carbonOutput']), parseInt(output['GDP']), output['isKyotoMember']]);
         });
@@ -154,10 +155,14 @@
         data.addColumn('number', 'GDP');
         data.addColumn('string', 'Annex');
         data.addRows(rows);
+        
+        options['width'] = 960;
+        options['height'] = 500;
+        options['state'] = '{"orderedByX":false,"xLambda":0,"colorOption":"4","time":"1988-01-11","xZoomedDataMax":1200,"iconKeySettings":[],"yZoomedIn":false,"duration":{"timeUnit":"D","multiplier":1},"orderedByY":false,"yZoomedDataMax":617,"xZoomedIn":false,"iconType":"BUBBLE","xAxisOption":"2","nonSelectedAlpha":0.4,"yZoomedDataMin":150,"xZoomedDataMin":300,"yLambda":0,"sizeOption":"2","uniColorForNonSelected":false,"yAxisOption":"3","playDuration":15000,"dimensions":{"iconDimensions":["dim0"]},"showTrails":true}';
 
         var motionchart = new google.visualization.MotionChart(
             document.getElementById('motion_chart'));
-        motionchart.draw(data, {'width': 960, 'height': 500});
+        motionchart.draw(data, options);
     }
     
     {/literal}    
