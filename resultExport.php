@@ -19,6 +19,26 @@ if (isset($_GET['part'])) {
          $fp = fopen('local/'.$_GET['simid'].'results.csv', 'a');
          //fseek($fp,-1, SEEK_END);
             $previous = array();
+             if ($_GET['part']=='0'){
+                    $dave2 = array(
+                        'Tick', 
+                        'Quarter', 
+                        'ISO', 
+                        'Year', 
+                        'GDPRate', 
+                        'GDP', 
+                        'AvailableToSpend',   
+                        'CarbonOffset', 
+                        'CarbonOutput', 
+                        'EnergyOutput', 
+                        'ArableLandArea', 
+                        'CarbonAbsorption', 
+                        'IsKyotoMember',  
+                        'Cheated'
+                            );
+               fputcsv($fp, $dave2);
+
+             }
 
             foreach($results as $r) {
                 if ($previous==$r){
@@ -41,26 +61,6 @@ if (isset($_GET['part'])) {
                         $r->getIsKyotoMember(),  
                         $r->getCheated()
                             );
-             if ($_GET['part']=='0'){
-                    $dave2 = array(
-                        'Tick', 
-                        'Quarter', 
-                        'ISO', 
-                        'Year', 
-                        'GDPRate', 
-                        'GDP', 
-                        'AvailableToSpend',   
-                        'CarbonOffset', 
-                        'CarbonOutput', 
-                        'EnergyOutput', 
-                        'ArableLandArea', 
-                        'CarbonAbsorption', 
-                        'IsKyotoMember',  
-                        'Cheated'
-                            );
-               fputcsv($fp, $dave2);
-
-             }
                 fputcsv($fp, $dave);
 
                    echo $r->getISO().$r->getYear().':'.$r->getQuarter().'<br>';
