@@ -155,6 +155,12 @@
 </div> 
 
 <div class="row">
+    <div class="span1">
+        <div style="width: 15px; height: 15px; background: #da4f49; float: right;">&nbsp;</div>
+    </div>
+    <div class="span11">
+       <h6>Countries that are not defined in this simulation</h6>
+    </div>
     <div class="span12">
         <div id="visualization"></div>
     </div>
