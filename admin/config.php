@@ -89,7 +89,7 @@ function startRemoteDB(){
 
 function simulationList() {
     $simquery = new SimulationModel();    // instantiate collection model
-    $results = $simquery->find(array('classname'=> DEFAULT_CLASSNAME ), array('sort'=>array("_id"=>1)));
+    $results = $simquery->find(array('classname'=> DEFAULT_CLASSNAME,'keep'=>'true'), array('sort'=>array("_id"=>-1),'limit'=>10));
 $simulations = array();
     foreach ($results as $sim) {
         $s = $sim->getAttributes();

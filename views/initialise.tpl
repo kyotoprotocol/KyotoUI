@@ -44,7 +44,7 @@
             <th>Name</th>
             <th>Description</th>
             <th>Author</th>
-            <th>Action</th>
+            <th class="span3">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -57,8 +57,10 @@
             <td>
                 <form name="input" action="initialise.php" method="post">
                 {if isset($file['installed'])}
+                    <div class="btn-group">
                 <button name="filename" value="{$file['file']}" type="submit" class="btn btn-danger"><i class="icon-exclamation-sign"></i>reinstall</button>
-                <button name="filename" value="{$file['file']}.new" type="submit" class="btn btn-danger"><i class="icon-exclamation-sign"></i>ADD AS NEW ID</button>
+                <button name="filename" value="{$file['file']}.new" type="submit" class="btn btn-danger"><i class="icon-exclamation-sign"></i>Add as new ID</button>
+                </div>
                 {else}
                 <button name="filename" value="{$file['file']}"  type="submit" class="btn btn-success"><i class="icon-plus"></i>install</button>
                 {/if}
@@ -72,7 +74,7 @@
     </div>
 </div>
 
-<div class="row">
+{*<div class="row">
     <div class="span12">
         <h2>Tables in MongoDB </h2>
         <blockquote>
@@ -85,7 +87,7 @@
         </ul>
 
     </div>
-</div>
+</div>*}
 <div class="row">
     <div class="span6">
         <h2>Empty the tables</h2>
