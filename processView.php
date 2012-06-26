@@ -14,7 +14,7 @@
     foreach ($agentslist as $ag) {
             $totalASQ = new AgentStateModel();    // instantiate collection model
             $totalAS = $totalASQ->find(array("aid"=>$ag->getAid()));
-        echo '<li>'.$ag->getName().':'.$totalAS->count().'</li>';
+        echo '<li>'.$totalAS->count().':'.$ag->getName().'</li>';
         
             
     }
