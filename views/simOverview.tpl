@@ -23,14 +23,20 @@
             return false;
         });
         $("#runbutton").click(function(){
-                console.log('clicked');
+                $(this).append("<img src='includes/img/ajax-loader.gif'>");
+                    $(this).addClass('active');
                 $.ajax({
                     type: "GET",
                     url: "ajax.php",
                     data: {func : 'run', simid : '{/literal}{$smarty.get.simid}{literal}'},
                     success: function(data){
                        console.log(data);
-                       console.log('done');
+                       if(data == 0){
+                           //success
+                            
+                      } else {
+                          //failed
+                      }
                     }
                 });
             });
