@@ -4,7 +4,7 @@
                     <div class="subnav">
                         <ul class="nav nav-tabs">
                         {if (substr_count($smarty.server.PHP_SELF, 'simOverview.php')==1)}
-                            <li class="active"><a href="#">Overview</a></li>
+                            <li class="active"><a href="#">Pre-Sim Overview</a></li>
                         {else}
                             <li><a href="simOverview.php?simid={$smarty.get.simid}">Pre-Sim Overview</a></li>
                         {/if}
@@ -16,17 +16,17 @@
                             <li><a href="simEdit.php?simid={$smarty.get.simid}">Edit</a></li>
                         {/if}
                         {if (substr_count($smarty.server.PHP_SELF, 'simRun.php')==1)}
-                            <li class="active"><a href="#">Run</a></li>
+                            <li class="active"><a href="#">Process</a></li>
                         {else}
                             <li class="disabled"><a href="simRun.php?simid={$smarty.get.simid}">Process</a></li>
                         {/if}
                         {if (substr_count($smarty.server.PHP_SELF, 'resultOverview.php')==1)}
-                            <li class="active"><a href="#">Results</a></li>
+                            <li class="active"><a href="#">Infographic Results</a></li>
                         {else}
                             <li class="disabled"><a href="resultOverview.php?simid={$smarty.get.simid}">Infographic Results</a></li>
                         {/if}
                         {if (substr_count($smarty.server.PHP_SELF, 'maps.php')==1)}
-                            <li class="active"><a href="#">Trade Maps</a></li>
+                            <li class="active"><a href="#">Trade Map Results</a></li>
                         {else}
                             <li class="disabled"><a href="maps.php?simid={$smarty.get.simid}">Trade Map Results</a></li>
                         {/if}
