@@ -26,7 +26,7 @@
                     <input class="input-xlarge focused" name="filename" value="{$filename}" type="text">
                     <p class="help-block">This will be saved in local/.<br>This folder is ignored by GIT and intentionally done you if you're overwriting the default CSV's you have to manually copy it. Drag to admin/csv/ to add to git and import.</p>
                     <label class="checkbox">
-                    <input type="checkbox" disabled="disabled" > Check only if you're an absolute legend
+                    {*<input type="checkbox" disabled="disabled" > Check only if you're an absolute legend*}
                     </label>
                         {html_radios name='simulation' options=$simulations
                         selected=$selectedsim separator=''}
@@ -47,5 +47,11 @@
     </div>
     {/if}
 </div>
-    <a href="exportedCSV.php"><h1>EXPORTED CSV's</h1></a>
+
+<div class="row">
+    <div class="span6">
+        <br><br><br>
+    <a href="exportedCSV.php">EXPORTED CSV RESULTS</a>
+    </div>
+</div>
 {/block}
