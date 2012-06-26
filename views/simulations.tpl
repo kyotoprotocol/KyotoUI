@@ -34,21 +34,21 @@ jQuery(function($) {
 <div class="row">
     <div class="span12">
      
-      <form class="well form-inline" id="filterForm" name="dave" action="simulations.php" method="post" style="margin-top:5px;padding: 2px;">
-            <div class="btn-group span4" data-toggle-name="state" data-toggle="buttons-radio" >
+      <form class="well form-inline" id="filterForm" name="dave" action="simulations.php" method="post" style="margin-top:2px;padding: 1px; margin-bottom: 10px; height: 30px;">
+            <div class="btn-group span4" data-toggle-name="state" data-toggle="buttons-radio" style="margin-top: 1px;">
                 <button type="button" value="all" class="btn" data-toggle="button">All</button>
                 <button type="button" value="notstarted" class="btn" data-toggle="button">Not Started</button>
                 <button type="button" value="running" class="btn" data-toggle="button">Running</button>
                 <button type="button" value="complete" class="btn" data-toggle="button">Complete</button>
             </div>
             <input type="hidden" name="state" value="{$smarty.session.simfilterstate}" />
-            <div class="btn-group span3" data-toggle-name="type" data-toggle="buttons-radio" >
+            <div class="btn-group span3" data-toggle-name="type" data-toggle="buttons-radio" style="margin-top: 1px;">
                 <button type="button" value="all" class="btn" data-toggle="button">All</button>
                 <button type="button" value="kyoto" class="btn" data-toggle="button">kyoto.simulation</button>
             </div>
             <input type="hidden" name="type" value="{$smarty.session.simfiltertype}" />
            
-                <div class="input-prepend input-append span3">
+                <div class="input-prepend input-append span3" style="margin-top: 1px;">
                     <span class="add-on">Limit to</span><input class="span1" name="limit" value="{$smarty.session.simfilterlimit}" type="text"><span class="add-on">sims</span>
                 </div>
       </form>
