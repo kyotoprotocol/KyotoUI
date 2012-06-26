@@ -87,32 +87,6 @@ switch ($_GET['func']) {
         $first['totalCarbonOutput'] = 0;
         $first['totalCarbonAbsorption'] = 0;
         $first['globalGDP'] = 0;
-        
-        
-     /*   foreach($finalYearResults as $f){
-            //final year totals here
-            $last['totalCarbonOutput'] += $f->getCarbonOutput();
-            $last['globalGDP'] += $f->getGdp();
-            
-            if(($f->getIsKyotoMember() == 'ANNEXONE') OR ($f->getIsKyotoMember() == 'NONANNEXONE')){ 
-                if($f->getQuarter() == 3){
-                    $global['numberOfMemberCountries']++;
-                }
-            }
-            
-            $global['finalYearGlobalEmissionTarget'] += $f->getEmissionsTarget();
-        }
-        foreach($firstYearResults as $r){
-            //first year totals here
-            $first['totalCarbonOutput'] += $r->getCarbonOutput();
-            $first['globalGDP'] += $r->getGdp();
-        }
-        
-        //Calculations here
-        $global['carbonReduction'] = $last['totalCarbonOutput'] - $first['totalCarbonOutput'];
-        $global['globalGDPChange'] = $last['globalGDP'] - $first['globalGDP'];
-        
-*/
 
 //Generate country data
 
@@ -133,7 +107,7 @@ switch ($_GET['func']) {
                     $global['cheatcount']++;
                 }
                 
-                $global['finalYearGlobalEmissionTarget'] = $country->getEmissionsTarget();
+                $global['finalYearGlobalEmissionTarget'] += $country->getEmissionsTarget();
             
             } elseif ($country->getYear()==0) {
                 $first['totalCarbonOutput'] += $country->getCarbonOutput();
