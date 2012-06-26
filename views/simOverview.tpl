@@ -33,8 +33,7 @@
                        console.log(data);
                        if(data == 0){
                            //success
-                           $(this).show();
-                           $("#runningbutton").hide();
+                           location.reload();
                       } else {
                           //failed
                       }
@@ -147,7 +146,8 @@
                 <a class="btn" href="export.php?simid={$simID}"><i class="icon-download"></i> CSV export</a>
                 <a class="btn" data-toggle="modal" href="#sim{$simID}"><i class="icon-circle-arrow-right"></i> Copy</a>
                 <button class="btn btn-danger" id="runbutton">RUN SIM</button>  
-                <button class="btn btn-danger" id="runningbutton">RUNNING <img src='/includes/img/ajax-loader.gif' width='28' height='28'></button>  
+                <button class="btn btn-danger" id="runningbutton" style="display:none;">RUNNING</button>
+                <img src='/includes/img/ajax-loader.gif' width='28px' height='28px'>
             </div>   
         </div>
     </div>
