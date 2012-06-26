@@ -31,16 +31,14 @@
                     url: "ajax.php",
                     data: {func : 'run', simid : '{/literal}{$smarty.get.simid}{literal}'},
                     success: function(data){
-                       console.log(data);
                        if(data == 0){
                            //success
                            setTimeout(function(){
                                location.reload();}
                             ,4000);
-                           
                       } else {
                           //failed
-                          
+                          $("#runningbutton").text('FAILED');
                       }
                     }
                 });
