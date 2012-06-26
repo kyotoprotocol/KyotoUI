@@ -8,7 +8,7 @@ include('admin/config.php');
 
 $simList = simulationList();
 //POST copy simulation?
-if (!isset($_SESSION['simfilterstate'])) {
+if (!isset($_SESSION['display'])) {
     // First visit this session, so make some session defaults.
         $_SESSION['simfilterstate']     = 'all';
         $_SESSION['simfiltertype']      = 'all';
