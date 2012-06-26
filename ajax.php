@@ -216,6 +216,7 @@ switch ($_GET['func']) {
         exec($command);
         ajaxSend(0);
         break;
+    
     default : echo 'error';
 }
 
