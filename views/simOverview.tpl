@@ -11,6 +11,7 @@
             {/literal}
                 window.bigtime = {$countries|@json_encode};     // convert array of countries to JSON
             {literal};
+            
         });
         $(".params").click(function() {     // when a button is clicked
             var newarray = [];
@@ -33,9 +34,10 @@
                        console.log(data);
                        if(data == 0){
                            //success
-                           location.reload();
+                           location.delay(1000).reload();
                       } else {
                           //failed
+                          
                       }
                     }
                 });
