@@ -11,6 +11,7 @@
             {/literal}
                 window.bigtime = {$countries|@json_encode};     // convert array of countries to JSON
             {literal};
+            
         });
         $(".params").click(function() {     // when a button is clicked
             var newarray = [];
@@ -33,10 +34,10 @@
                        console.log(data);
                        if(data == 0){
                            //success
-                           $(this).show();
-                           $("#runningbutton").hide();
+                           location.delay(1000).reload();
                       } else {
                           //failed
+                          
                       }
                     }
                 });
@@ -147,7 +148,7 @@
                 <a class="btn" href="export.php?simid={$simID}"><i class="icon-download"></i> CSV export</a>
                 <a class="btn" data-toggle="modal" href="#sim{$simID}"><i class="icon-circle-arrow-right"></i> Copy</a>
                 <button class="btn btn-danger" id="runbutton">RUN SIM</button>  
-                <button class="btn btn-danger" id="runningbutton">RUNNING <img src='/includes/img/ajax-loader.gif' width='28' height='28'></button>  
+                <button class="btn btn-danger" id="runningbutton" style="display:none;">RUNNING <img src='/includes/img/ajax-loader.gif'></button>
             </div>   
         </div>
     </div>
