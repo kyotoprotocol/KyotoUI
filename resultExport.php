@@ -7,7 +7,6 @@
 require('libs/Smarty.class.php');
 $smarty = new Smarty;
 include('admin/config.php');
-$smarty->caching = false;
 $smarty->assign('simid',$_GET['simid']);
 
 //obtain list and (if any) selected sim
