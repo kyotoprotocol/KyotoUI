@@ -73,6 +73,7 @@ switch ($_GET['func']) {
         $finalYear = $finalYearResultsQuery->getYear();
 
         $global['finalYear'] = $finalYear;
+        $global['cheatcount'] = 0;
         
         //$finalYearResults = $result->find(array("simID" => $id), array("sort" => array("year" => $finalYear)));
 
@@ -120,10 +121,14 @@ switch ($_GET['func']) {
                 $last['totalCarbonOutput'] += $country->getCarbonOutput();
                 $last['totalCarbonAbsorption'] += $country->getCarbonAbsorption();
                 $last['globalGDP'] += $country->getGDP();
+                $last['cheated'] = $country->getCheated();
                 if(($country->getIsKyotoMember() == 'ANNEXONE') OR ($country->getIsKyotoMember() == 'NONANNEXONE')){ 
                     if($country->getQuarter() == 3){
                         $global['numberOfMemberCountries']++;
                     }
+                }
+                if($last['cheated']){
+                    $global['cheatcount']++;
                 }
                 
                 $global['finalYearGlobalEmissionTarget'] = $country->getEmissionsTarget();
@@ -143,8 +148,8 @@ switch ($_GET['func']) {
 
             }
             $params[$key] = $country->getAttributes();
-            $params[$key]['ISO2'] = toISO2($params[$key]['ISO']); 
-            
+            $params[$key]['ISO2'] = toISO2($params[$key]['ISO']);
+            $params[$key]['cheated'] = $country->getCheated();
         }
         $global['carbonReduction'] = ($first['totalCarbonOutput'] - $first['totalCarbonAbsorption']) - ($last['totalCarbonOutput'] - $last['totalCarbonAbsorption']);
         $global['globalGDPChange'] = $last['globalGDP'] - $first['globalGDP'];

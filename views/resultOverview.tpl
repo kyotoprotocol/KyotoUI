@@ -16,6 +16,7 @@
             success: function(data) {
                 $("#loading").delay(100).slideUp('slow');
                 window.glbldata = data;
+                    console.log(data.stats);
                 updateMotionChart(data);
                 arrayCountriesTool(data, 'carbonOutput');
                 arrayStatsTool(data);
@@ -33,6 +34,12 @@
             $.each(data.countries, function(index, element){
                 if(field == 'isKyotoMember'){
                     if(element[field] == 'ANNEXONE' || element[field] == 'NONANNEXONE'){
+                        newArray.push([element['ISO2'], parseInt(1)]);
+                    } else {
+                        newArray.push([element['ISO2'], parseInt(0)]);
+                    }
+                } else if (field == 'cheated'){
+                    if(element[field] == 'true'){
                         newArray.push([element['ISO2'], parseInt(1)]);
                     } else {
                         newArray.push([element['ISO2'], parseInt(0)]);
@@ -56,6 +63,8 @@
                     $('#'+ index).text((element/1000000).toFixed(0));
                 } else if(index == 'finalYearGlobalEmissionTarget'){
                     $('#' + index).text((element/1000000).toFixed(0));
+                } else if(index == 'globalGDPChange'){
+                    $('#' + index).text((element/1000000000).toFixed(0));
                 } else {
                     $('#'+ index).text(element);
                 }
@@ -113,7 +122,6 @@
         var newArray = [];
         newArray.push(['Year', 'Carbon Output']);
         $.each(parameters.timeline, function(index, element){
-            console.log(element);
             newArray.push(element);
         });
         var data = google.visualization.arrayToDataTable(newArray);
@@ -173,8 +181,8 @@
 <div class="row">
     <div class="span3">
         <div class="well">
-            <p id="globalGDPChange" style="color: green;line-height: 96px;font-size: 20px; font-weight: bold"></p>
-            <h4>Global GDP Change</h4>
+            <p id="globalGDPChange" style="color: green;line-height: 96px;font-size: 56px; font-weight: bold"></p>
+            <h4>Global GDP Change (Bn$)</h4>
         </div>
         <div class="well">
             <p id="numberOfMemberCountries" style="color: green;line-height: 96px;font-size: 96px; font-weight: bold"></p>
@@ -200,15 +208,21 @@
             <h4>Credit Trades</h4>
         </div>
     </div>
-    <div class="span4">
+    <div class="span2">
         <div class="well" style="height: 140px;">
             <p id="finalYear" style="color: green;line-height: 96px;font-size: 96px; font-weight: bold"></p>
-            <h4>Final Year</h4>
+            <h4>Final Sim. Year</h4>
         </div>
     </div>
-    <div class="span5">
+    <div class="span3">
         <div class="well" style="height: 140px;">
-            <p id="finalYearGlobalEmissionTarget" style="color: red;line-height: 96px;font-size: 86px; font-weight: bold"></p>
+        <p id="cheatcount" style="color: green;line-height: 96px; font-size: 96px; font-weight: bold"></p>
+        <h4>No. of Cheating Countries</h4>
+        </div>
+    </div>
+    <div class="span4">
+        <div class="well" style="height: 140px;">
+            <p id="finalYearGlobalEmissionTarget" style="color: red;line-height: 96px;font-size: 86px; font-weight: bold;"></p>
             <h4>Million tonnes final year global emission target</h4>
         </div>
     </div>
@@ -263,7 +277,10 @@
 </div>
 <hr>
 <div class="page-header">
-    <h2>Multifunctional Geochart</h2>
+    <h2>
+        Multifunctional Geochart
+        <small>Note: where true/false is required, 1 and 0 are used respectively.</small>
+    </h2> 
 </div>
 <div class="row">
     <div class="span7 offset6">
@@ -272,7 +289,7 @@
                 <button id="carbonOutput" class="btn active">CO2 Tonnes</button>
                 <button id="carbonChangePercentage" class="btn">CO2 % Change</button>
                 <button id="isKyotoMember" class="btn">Kyoto Members</button>
-                <button id="cheat" class="btn">Cheating Countries</button>
+                <button id="cheated" class="btn">Cheating Countries</button>
             </div>
     </div>
 </div>
