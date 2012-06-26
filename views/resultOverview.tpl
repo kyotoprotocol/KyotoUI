@@ -158,7 +158,7 @@
         
         options['width'] = 960;
         options['height'] = 500;
-        options['state'] = '{"orderedByX":false,"xLambda":0,"colorOption":"4","time":"1988-01-11","xZoomedDataMax":1200,"iconKeySettings":[],"yZoomedIn":false,"duration":{"timeUnit":"D","multiplier":1},"orderedByY":false,"yZoomedDataMax":617,"xZoomedIn":false,"iconType":"BUBBLE","xAxisOption":"2","nonSelectedAlpha":0.4,"yZoomedDataMin":150,"xZoomedDataMin":300,"yLambda":0,"sizeOption":"2","uniColorForNonSelected":false,"yAxisOption":"3","playDuration":15000,"dimensions":{"iconDimensions":["dim0"]},"showTrails":true}';
+        options['state'] = '{"orderedByX":false,"xLambda":0,"colorOption":"4","time":"1900-00-01","xZoomedDataMax":1200,"iconKeySettings":[],"yZoomedIn":false,"duration":{"timeUnit":"D","multiplier":1},"orderedByY":false,"yZoomedDataMax":617,"xZoomedIn":false,"iconType":"BUBBLE","xAxisOption":"2","nonSelectedAlpha":0.4,"yZoomedDataMin":150,"xZoomedDataMin":300,"yLambda":0,"sizeOption":"2","uniColorForNonSelected":false,"yAxisOption":"3","playDuration":15000,"dimensions":{"iconDimensions":["dim0"]},"showTrails":true}';
 
         var motionchart = new google.visualization.MotionChart(
             document.getElementById('motion_chart'));
