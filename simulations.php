@@ -66,6 +66,11 @@ if (isset($_POST['simulationcopy'])) {
     $dropitlikeitshot = $sims->findOne(array("_id" => (int)$_POST['simulationid']));
     $dropitlikeitshot->destroy();
         $smarty->assign('success', 'Deleted :'.$_POST['simulationid'].'!');
+} elseif (isset($_GET['keep'])) {
+        $sims = new SimulationModel();
+    $dave = $sims->findOne(array("_id" => (int)$_GET['simid']));
+    $dave->setKeep('true');
+    $dave->save();
 }
 
 
