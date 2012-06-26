@@ -21,7 +21,7 @@ define ("DB", "presage");
 define ("SIMTREE", "simulations");
 define ("LOCAL_HOST", "127.0.0.1:27017");
 //define ("REMOTE_HOST", "155.198.117.244:27017");
-define ("REMOTE_HOST", "46.137.119.122:27017");
+define ("REMOTE_HOST", "46.137.120.70:27017");
 
 
 
