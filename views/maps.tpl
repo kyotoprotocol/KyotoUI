@@ -535,14 +535,11 @@
         </div>   
     </div>
 </div>
-<div id="country_name_popup">
-</div>
+
     
 <!--<div id="geoloc_me" class="ui-state-default ui-corner-all">
     <span title="Where am I?" class="ui-icon ui-icon-home"></span>
 </div>-->
-<div id="progressbar"></div>
-<div id="progressbarMessage"></div>
 </div>
 
 {/literal}
