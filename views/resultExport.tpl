@@ -9,9 +9,10 @@
         <br>
             <h2>{$count2}</h2>
             <ul>
-            {foreach $list as $l}
-                <li><a href="resultExport.php?simid={$simid}&part={$l}&total={$count2}">CLICK ONCE</a></li>  
-            {/foreach}
+                <li><a href="resultExport.php?simid={$simid}&part=0&total={$count2}">CLICK ONCE AND WAIT A V LONG TIME</a></li>  
+            {*foreach $list as $l}
+                
+            {/foreach*}
             </ul>
     <a href="local/{$simid}results.csv">Download Results</a>
 
