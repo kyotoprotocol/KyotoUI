@@ -146,8 +146,7 @@
                 <a class="btn" href="export.php?simid={$simID}"><i class="icon-download"></i> CSV export</a>
                 <a class="btn" data-toggle="modal" href="#sim{$simID}"><i class="icon-circle-arrow-right"></i> Copy</a>
                 <button class="btn btn-danger" id="runbutton">RUN SIM</button>  
-                <button class="btn btn-danger" id="runningbutton" style="display:none;">RUNNING</button>
-                <img src='/includes/img/ajax-loader.gif' width='28px' height='28px'>
+                <button class="btn btn-danger" id="runningbutton" style="display:none;">RUNNING <img src='/includes/img/ajax-loader.gif'></button>
             </div>   
         </div>
     </div>
