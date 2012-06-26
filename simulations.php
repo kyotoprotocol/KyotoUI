@@ -10,9 +10,10 @@ $simList = simulationList();
 //POST copy simulation?
 if (!isset($_SESSION['simfilterstate'])) {
     // First visit this session, so make some session defaults.
-        $_SESSION['simfilterstate'] = 'all';
-        $_SESSION['simfiltertype'] = 'all';
-        $_SESSION['simfilterlimit'] = '100';
+        $_SESSION['simfilterstate']     = 'all';
+        $_SESSION['simfiltertype']      = 'all';
+        $_SESSION['simfilterlimit']     = '100';
+        $_SESSION['display']            = 'display';
 }
 
 if (isset($_POST['type'])) {
@@ -20,6 +21,7 @@ if (isset($_POST['type'])) {
     $_SESSION['simfilterstate'] = $_POST['state'];
     $_SESSION['simfiltertype'] = $_POST['type'];
     $_SESSION['simfilterlimit'] = $_POST['limit'];
+    $_SESSION['display'] = $_POST['display'];
     header("Location: simulations.php?#filterset"); /* Redirect browser */
 }
 
@@ -95,7 +97,16 @@ if (isset($_POST['simulationcopy'])) {
         $type = array('classname'=>DEFAULT_CLASSNAME);
     }
 
-    $results = $simquery->find(array_merge($type, $state), array('sort'=>array("_id"=>-1), 'limit'=>(int)$_SESSION['simfilterlimit']));
+    if ($_SESSION['display'] == 'all') {
+        //don't filter
+        $keep = array();
+    } elseif ($_SESSION['display'] == 'display') {
+        $keep = array('keep'=>'true');
+    }
+    $search1 = array_merge($type, $state);
+    $search2 = array_merge($keep, $search1);
+    
+    $results = $simquery->find($search2, array('sort'=>array("_id"=>-1), 'limit'=>(int)$_SESSION['simfilterlimit']));
 
     $s = array();
     foreach ($results as $sim) {

@@ -36,17 +36,22 @@ jQuery(function($) {
      
       <form class="well form-inline" id="filterForm" name="dave" action="simulations.php" method="post" style="margin-top:2px;padding: 1px; margin-bottom: 10px; height: 30px;">
             <div class="btn-group span4" data-toggle-name="state" data-toggle="buttons-radio" style="margin-top: 1px;">
-                <button type="button" value="all" class="btn" data-toggle="button">All</button>
-                <button type="button" value="notstarted" class="btn" data-toggle="button">Not Started</button>
-                <button type="button" value="running" class="btn" data-toggle="button">Running</button>
-                <button type="button" value="complete" class="btn" data-toggle="button">Complete</button>
+                <button type="button" value="all" class="btn btn-small" data-toggle="button">All</button>
+                <button type="button" value="notstarted" class="btn btn-small" data-toggle="button">Not Started</button>
+                <button type="button" value="running" class="btn btn-small" data-toggle="button">Running</button>
+                <button type="button" value="complete" class="btn btn-small" data-toggle="button">Complete</button>
             </div>
             <input type="hidden" name="state" value="{$smarty.session.simfilterstate}" />
-            <div class="btn-group span3" data-toggle-name="type" data-toggle="buttons-radio" style="margin-top: 1px;">
-                <button type="button" value="all" class="btn" data-toggle="button">All</button>
-                <button type="button" value="kyoto" class="btn" data-toggle="button">kyoto.simulation</button>
+            <div class="btn-group span2" data-toggle-name="type" data-toggle="buttons-radio" style="margin-top: 1px;">
+                <button type="button" value="all" class="btn btn-small" data-toggle="button">All</button>
+                <button type="button" value="kyoto" class="btn btn-small" data-toggle="button">kyoto</button>
             </div>
             <input type="hidden" name="type" value="{$smarty.session.simfiltertype}" />
+            <div class="btn-group span2" data-toggle-name="display" data-toggle="buttons-radio" style="margin-top: 1px;">
+                <button type="button" value="all" class="btn btn-small" data-toggle="button">All</button>
+                <button type="button" value="display" class="btn btn-small" data-toggle="button">Showcase</button>
+            </div>
+            <input type="hidden" name="display" value="{$smarty.session.display}" />
            
                 <div class="input-prepend input-append span3" style="margin-top: 1px;">
                     <span class="add-on">Limit to</span><input class="span1" name="limit" value="{$smarty.session.simfilterlimit}" type="text"><span class="add-on">sims</span>
@@ -218,7 +223,6 @@ jQuery(function($) {
                                 <li><a href="simEdit.php?simid={$s["_id"]}">Edit</a></li>
                                 <li><a href="rawResultOutput.php?simid={$s["_id"]}">Raw RESULTS</a></li>
                                 <li><a href="simulations.php?simid={$s["_id"]}&keep=true">Keep</a></li>
-
                                 <li><a data-toggle="modal" href="#sim{$s["_id"]}">Copy</a></li>
                                 <li><a data-toggle="modal" href="#simdel{$s["_id"]}">Delete</a></li>
                                 <!--            <li class="divider"></li>
