@@ -22,49 +22,17 @@ if (isset($_GET['simid'])) {
     var_dump('failed'); die();
 }
 
-switch ($_GET['func']) {
-   /* case 'load' :
-        //$attributes = $sim->getAttributes();
-        $countries = $sim->getCountries();
-        //$output = $attributes;
-        $output = array();
-        $noMembers = 0;
-        foreach ($countries as $c) {            // package countries to contain all relevant data
-            $output['countries'][$c['ISO']] = $c;
-            $output['countries'][$c['ISO']]['arableLandAreaPercent'] = (int)(($c['arableLandArea']/$c['landArea'])*100) ;
-            $output['countries'][$c['ISO']]['ISO2'] = toISO2($c['ISO']);
-            $output['countries'][$c['ISO']]['GDPperkm2'] = (int)(($c['GDP']/$c['landArea'])) ;
-            $initialCarbonOutput += $c['carbonOutput'];
-            if(rand(0,10) > 5){
-                //set it to be a member
-                $output['countries'][$c['ISO']]['kyotoMember'] = 1;
-                $output['countries'][$c['ISO']]['cheat'] = 1;
-                $noMembers ++;
-            } else {
-                $output['countries'][$c['ISO']]['kyotoMember'] = 0;
-                $output['countries'][$c['ISO']]['cheat'] = 0;
-            }
-            $output['countries'][$c['ISO']]['carbonChangePercentage'] = rand(0, 100);
-        }
-        
-        $output['stats']['carbonOutput'] = $initialCarbonOutput; //calculated overview data
-        $output['stats']['globalCarbonChangePercentage'] = (($initialCarbonOutput - rand(1000000, $initialCarbonOutput))/$initialCarbonOutput)*100;
-        $output['stats']['numberOfMemberCountries'] = $noMembers;
-        ajaxSend($output);
-        break;*/
-    
+switch ($_GET['func']) {    
     case 'result' :
         $id = new MongoInt64($sim->getId());
         $intid = (int)$sim->getId();
         
         $result = new ResultModel();
         
-        //$countrytotals = new CountryTotalsModel();
-        
         $trade = new TradeModel();
         $tradeArray = $trade->find(array("simID" => (string)$id));
         
-        //Generate global data
+    //Generate global data
         
         $countries = array();
         $global = array();
@@ -74,10 +42,6 @@ switch ($_GET['func']) {
 
         $global['finalYear'] = $finalYear;
         $global['cheatcount'] = 0;
-        
-        //$finalYearResults = $result->find(array("simID" => $id), array("sort" => array("year" => $finalYear)));
-
-       // $firstYearResults = $result->find(array("simID" => $id), array("sort" => array("year" => "0")));
         
         $global['finalYearGlobalEmissionTarget'] = 0;
         $global['numberOfMemberCountries'] = 0;
@@ -113,8 +77,6 @@ switch ($_GET['func']) {
                 $first['totalCarbonOutput'] += $country->getCarbonOutput();
                 $first['totalCarbonAbsorption'] += $country->getCarbonAbsorption();
                 $first['globalGDP'] += $country->getGDP();
-
-                //var_dump($country->getGDP());
             } else {
                 if (isset($years[$country->getYear()])){
                     $years[$country->getYear()] += $country->getCarbonOutput();
@@ -182,7 +144,6 @@ switch ($_GET['func']) {
         
         //Bundle output and send to the page      
         $output = array('stats' => $global, 'countries' => $params, 'trades' => $trades, 'timeline'=>$timeline);
-        //'totals' => $totals,
         ajaxSend($output);
         break;
         
