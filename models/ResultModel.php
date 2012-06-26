@@ -14,6 +14,9 @@ class ResultModel extends BaseMongoRecord
     public function getGDP() {
         return $this->attributes['GDP'];
     }
+    public function getISO() {
+        return $this->attributes['ISO'];
+    }
     public function getGDPRate() {
         return $this->attributes['GDPRate'];
     }
