@@ -16,7 +16,6 @@
             success: function(data) {
                 $("#loading").delay(100).slideUp('slow');
                 window.glbldata = data;
-                    console.log(data.stats);
                 updateMotionChart(data);
                 arrayCountriesTool(data, 'carbonOutput');
                 arrayStatsTool(data);
