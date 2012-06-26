@@ -87,7 +87,7 @@
 {/literal}
 {/block}
 {block name=body}
-<button class="btn btn-danger" id="runbutton">RUN SIM</button>     
+   
 <div class="row">
     <div class="span12">
                         <!-- Hover box for copy simulation -->
@@ -129,7 +129,7 @@
             </div>
               
             <div class="btn-group">
-                    <a id="c2" class="btn dropdown-toggle" data-toggle="dropdown" href=""><i class="icon-cog"></i>Edit Countries<span class="caret"></span>
+                <a id="c2" class="btn dropdown-toggle" data-toggle="dropdown" href=""><i class="icon-cog"></i>Edit Countries<span class="caret"></span>
                     </a>
                         <ul class="dropdown-menu">
                     {foreach from=$simData['countries'] key=key item=cnt}
@@ -139,6 +139,7 @@
                 <a class="btn" href="simEdit.php?simid={$simID}"><i class="icon-cog"></i>Edit Simulation</a>
                 <a class="btn" href="export.php?simid={$simID}"><i class="icon-download"></i> CSV export</a>
                 <a class="btn" data-toggle="modal" href="#sim{$simID}"><i class="icon-circle-arrow-right"></i> Copy</a>
+                <button class="btn btn-danger" id="runbutton">RUN SIM</button>  
             </div>   
         </div>
     </div>
