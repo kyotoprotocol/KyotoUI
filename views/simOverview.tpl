@@ -23,7 +23,7 @@
             return false;
         });
         $("#runbutton").click(function(){
-                $(this).append("<img src='includes/img/ajax-loader.gif'>");
+                $(this).append("<img src='/includes/img/ajax-loader.gif'>");
                     $(this).addClass('active');
                 $.ajax({
                     type: "GET",
