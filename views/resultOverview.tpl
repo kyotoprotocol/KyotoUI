@@ -74,6 +74,8 @@
             $.each(data.trades, function(index, element){
                 if(index == "totalTradeValue"){
                     $('#'+ index).append((element/1000000000).toFixed(1)+'B');
+                } else if(index == 'tradeCount'){
+                    $('#'+ index).append((element/1000).toFixed(1));
                 } else {
                     $('#'+ index).append((element).toFixed(0));
                 }
@@ -203,19 +205,19 @@
 <div class="row">
     <div class="span3">
         <div class="well" style="height: 140px;">
-            <p id="tradeCount" style="color: black;line-height: 96px;font-size: 18px; font-weight: bold"></p>
-            <h4>Credit Trades</h4>
+            <p id="tradeCount" style="color: black;line-height: 96px;font-size: 86px; font-weight: bold"></p>
+            <h4>Thousand Credit Trades</h4>
         </div>
     </div>
     <div class="span2">
         <div class="well" style="height: 140px;">
-            <p id="finalYear" style="color: green;line-height: 96px;font-size: 96px; font-weight: bold"></p>
+            <p id="finalYear" style="color: green;line-height: 96px;font-size: 86px; font-weight: bold"></p>
             <h4>Final Sim. Year</h4>
         </div>
     </div>
     <div class="span3">
         <div class="well" style="height: 140px;">
-        <p id="cheatcount" style="color: green;line-height: 96px; font-size: 96px; font-weight: bold"></p>
+        <p id="cheatcount" style="color: green;line-height: 96px; font-size: 86px; font-weight: bold"></p>
         <h4>No. of Cheating Countries</h4>
         </div>
     </div>
