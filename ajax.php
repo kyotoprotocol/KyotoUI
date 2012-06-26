@@ -214,11 +214,7 @@ switch ($_GET['func']) {
         chdir('../kyoto/kyoto/');
         $command = ('sudo sh sim-run.sh run '.(string)$sim->getID().' > /var/log/kyoto/log'.(string)$sim->getID().'.txt $');
         exec($command, $output, $return);
-        $f = "/var/log/kyoto/log".(string)$sim->getID().".txt";
-        $l = fopen($f, 'r');
-        $log = fread($l);
-        fclose($l);
-        ajaxSend(array($command, $output, $return, $log));
+        ajaxSend($return);
         break;
     default : echo 'error';
 }
