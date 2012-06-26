@@ -51,7 +51,9 @@
 
                 </ul>
             </li>
-        </ul>            
+        </ul>
+                
+                <img src="includes/img/{$ISO2}.png" alt="{$ISO2}">        
     </div>
     <div class="span8"> <div id="visualization" style="width: 800px; height: 400px; margin-left: 50px;"></div></div>
  </div>
