@@ -41,7 +41,7 @@ if (isset($_GET['simid'])) {
     define ("YEARS", floor(TICK_LENGTH/TICK_YEAR));
     //define ("OUTPUTFORM", 'HTTPREQUEST');
     define ("OUTPUTFORM", 'JSON');
-    define ("REPORT", 3);
+    define ("REPORT", 0);
             if(REPORT>2)echo 'Number of YEARS: '.YEARS .'<br>';
     //Float variable of how many ticks in a quarter
     $tickquarter = ((int)TICK_YEAR)/4;
