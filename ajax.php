@@ -18,6 +18,8 @@ include('admin/config.php');
 $simulation = new SimulationModel();    // instantiate collection model
 if (isset($_GET['simid'])) {
     $sim = $simulation->findOne(array("_id" => (int)$_GET['simid']));
+    $simparams = $sim->getParameters();
+    $startyear = $simparams['START_YEAR'];
 } else {
     var_dump('failed'); die();
 }
@@ -91,6 +93,7 @@ switch ($_GET['func']) {
         }
         $global['carbonReduction'] = ($first['totalCarbonOutput'] - $first['totalCarbonAbsorption']) - ($last['totalCarbonOutput'] - $last['totalCarbonAbsorption']);
         $global['globalGDPChange'] = $last['globalGDP'] - $first['globalGDP'];
+        $global['startyear'] = $startyear;
         
         $timeline[] = array(0, $first['totalCarbonOutput']);
         foreach ($years as $year => $data) {
