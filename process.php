@@ -8,40 +8,8 @@ $time1 = getTime();
 $time2 = 0; 
 $time3 = 0;
 $looptimer = getTime(); 
-        
-/* THIS IS A COPY OF ESSENTIALS FROM CONFIG.PHP IN ORDER TO MINIMISE PAGE LOAD TIME ON THIS FILE.*/
-include('libs/mongorecord/BaseMongoRecord.php');
-include('models/SimulationModel.php');
-include('models/AgentsModel.php');
-include('models/AgentStateModel.php');
-include('models/ResultModel.php');
-
-define ("DB", "presage");
-define ("SIMTREE", "simulations");
-define ("LOCAL_HOST", "127.0.0.1:27017");
-//define ("REMOTE_HOST", "155.198.117.244:27017");
-define ("REMOTE_HOST", "46.137.119.122:27017");
-
-session_start();
-if(isset($_SESSION['database'])) {
-    if($_SESSION['database']=='remote') {
-        define ("HOST", REMOTE_HOST);
-    } else {
-        $_SESSION['database']='local';
-        define ("HOST", LOCAL_HOST);
-    }
-} else {
-        $_SESSION['database']='local';
-        define ("HOST", LOCAL_HOST);    
-}
-    try {
-        BaseMongoRecord::$connection = new Mongo(HOST);
-        BaseMongoRecord::$database = 'presage';
-    } catch(MongoConnectionException $e) {
-        //var_dump($e);
-    }
-    
-define ("NOTICE_1", "change in kyoto state, before, after, ticknumber");
+  include("admin/config.php");
+//define ("NOTICE_1", "change in kyoto state, before, after, ticknumber");
 
 /* END OF ESSENTIALS FROM CONFIG.PHP IN ORDER TO MINIMISE PAGE LOAD TIME ON THIS FILE.*/
     
@@ -73,7 +41,7 @@ if (isset($_GET['simid'])) {
     define ("YEARS", floor(TICK_LENGTH/TICK_YEAR));
     //define ("OUTPUTFORM", 'HTTPREQUEST');
     define ("OUTPUTFORM", 'JSON');
-    define ("REPORT", 0);
+    define ("REPORT", 3);
             if(REPORT>2)echo 'Number of YEARS: '.YEARS .'<br>';
     //Float variable of how many ticks in a quarter
     $tickquarter = ((int)TICK_YEAR)/4;
@@ -131,10 +99,28 @@ if (isset($_GET['simid'])) {
     if(REPORT>2)echo "agentsteps ".$agentSteps . "#  progresscount#".$progressCount."<br>";              
     if(REPORT>2)echo "YEAR ".$year . "# Quarter #".$currentQuarter."<br>";              
     $ticksInQuarter = $quarter[$year][$currentQuarter]['limit']; // Set how many ticks are in this quarter.
-
+    if(REPORT>2) echo $_GET['simid']."DAVE".$agentOffset.'<br>';
+    if(REPORT>2) var_dump($agentslist);
     
     $outputARY = array();
+
+    
+    
+    /*$agents2 = new AgentsModel();    // instantiate collection model
+    $agentslist2 = $agents2->findAll(array("simID" => (int) $_GET['simid']));
+    //echo $agentslist2->count();
+    foreach ($agentslist2 as $a) {
+       if(REPORT>2) var_dump($agentslist2);
+        if(REPORT>2) echo "list";
+        if(REPORT>2) var_dump($a->getAttributes());
+       if(REPORT>2) var_dump($agentslist2);
+    }*/
+    
+    
         foreach ($agentslist as $agent) {
+    if(REPORT>2) echo 'ENTERING FOR LOOP<br>';
+    if(REPORT>2) var_dump($agent);
+    if(REPORT>2) echo bin2hex ($agent->getAid());
             // EACH COUNTRY AS AGENT
             $agentProperties = $agent->getProperties();
             $iso = $agentProperties['ISO'];
@@ -147,6 +133,9 @@ if (isset($_GET['simid'])) {
             $counter = 0;
             $totalASQ = new AgentStateModel();    // instantiate collection model
             $totalAS = $totalASQ->find(array("aid"=>$agent->getAid()));
+            
+            if(REPORT>2) var_dump($totalAS);
+            
             $totalticks = $totalAS->count();
             
             
@@ -174,7 +163,11 @@ if (isset($_GET['simid'])) {
             /*
              *  BEGIN LOOPING UNTIL FINISHED OR THE AGENT HAS COMPLETED
              */
+    if(REPORT>2) echo 'PRELOOP DATA counter:'.$counter.' totalticks: '.$totalticks.'<br>';
+
             while (($looptimer-$time1 < 20) && $counter < $totalticks){//&& (!$finishloop)) {
+    if(REPORT>2) echo 'ENTERING FOR WHILELOOP<br>';
+
                     $year = (int)floor((($progressCount)%($agentSteps)/4));
                     if(REPORT>2)"YEAR ".$year . "# dave<br>"; //die();
                     $ticksInQuarter = $quarter[$year][$currentQuarter]['limit'];
