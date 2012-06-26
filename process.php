@@ -151,7 +151,7 @@ if (isset($_GET['simid'])) {
             
             
                     //Implement check here asap
-                    $resultcheckq = new ResultModel();    // instantiate collection model
+       /*             $resultcheckq = new ResultModel();    // instantiate collection model
                     $resultcheck = $resultcheckq->findOne(array("simID" => (int)$_GET['simid'], "ISO" => $iso, 'year'=> (int)$year,'quarter'=> (int)$currentQuarter));
                     if (is_null($resultcheck)) {
                         //echo 'no record exists<bR>';
@@ -168,7 +168,7 @@ if (isset($_GET['simid'])) {
                         header('content-type: application/json');
                         echo json_encode($outputARY);
                         die();
-                    } 
+                    } */
             
             
             /*
@@ -213,7 +213,7 @@ if (isset($_GET['simid'])) {
                         }
                         
                         // Cheating?
-                        if ($agentTickProperties['cheated']='cheated') {
+                        if ($agentTickProperties['cheated']=='cheated') {
                             $cheated = true;
                         }
                         if(REPORT>2)echo 'Ticks in Quarter'.$ticksInQuarter.'<br>';
