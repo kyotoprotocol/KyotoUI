@@ -52,8 +52,9 @@
                 </ul>
             </li>
         </ul>
-                
-                <img src="includes/img/{$ISO2}.png" alt="{$ISO2}">        
+                <center>
+                <img src="includes/img/{$ISO2|strtolower}.png" alt="{$ISO2}">        
+                </center>
     </div>
     <div class="span8"> <div id="visualization" style="width: 800px; height: 400px; margin-left: 50px;"></div></div>
  </div>
