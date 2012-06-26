@@ -34,7 +34,10 @@
                        console.log(data);
                        if(data == 0){
                            //success
-                           setTimeout(location.reload(),3000);
+                           setTimeout(function(){
+                               location.reload();}
+                            ,4000);
+                           
                       } else {
                           //failed
                           
