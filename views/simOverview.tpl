@@ -208,7 +208,7 @@
                                 {/if}
                             </td>
                         <tr>
-                     {elseif ($key == "createdAt") or ($key == "currentTime") or ($key == "finishedAt")}
+                     {elseif ($key == "createdAt") or ($key == "startedAt") or ($key == "finishedAt")}
                                <tr>
                                    <td>{$key}</td>
                                {if $c == 0}
