@@ -21,7 +21,7 @@
                 arrayStatsTool(data);
                 arrayTradesTool(data);
                     
-                //updateLineChart(data);  //pass some useful data here parameters = data: ..., options:....
+                updateLineChart(data);  //pass some useful data here parameters = data: ..., options:....
                 //addNotices(data);
             }
         });
@@ -108,19 +108,25 @@
         if(window.linechart){
             window.linechart.clearChart();
         } else {
-            window.linechart = new google.visualization.LineChart(document.getElementById('credit_cost_chart'));
+            window.linechart = new google.visualization.LineChart(document.getElementById('global_carbon_chart'));
         }
         var newArray = [];
         newArray.push(['Year', 'Carbon Output']);
-        $.each(parameters.countries, function(index, element){
-            newArray.push([element['year'], element['carbonOutput']]);
+        $.each(parameters.timeline, function(index, element){
+            console.log(element);
+            newArray.push(element);
         });
-        var data = google.visualization.arrayToDataTable(parameters.data);
+        var data = google.visualization.arrayToDataTable(newArray);
         if(parameters.options){
             var options = parameters.options;
         } else { //default options
             var options = { 
-                title: 'Company Performance'
+                title: 'Global Carbon Output vs Time',
+                width: 960,
+                height: 500,
+                curveType: 'function',
+                hAxis : {title: 'Simulation Year'},
+                vAxis : {title: 'Global Carbon Output (tons)'}
             };
         }
         //draw the chart    
@@ -167,7 +173,7 @@
 <div class="row">
     <div class="span3">
         <div class="well">
-            <p id="globalGDPChange" style="color: green;line-height: 96px;font-size: 18px; font-weight: bold"></p>
+            <p id="globalGDPChange" style="color: green;line-height: 96px;font-size: 20px; font-weight: bold"></p>
             <h4>Global GDP Change</h4>
         </div>
         <div class="well">
@@ -211,7 +217,7 @@
     <div class="span2">
         <div class="well" style="font-size:11px;">
         <strong>Total Trade Value:</strong>
-        <div id="totalTradeValue" style="font-size:18px;">
+        <div id="totalTradeValue" style="font-size:22px;">
             $
         </div>
         </div>
@@ -255,21 +261,23 @@
         </div>
     </div>
 </div>
-
 <hr>
+<div class="page-header">
+    <h2>Multifunctional Geochart</h2>
+</div>
 <div class="row">
-    <div class="span12">
+    <div class="span7 offset6">
 
-<!-- Add data-toggle="buttons-radio" for radio style toggling on btn-group -->
             <div class="btn-group geochart_buttons" data-toggle="buttons-radio">
                 <button id="carbonOutput" class="btn active">CO2 Tonnes</button>
                 <button id="carbonChangePercentage" class="btn">CO2 % Change</button>
                 <button id="isKyotoMember" class="btn">Kyoto Members</button>
                 <button id="cheat" class="btn">Cheating Countries</button>
             </div>
-        <h2>GeoChart of CO2 reduction in Tonnes</h2>
-            <div id="geo_chart"></div>
     </div>
+</div>
+<div class="row">
+<div id="geo_chart"></div>
 </div>
 <hr>
 <!--
@@ -321,23 +329,19 @@
     </div>
 </div>
 -->
-<div class="row">
-    <div class="span12">
-        <h2>GDP and Carbon Output Over Time</h2>
-    </div>
+<div class="page-header">
+    <h2>GDP and Carbon Output vs Time (with Annex Information)</h2>
 </div>
 
-
-<!-- TRADE OUTPUT HERE -->
 <div id="motion_chart"></div>
-<!--
-<div class="row">
-    <div class="span12">
-        <h2>Global CO2 Emissions VS Global GDP</h2>
-    </div>
+<hr>
+
+<div class="page-header">
+    <h2>Carbon Output vs Simulation Time</h2>
 </div>
--->
-<br>
+
+<div id="global_carbon_chart"></div>
+<hr>
 <!-- TRADE OUTPUT HERE
 <div id="credit_cost_chart" style="width: 900px; height: 500px;"></div>
 

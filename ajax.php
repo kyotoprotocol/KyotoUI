@@ -136,9 +136,9 @@ switch ($_GET['func']) {
                 //var_dump($country->getGDP());
             } else {
                 if (isset($years[$country->getYear()])){
-                $years[$country->getYear()] += $country->getCarbonOutput();
+                    $years[$country->getYear()] += $country->getCarbonOutput();
                 } else {
-                $years[$country->getYear()] = $country->getCarbonOutput();
+                    $years[$country->getYear()] = $country->getCarbonOutput();
                 }
 
             }
@@ -148,14 +148,13 @@ switch ($_GET['func']) {
         }
         $global['carbonReduction'] = ($first['totalCarbonOutput'] - $first['totalCarbonAbsorption']) - ($last['totalCarbonOutput'] - $last['totalCarbonAbsorption']);
         $global['globalGDPChange'] = $last['globalGDP'] - $first['globalGDP'];
-        //var_dump($global['globalGDPChange']);
         
-                $timeline[] = array(0, $first['totalCarbonOutput']);
-               foreach ($years as $year => $data) {
-                $timeline[] = array($year, $data);
-               }
-                $timeline[] = array($finalYear, $last['totalCarbonOutput']);
-                //[new Date(2008, 1 ,1), 30000, null, null, 40645, null, null],
+        $timeline[] = array(0, $first['totalCarbonOutput']);
+        foreach ($years as $year => $data) {
+            $timeline[] = array($year, $data);
+        }
+        $timeline[] = array($finalYear, $last['totalCarbonOutput']);
+        //[new Date(2008, 1 ,1), 30000, null, null, 40645, null, null],
 
         
 //Generate trades data
