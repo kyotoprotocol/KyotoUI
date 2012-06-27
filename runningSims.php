@@ -12,7 +12,15 @@ $smarty->assign('simList',simulationList());
 
 
 
-
+    $running = shell_exec('ps -ef | grep java');
+ echo '<br><br><br><br><br><br>';
+    var_dump($running);
+    var_dump($running);
+    var_dump($running);
+    var_dump($running);
+    var_dump($running);
+    var_dump($running);
+    var_dump($running);
 
     $list = runningIds();
     var_dump($list);
