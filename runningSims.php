@@ -12,9 +12,6 @@ $smarty->assign('simList',simulationList());
 
 
 
-    $running = shell_exec('ps -ef | grep java');
-
-
     $list = runningIds();
 
     foreach ($list as $l) {
