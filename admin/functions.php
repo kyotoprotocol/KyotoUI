@@ -10,12 +10,21 @@
 
 function runningIds(){
     $running = shell_exec('ps -ef | grep java');
-    preg_match_all('/run [0-9]*/',$running,$matches);
-    foreach($matches as $match){
-        $returnArry[] = (int)str_replace('run ', '', $match);
+    
+    $array = explode('run',$running);
+    $rs = array();
+
+    for ($i=1; $i<count($array); $i++){
+        $rSim = explode(' ', $array[$i]);
+        //var_dump($rSim);
+        $number = trim($rSim[1],'"');
+        if (!isset($rs[$number])) {
+        $rs[$number] =$number ;
+        }
     }
-    //$returnArry = array(3,9);
-    return $returnArry;
+
+    return $rs;
+
 }
 
 
