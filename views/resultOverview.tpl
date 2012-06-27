@@ -146,9 +146,13 @@
         var data = new google.visualization.DataTable();
         var rows = [];
         var options = {};
+        var year = 0;
         $.each(parameters.countries, function(index, output){
-            rows.push([output['ISO'], new Date(output['year'],0,1), parseInt(output['carbonOutput']), parseInt(output['GDP']), output['isKyotoMember']]);
+            year = parseInt(parameters.stats['startyear']) + parseInt(output['year']);
+                console.log(year);
+            rows.push([output['ISO'], new Date(year,0,1), parseInt(output['carbonOutput']), parseInt(output['GDP']), output['isKyotoMember']]);
         });
+            console.log(parameters.stats);
         data.addColumn('string', 'Country');
         data.addColumn('date', 'Date');
         data.addColumn('number', 'Carbon Output');
@@ -158,7 +162,7 @@
         
         options['width'] = 960;
         options['height'] = 500;
-        options['state'] = '{"orderedByX":false,"xLambda":0,"colorOption":"4","time":"1900-00-01","xZoomedDataMax":1200,"iconKeySettings":[],"yZoomedIn":false,"duration":{"timeUnit":"D","multiplier":1},"orderedByY":false,"yZoomedDataMax":617,"xZoomedIn":false,"iconType":"BUBBLE","xAxisOption":"2","nonSelectedAlpha":0.4,"yZoomedDataMin":150,"xZoomedDataMin":300,"yLambda":0,"sizeOption":"2","uniColorForNonSelected":false,"yAxisOption":"3","playDuration":15000,"dimensions":{"iconDimensions":["dim0"]},"showTrails":true}';
+        options['state'] = '{"orderedByX":false,"xLambda":0,"colorOption":"4","time":"'+ parameters.stats['startyear'] +'","xZoomedDataMax":1200,"iconKeySettings":[],"yZoomedIn":false,"duration":{"timeUnit":"D","multiplier":1},"orderedByY":false,"yZoomedDataMax":617,"xZoomedIn":false,"iconType":"BUBBLE","xAxisOption":"2","nonSelectedAlpha":0.4,"yZoomedDataMin":150,"xZoomedDataMin":300,"yLambda":0,"sizeOption":"2","uniColorForNonSelected":false,"yAxisOption":"3","playDuration":15000,"dimensions":{"iconDimensions":["dim0"]},"showTrails":true}';
 
         var motionchart = new google.visualization.MotionChart(
             document.getElementById('motion_chart'));
