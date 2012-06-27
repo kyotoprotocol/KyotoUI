@@ -140,7 +140,7 @@ if (isset($_GET['simid'])) {
             
             
                     //Implement check here asap
-       /*             $resultcheckq = new ResultModel();    // instantiate collection model
+                    $resultcheckq = new ResultModel();    // instantiate collection model
                     $resultcheck = $resultcheckq->findOne(array("simID" => (int)$_GET['simid'], "ISO" => $iso, 'year'=> (int)$year,'quarter'=> (int)$currentQuarter));
                     if (is_null($resultcheck)) {
                         //echo 'no record exists<bR>';
@@ -157,7 +157,7 @@ if (isset($_GET['simid'])) {
                         header('content-type: application/json');
                         echo json_encode($outputARY);
                         die();
-                    } */
+                    } 
             
             
             /*
