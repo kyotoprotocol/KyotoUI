@@ -59,6 +59,13 @@
 </div>
 
 
+<div class="row">
+    <div class="span9">
+    <a class="btn" href="https://github.com/kyotoprotocol"><i class="icon-random"></i> Github Organisation</a>
+    <a class="btn" href="https://github.com/kyotoprotocol/kyoto/raw/development/report/report.pdf" ><i class="icon-file"></i> Download Report</a>
+    </div>
+    <div class="span3">
     <a id="dave" rel="tooltip" href="test.php" title="Contribute and we'll add you in!" style="float:right;" ><i class="icon-thumbs-up"></i>Contributors</a>
-
+    </div>
+</div>
 {/block}
