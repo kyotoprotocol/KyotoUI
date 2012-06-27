@@ -15,6 +15,11 @@
                         {else}
                             <li><a href="simEdit.php?simid={$smarty.get.simid}">Edit</a></li>
                         {/if}
+                        {if (substr_count($smarty.server.PHP_SELF, 'rawResultOutput.php')==1)}
+                            <li class="active"><a href="#">Raw</a></li>
+                        {else}
+                            <li class="disabled"><a href="rawResultOutput.php?simid={$smarty.get.simid}">Raw</a></li>
+                        {/if}
                         {if (substr_count($smarty.server.PHP_SELF, 'simRun.php')==1)}
                             <li class="active"><a href="#">Process</a></li>
                         {else}
