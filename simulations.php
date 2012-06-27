@@ -46,7 +46,7 @@ if (isset($_POST['simulationcopy'])) {
                                                 'name'              =>  $_POST['simulationname'],
                                                 'classname'         =>  $sim->getClassname(),
                                                 'description'       =>  $_POST['simulationdescription'],
-                                                'state'             =>  $sim->getState(),
+                                                'state'             =>  DEFAULT_STATE,
                                                 'author'            =>  $_POST['author'],
                                                 'finishTime'        =>  new MongoInt64($sim->getFinishTime()),
                                                 'createdAt'         =>  new MongoInt64(time()*1000) ,
