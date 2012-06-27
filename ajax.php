@@ -29,6 +29,8 @@ switch ($_GET['func']) {
         $id = new MongoInt64($sim->getId());
         $intid = (int)$sim->getId();
         
+        var_dump(runningIds()); die();
+        
         $result = new ResultModel();
         
         $trade = new TradeModel();
