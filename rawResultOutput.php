@@ -13,7 +13,7 @@ $smarty->assign('simList',simulationList());
         // Load specific simulation
         if (isset($_GET['simid'])) {
             $sim = $simulation->findOne(array("_id" => (int)$_GET['simid']));
-            $agentslist = $agents->find(array("simID" => (float) $_GET['simid']));
+            $agentslist = $agents->find(array("simID" => (float) $_GET['simid']),array('sort'=>array('_id'=>1)));
             //$agentslist = $agents->find();
         } else {
             var_dump('error no sim found'); die(); // basic error reporting
@@ -29,18 +29,24 @@ $smarty->assign('simList',simulationList());
                 $propcount = count($properties);
                 $propkeys = array_keys($properties);
                $a[$i] = $dave->getAttributes();
-
+               $names[$i] = $dave->getName();
+            if (isset($_GET['number'])&&($_GET['number']==$i)    ) {
+                $aid=$dave->getAid();
+            }
                //okvar_dump($a[$i]);
-               $binaryUUID = $dave->getAid();
-                $agentstate = $as->find(array("aid"=>$binaryUUID));
-                foreach ($agentstate as $ag) {
-                    $a[$i]['agentstates'][] = $ag->getAttributes();
-                    $statekeys = array_keys($ag->getProperties());
-                }
+           //    $binaryUUID = 
+          //      $agentstate = 
                 $i++;
                 
             }
- 
+            if (isset($_GET['number'])) {
+                
+                    $as->find(array("aid"=>$binaryUUID));
+                    $a['agentstates'][] = $ag->getAttributes();
+                    $statekeys = array_keys($ag->getProperties());
+                
+
+            }
         $smarty->assign('statekeys', $statekeys);
         $smarty->assign('propkeys', $propkeys);
         $smarty->assign('propcount', $propcount);
