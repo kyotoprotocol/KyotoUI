@@ -29,6 +29,8 @@ switch ($_GET['func']) {
         $id = new MongoInt64($sim->getId());
         $intid = (int)$sim->getId();
         
+        runningIds();
+        
         $result = new ResultModel();
         
         $trade = new TradeModel();
@@ -143,7 +145,6 @@ switch ($_GET['func']) {
         if($trades['averageCreditValue'] != 0 && $trades['tradeCount'] != 0){
             $trades['averageCreditValue'] = (int)$trades['averageCreditValue']/$trades['tradeCount'];
         } else $trades['averageCreditValue'] = 0;
-        
         
         //Bundle output and send to the page      
         $output = array('stats' => $global, 'countries' => $params, 'trades' => $trades, 'timeline'=>$timeline);
