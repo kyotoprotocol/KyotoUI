@@ -75,7 +75,7 @@
     <h3>Simulation Data Processing:</h3>
 </div>
     <blockquote>
-This script doesn't work in university firefox (installed circa 1994). (Max made it - Webster broke it).
+This script doesn't work in university firefox. Leave running until the bar has completed!.
 
     </blockquote>
     {if $completedProcess}
@@ -87,7 +87,7 @@ This script doesn't work in university firefox (installed circa 1994). (Max made
        style="width: 0%"></div>
 </div>
  
-<div class="span10 offset2">
+<div class="span10 offset1">
     <div id="progressoutput" class="well">
     
     </div>

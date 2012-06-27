@@ -177,7 +177,7 @@ if (isset($_GET['simid'])) {
                     $as = new AgentStateModel();  // instantiate collection model
                         $agentstate = $as->find(
                                         array("aid"=>$agent->getAid()),
-                                        array('sort' => array('_id' => 1),
+                                        array('sort' => array('_id' => 1,'time' => 1),
                                               'offset' => $quarter[$year][$currentQuarter]['offset'],
                                               'limit' => (int)$quarter[$year][$currentQuarter]['limit']
                                               )

@@ -13,7 +13,7 @@ $smarty->assign('simList',simulationList());
         // Load specific simulation
         if (isset($_GET['simid'])) {
             $sim = $simulation->findOne(array("_id" => (int)$_GET['simid']));
-            $agentslist = $agents->find(array("simID" => (float) $_GET['simid']));
+            $agentslist = $agents->find(array("simID" => (float) $_GET['simid']),array('sort'=>array('_id'=>1)));
             //$agentslist = $agents->find();
         } else {
             var_dump('error no sim found'); die(); // basic error reporting
@@ -21,30 +21,34 @@ $smarty->assign('simList',simulationList());
         
         $simID = new MongoInt64($sim->getID()); // ensure simID is of the correct type
         
-        $as = new AgentStateModel();    // instantiate collection model
         $i = 0;
+                        $a = array();
             foreach ($agentslist as $dave) {
-               
-                $properties = $dave->getProperties();
-                $propcount = count($properties);
-                $propkeys = array_keys($properties);
-               $a[$i] = $dave->getAttributes();
+                $names[$i] = $dave->getName();
+                if (isset($_GET['number'])&&($_GET['number']==$i)) {
+                    $binaryUUID=$dave->getAid();
+                    $properties = $dave->getProperties();
+                    $smarty->assign('properties', $properties);
+                    $smarty->assign('Cname', $dave->getName());
 
-               //okvar_dump($a[$i]);
-               $binaryUUID = $dave->getAid();
-                $agentstate = $as->find(array("aid"=>$binaryUUID));
-                foreach ($agentstate as $ag) {
-                    $a[$i]['agentstates'][] = $ag->getAttributes();
-                    $statekeys = array_keys($ag->getProperties());
-                }
+                    //AGENT STATE PROCESSOR
+                        $agentState = new AgentStateModel();    // instantiate collection model
+                        $as = $agentState->find(array("aid"=>$binaryUUID));
+                        $count = $as->count();
+                        $smarty->assign('tCount', $count);
+                        foreach ($as as $ag) {
+                        $a[$ag->getTime()] = $ag->getProperties();
+                        //$statekeys = array_keys($ag->getProperties());
+                        }
+                        $smarty->assign('ticks', $a);
+                    }
                 $i++;
                 
             }
- 
-        $smarty->assign('statekeys', $statekeys);
-        $smarty->assign('propkeys', $propkeys);
-        $smarty->assign('propcount', $propcount);
-        $smarty->assign('agents', $a);
+    //    $smarty->assign('statekeys', $statekeys);
+   //     $smarty->assign('propkeys', $propkeys);
+    //    $smarty->assign('propcount', $propcount);
+        $smarty->assign('names', $names);
         $smarty->assign('simAuthor', $sim->getAuthor());
         $smarty->assign('simName', $sim->getName());
         $smarty->assign('simDescription', $sim->getDescription());
