@@ -106,9 +106,16 @@ $jsonOut = array();
                 $jsonOut[$key] = generateFlightPathArray($country, $key, (int)$cost['value'], $countries, $names);
             }
         }
-    } elseif ($_GET['direction']=='both') {
+    } elseif (substr_count($_GET['direction'],'both')>0) {
+        if (substr_count($_GET['direction'],'CDM')>0) {
+            //CDM QUERIES
+            $investType = 'ABSORB';
+        } else {
+            // CO2 QUERIES
+            $investType = 'INVALID';
+        }
         $tradeQ = new TradeModel();    // instantiate collection model
-        $trades = $tradeQ->find(array('simID'=>$simID,'broadcaster'=>$country));
+        $trades = $tradeQ->find(array('simID'=>$simID,'broadcaster'=>$country,'investmentType'=>$investType));
         $lines = array();
         foreach ($trades as $trade){
        // var_dump($trade);
@@ -119,7 +126,7 @@ $jsonOut = array();
             }
         }
         unset($trades);
-        $trades = $tradeQ->find(array('simID'=>$simID,'initiator'=>$country));
+        $trades = $tradeQ->find(array('simID'=>$simID,'initiator'=>$country, 'investmentType'=>$investType));
         foreach ($trades as $trade){
         //var_dump($trades);
             if (isset($lines[$trade->getBroadcaster()])){
@@ -133,8 +140,25 @@ $jsonOut = array();
             $jsonOut[$key] = generateFlightPathArray($country, $key, (int)$value, $countries, $names);
         }
     } else {
+        //
+        // inCO2 outCO2 inCDM outCDM here!
+        //
         $tradeQ = new TradeModel();    // instantiate collection model
-        $trades = $tradeQ->find(array('simID'=>$simID,'broadcaster'=>$country));
+        if (substr_count($_GET['direction'],'CDM')>0) {
+            //CDM QUERIES
+            $investType = 'ABSORB';
+        } else {
+            // CO2 QUERIES
+            $investType = 'INVALID';
+        }
+        if (substr_count($_GET['direction'],'in')>0) {
+            // INITIATOR QUERY
+                        $trader = 'initiator';
+        } elseif (substr_count($_GET['direction'],'out')>0) {
+            // BROADCASTER QUERY
+                        $trader = 'broadcaster';
+        }
+        $trades = $tradeQ->find(array('simID'=>$simID,$trader=>$country, 'investmentType'=>$investType));
         $lines = array();
         foreach ($trades as $trade){
             if (isset($lines[$trade->getInitiator()])){
@@ -147,6 +171,7 @@ $jsonOut = array();
         foreach ($lines as $key => $value){
             $jsonOut[$key] = generateFlightPathArray($country, $key, (int)$value, $countries, $names);
         }
+   
     }
 
 //var_dump($jsonOut);
