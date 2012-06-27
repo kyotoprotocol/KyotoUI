@@ -61,7 +61,7 @@
 
 <div class="row">
     <div class="span9">
-    <a class="btn" href="https://github.com/kyotoprotocol"><i class="icon-random"></i> Github Organisation</a>
+    <a class="btn" href="https://github.com/kyotoprotocol"><i class="icon-random"></i> Kyoto Protocol on github</a>
     <a class="btn" href="https://github.com/kyotoprotocol/kyoto/raw/development/report/report.pdf" ><i class="icon-file"></i> Download Report</a>
     </div>
     <div class="span3">
