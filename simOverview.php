@@ -59,6 +59,7 @@ $smarty->assign('simList',simulationList());
         $smarty->assign('countries',$countriesDisplay);
         
         $smarty->assign('simAuthor', $sim->getAuthor());
+        $smarty->assign('simState', $sim->getState());
         $smarty->assign('simName', $sim->getName());
         $smarty->assign('simDescription', $sim->getDescription());
         $smarty->assign('simData', $sim->getAttributes());

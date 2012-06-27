@@ -20,7 +20,7 @@
     </div>
 </div>                
 <div class="row">
-    <div class="row">
+    <div class="span12">
         <div class="btn-group ">
     {foreach from=$names key=id item=country}
     <a href="rawResultOutput.php?simid={$smarty.get.simid}&number={$id}" class="btn btn-mini">{$country}</a>
