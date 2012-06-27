@@ -35,7 +35,7 @@
                            //success
                            setTimeout(function(){
                                location.reload();}
-                            ,4000);
+                            ,10000);
                       } else {
                           //failed
                           $("#runningbutton").text('FAILED');
