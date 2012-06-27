@@ -13,11 +13,11 @@ $smarty->assign('simList',simulationList());
 
 
     $list = runningIds();
-    var_dump($list);
+    //var_dump($list);
     foreach ($list as $l) {
         
         $simquery = new SimulationModel();    // instantiate collection model
-        $results = $simquery->findOne(array('_id'=>$l));
+        $results = $simquery->findOne(array('_id'=>(int)$l));
         $simlist[] = $results->getAttributes();
     }
 //var_dump($simlist);
