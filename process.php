@@ -165,7 +165,7 @@ if (isset($_GET['simid'])) {
              */
     if(REPORT>2) echo 'PRELOOP DATA counter:'.$counter.' totalticks: '.$totalticks.'<br>';
 
-            while (($looptimer-$time1 < 20) && $counter < $totalticks){//&& (!$finishloop)) {
+            while (($looptimer-$time1 < 120) && $counter < $totalticks){//&& (!$finishloop)) {
     if(REPORT>2) echo 'ENTERING FOR WHILELOOP<br>';
 
                     $year = (int)floor((($progressCount)%($agentSteps)/4));
