@@ -16,7 +16,7 @@ Running Sims on max's server
             <th>Name</th>
             <th>Description</th>
             <th>Author</th>
-            <th>DOWNLOAD</th>
+            <th>Progress</th>
           </tr>
         </thead>
         <tbody>

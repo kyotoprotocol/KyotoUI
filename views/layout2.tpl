@@ -34,6 +34,7 @@
                         <li><a href="initialise.php">Import Simulations</a></li>
                         <li><a href="export.php">Export Simulations</a></li>
                         <li><a href="index.php">Change Database</a></li>
+                        <li><a href="runningSims.php">Running Simulations</a></li>
                         <!--<li><a href="#">Export Editor</a></li>-->
                     </ul>
                 </li>
