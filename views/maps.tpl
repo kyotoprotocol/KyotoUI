@@ -48,12 +48,15 @@
         <select style="display: inline" class="span4" id="country_select">
         </select>
     </div>
-    <div class="span6">
-        <div  style="display: inline" class="btn-group" data-toggle="buttons-radio">
-            <button href="#" id="in"  class="btn">Buyer</button>
-            <button href="#" id="out" class="btn">Seller</button>
-            <button href="#" id="both" class="btn">Both</button>
-            <button href="#" id="all" class="btn">All Trades, All Countries</button>
+    <div class="span8">
+        <div class="span8 btn-group" data-toggle="buttons-radio">
+            <button href="#" id="inCDM"  class="btn btn-mini">Initiator CDM</button>
+            <button href="#" id="outCDM" class="btn btn-mini">Broadcaster CDM </button>
+            <button href="#" id="bothCDM" class="btn btn-mini">Both CDM </button>
+            <button href="#" id="inCO2" class="btn btn-mini">Initiator CO2</button>
+            <button href="#" id="outCO2" class="btn btn-mini">Broadcaster CO2</button>
+            <button href="#" id="bothCO2" class="btn btn-mini">Both CO2</button>
+            <button href="#" id="all" class="btn btn-mini">All Trades, All Countries</button>
         </div>
     </div>
 </div>
@@ -228,13 +231,13 @@
                     hiv = hiv + ' %';
                 else
                     hiv = "no data"
-                country_name.append("<tr><th>C02 Reduction</th><td style='text-align:right;'>" + hiv+'</td></tr>');
+                country_name.append("<tr><th>CO2 Reduction</th><td style='text-align:right;'>" + hiv+'</td></tr>');
                 var tb = parseFloat(TUBERCULOSIS[country]/1000).toFixed(2);
                 if (tb && !isNaN(tb))
                     tb = tb + ' %';
                 else
                     tb = "no data";
-                country_name.append("<tr><th>C02 Absorption</th><td style='text-align:right;'>" + tb +'</td></tr>');
+                country_name.append("<tr><th>CO2 Absorption</th><td style='text-align:right;'>" + tb +'</td></tr>');
                 var mortality =  parseFloat(UNDER_FIVE_MORTALITY[country]/10).toFixed(2);
                 if (mortality && !isNaN(mortality))
                     mortality = mortality + ' %';
@@ -378,7 +381,7 @@
                  POP = data;
              });
 
-             $.getJSON("maps/code_to_name.json", function(data) {
+             $.getJSON("code_to_country.php?simid={/literal}{$smarty.get.simid}{literal}", function(data) {
                  code_to_name = data;
                  var country_select = $("#country_select");
                  $.each(data, function(code, name) {
@@ -405,27 +408,44 @@
             if (!Modernizr.geolocation)
                 $("#geoloc_me").hide();
             container = $("#container");
-            $("#in").click(function(e){
+            $("#inCO2").click(function(e){
                e.preventDefault();
-               direction='out';
+               direction='inCO2';
                redraw();
             });
-            $("#out").click(function(e){
+            $("#outCO2").click(function(e){
                e.preventDefault();
 
-               direction='in';
+               direction='outCO2';
+               redraw();
+            });
+            $("#bothCO2").click(function(e){
+               e.preventDefault();
+
+               direction='bothCO2';
+               redraw();
+            });
+            $("#inCDM").click(function(e){
+               e.preventDefault();
+               direction='inCDM';
+               redraw();
+            });
+            $("#outCDM").click(function(e){
+               e.preventDefault();
+
+               direction='outCDM';
+               redraw();
+            });
+            $("#bothCDM").click(function(e){
+               e.preventDefault();
+
+               direction='bothCDM';
                redraw();
             });
             $("#all").click(function(e){
                e.preventDefault();
 
                direction='all';
-               redraw();
-            });
-            $("#both").click(function(e){
-               e.preventDefault();
-
-               direction='both';
                redraw();
             });
             $("#geoloc_me").click(function(e){
