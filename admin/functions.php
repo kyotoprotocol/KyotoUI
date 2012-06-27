@@ -8,7 +8,14 @@
 
 
 
-
+function runningIds(){
+    $running = shell_exec('ps -ef | grep java');
+    preg_match_all('/run [0-9]*/',$running,$matches);
+    foreach($matches as $match){
+        $returnArry[] = (int)str_replace('run ', '', $match);
+    }
+    return $returnArry;
+}
 
 
 

@@ -144,7 +144,6 @@ switch ($_GET['func']) {
             $trades['averageCreditValue'] = (int)$trades['averageCreditValue']/$trades['tradeCount'];
         } else $trades['averageCreditValue'] = 0;
         
-        
         //Bundle output and send to the page      
         $output = array('stats' => $global, 'countries' => $params, 'trades' => $trades, 'timeline'=>$timeline);
         ajaxSend($output);
