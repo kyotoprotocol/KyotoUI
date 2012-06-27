@@ -28,6 +28,8 @@
         </div>
     </div>
 </div>
+{if isset($ticks)}
+
 <h1>{$Cname}</h1>
     <ul>
     {foreach from=$properties key=key item=prop}
@@ -35,7 +37,6 @@
     {/foreach}
     </ul>
 </div>
-
 <div class="row">
      <div class="span12">
         <table class="table table-bordered table-condensed">
@@ -71,5 +72,6 @@
 
      </div>
 </div>
+{/if}
 <div>
 {/block}
