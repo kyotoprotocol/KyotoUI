@@ -58,6 +58,7 @@ $smarty->assign('simList',simulationList());
     $attributes = $sim->getAttributes();
     
     $smarty->assign('simName', $sim->getName());
+    $smarty->assign('simState', $sim->getState());
     $smarty->assign('simAuthor', $sim->getAuthor());
     $smarty->assign('simDescription', $sim->getDescription());
     $smarty->assign('simid', $simID);

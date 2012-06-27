@@ -3,6 +3,7 @@
                 <div class="span12">
                     <div class="subnav">
                         <ul class="nav nav-tabs">
+                            
                         {if (substr_count($smarty.server.PHP_SELF, 'simOverview.php')==1)}
                             <li class="active"><a href="#">Pre-Sim Overview</a></li>
                         {else}
@@ -15,6 +16,11 @@
                         {else}
                             <li><a href="simEdit.php?simid={$smarty.get.simid}">Edit</a></li>
                         {/if}
+                            
+                     {if (!isset($simState) or ($simState!="NOT STARTED"))}
+                            
+                            
+                            
                         {if (substr_count($smarty.server.PHP_SELF, 'rawResultOutput.php')==1)}
                             <li class="active"><a href="#">Raw</a></li>
                         {else}
@@ -35,11 +41,14 @@
                         {else}
                             <li class="disabled"><a href="maps.php?simid={$smarty.get.simid}">Trade Map Results</a></li>
                         {/if}
+                        
+                      {/if}  
                           <li class="nav-header pull-right ">
                            SIM#{$smarty.get.simid} : 
                                            {if isset($simName)}{$simName}{/if}
                           </li>  
                         </ul>
+                          
                     </div>
                 </div>
             </div>
