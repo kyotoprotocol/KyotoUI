@@ -419,42 +419,6 @@
                window.direction = $(this).attr('id');
                redraw();
             });
-        /*
-            $("#outCO2").click(function(e){
-               e.preventDefault();
-
-               direction='outCO2';
-               redraw();
-            });
-            $("#bothCO2").click(function(e){
-               e.preventDefault();
-
-               direction='bothCO2';
-               redraw();
-            });
-            $("#inCDM").click(function(e){
-               e.preventDefault();
-               direction='inCDM';
-               redraw();
-            });
-            $("#outCDM").click(function(e){
-               e.preventDefault();
-
-               direction='outCDM';
-               redraw();
-            });
-            $("#bothCDM").click(function(e){
-               e.preventDefault();
-
-               direction='bothCDM';
-               redraw();
-            });
-            $("#all").click(function(e){
-               e.preventDefault();
-
-               direction='all';
-               redraw();
-            });*/
             $("#geoloc_me").click(function(e){
                 navigator.geolocation.getCurrentPosition(function(data){
                     var userCoordinates = lolatoxy(data.coords);
