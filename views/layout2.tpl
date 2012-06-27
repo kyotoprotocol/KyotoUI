@@ -55,21 +55,6 @@
                 <li><a href="simulations.php">Simulations</a>
                 {/if}
                 </li>
-                {if isset($simList)}
-                    <li class="dropdown" id="menu3">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#menu3">
-                        Results
-                        <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                                <li><a href="resultsOverview.php">List all</a></li>
-                                <li class="divider"></li>
-                            {foreach $simList as $item}
-                                <li><a href="simOverview.php?simid={$item@key}">{$item}</a></li>
-                            {/foreach}
-                        </ul>
-                    </li>
-                {/if}
                 </ul>
                 <a class="brand" href="index.php?" style="float: right;font-weight: bold; color: rgb(ad,ad,ad); text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.1), 0px 0px 30px rgba(255, 255, 255, 0.125);">
                 db:{$smarty.session.database}
