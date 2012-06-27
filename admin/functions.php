@@ -14,6 +14,7 @@ function runningIds(){
     foreach($matches as $match){
         $returnArry[] = (int)str_replace('run ', '', $match);
     }
+    //$returnArry = array(3,9);
     return $returnArry;
 }
 
