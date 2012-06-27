@@ -49,7 +49,7 @@
         </select>
     </div>
     <div class="span8">
-        <div class="span8 btn-group" data-toggle="buttons-radio">
+        <div class="span8 btn-group blap" data-toggle="buttons-radio">
             <button href="#" id="inCDM"  class="btn btn-mini">Initiator CDM</button>
             <button href="#" id="outCDM" class="btn btn-mini">Broadcaster CDM </button>
             <button href="#" id="bothCDM" class="btn btn-mini">Both CDM </button>
@@ -404,48 +404,19 @@
 
 
         });
-        $(function(){
-            if (!Modernizr.geolocation)
+            
+        $(document).ready(function(){
+            if (!Modernizr.geolocation){
                 $("#geoloc_me").hide();
             container = $("#container");
-            $("#inCO2").click(function(e){
+                }
+        });
+            $(".blap").children().click(function(e){
                e.preventDefault();
-               direction='inCO2';
-               redraw();
-            });
-            $("#outCO2").click(function(e){
-               e.preventDefault();
-
-               direction='outCO2';
-               redraw();
-            });
-            $("#bothCO2").click(function(e){
-               e.preventDefault();
-
-               direction='bothCO2';
-               redraw();
-            });
-            $("#inCDM").click(function(e){
-               e.preventDefault();
-               direction='inCDM';
-               redraw();
-            });
-            $("#outCDM").click(function(e){
-               e.preventDefault();
-
-               direction='outCDM';
-               redraw();
-            });
-            $("#bothCDM").click(function(e){
-               e.preventDefault();
-
-               direction='bothCDM';
-               redraw();
-            });
-            $("#all").click(function(e){
-               e.preventDefault();
-
-               direction='all';
+               console.log($(this).attr('id'));
+               $(".blap").children().removeClass('active');    
+               $(this).addClass('active');
+               window.direction = $(this).attr('id');
                redraw();
             });
             $("#geoloc_me").click(function(e){
@@ -510,7 +481,7 @@
                 }
             }
 
-        });
+        //});
         var the_regexp = /^([^\/\?]+)\/?(\w*)$/i;
 
         hasher.initialized.add(parseHash);
