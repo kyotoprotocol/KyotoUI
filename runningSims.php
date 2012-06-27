@@ -13,7 +13,7 @@ $smarty->assign('simList',simulationList());
 
 
     $list = runningIds();
-
+    var_dump($list);
     foreach ($list as $l) {
         
         $simquery = new SimulationModel();    // instantiate collection model
