@@ -13,19 +13,10 @@ $smarty->assign('simList',simulationList());
 
 
     $running = shell_exec('ps -ef | grep java');
- echo '<br><br><br><br><br><br>';
-    var_dump($running);
-    var_dump($running);
-    var_dump($running);
-    var_dump($running);
-    var_dump($running);
-    var_dump($running);
-    var_dump($running);
+
 
     $list = runningIds();
-    var_dump($list);
-    var_dump($list);
-    var_dump($list);
+
     foreach ($list as $l) {
         
         $simquery = new SimulationModel();    // instantiate collection model
