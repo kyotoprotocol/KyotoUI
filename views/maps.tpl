@@ -17,7 +17,7 @@
     <link rel="stylesheet" type="text/css" href="maps/univers-else-font/stylesheet.css" />
     <script type="text/javascript" src="maps/raphael.js"></script>
     <link type="text/css" href="maps/jquery-ui-1.8.16.custom/css/ui-darkness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
-    <script type="text/javascript" src="maps/jquery-ui-1.8.16.custom/js/jquery-1.6.2.min.js"></script>
+   <!-- <script type="text/javascript" src="maps/jquery-ui-1.8.16.custom/js/jquery-1.6.2.min.js"></script>-->
     <script type="text/javascript" src="maps/jquery-ui-1.8.16.custom/js/jquery-ui-1.8.16.custom.min.js"></script>
     <script type="text/javascript" src="maps/signals.js"></script>
     <script type="text/javascript" src="maps/hasher.js"></script>
@@ -49,7 +49,7 @@
         </select>
     </div>
     <div class="span8">
-        <div class="span8 btn-group blap" data-toggle="buttons-radio">
+        <div class="span8 btn-group" id="blap" data-toggle="buttons-radio">
             <button href="#" id="inCDM"  class="btn btn-mini">Initiator CDM</button>
             <button href="#" id="outCDM" class="btn btn-mini">Broadcaster CDM </button>
             <button href="#" id="bothCDM" class="btn btn-mini">Both CDM </button>
@@ -405,20 +405,24 @@
 
         });
             
-        $(document).ready(function(){
+       $(document).ready(function(){
             if (!Modernizr.geolocation){
                 $("#geoloc_me").hide();
-            container = $("#container");
-                }
+                container = $("#container");
+            }  
+                    
+
         });
-            $(".blap").children().click(function(e){
-               e.preventDefault();
-               console.log($(this).attr('id'));
-               $(".blap").children().removeClass('active');    
-               $(this).addClass('active');
-               window.direction = $(this).attr('id');
-               redraw();
-            });
+            
+        $("#blap").children().click(function(e){
+            e.preventDefault();
+            console.log($(this).attr('id'));
+            $(".blap").children().removeClass('active');    
+            $(this).addClass('active');
+            direction = $(this).attr('id');
+            redraw();
+        });
+            
             $("#geoloc_me").click(function(e){
                 navigator.geolocation.getCurrentPosition(function(data){
                     var userCoordinates = lolatoxy(data.coords);

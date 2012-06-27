@@ -4,15 +4,11 @@
   <meta charset="utf-8">   
   <title>{block name=title}Kyoto Web App{/block}</title>
   </html>
+        <script src="includes/js/jquery-1.7.2.min.js"></script>
         <link rel=StyleSheet href="includes/css/bootstrap.css" type="text/css">
         <link rel=StyleSheet href="includes/css/kyoto.css" type="text/css"> 
     <script src="includes/js/bootstrap.js"></script>
     <script type="text/javascript">
-    $(document).ready(function() {
-        $('.alert-success').delay(500).slideDown('slow');
-        $('.alert-error').delay(500).slideDown('slow');
-        $('.alert-success').delay(2000).slideUp('slow');
-    });
 </script>
     {block name=head}{/block}
 </head>
