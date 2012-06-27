@@ -24,7 +24,6 @@ $smarty->assign('simList',simulationList());
         $i = 0;
                         $a = array();
             foreach ($agentslist as $dave) {
-                echo 'hello';
                 $names[$i] = $dave->getName();
                 if (isset($_GET['number'])&&($_GET['number']==$i)) {
                     $binaryUUID=$dave->getAid();
@@ -38,11 +37,10 @@ $smarty->assign('simList',simulationList());
                         $count = $as->count();
                         $smarty->assign('tCount', $count);
                         foreach ($as as $ag) {
-                        $a[] = $ag->getAttributes();
+                        $a[$ag->getTime()] = $ag->getProperties();
                         //$statekeys = array_keys($ag->getProperties());
                         }
                         $smarty->assign('ticks', $a);
-                        var_dump($a);
                     }
                 $i++;
                 

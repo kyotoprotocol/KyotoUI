@@ -6,10 +6,9 @@
 {/literal}
 {/block}
 {block name=body}
-
 <div class="row">
     <div class="span8">
-        <h1>{$simName}</h1>
+        <h1>Raw:{$simName}</h1>
     </div>
         <div class="span4"><h5>Author: {$simAuthor}</h5></div>
 </div> 
@@ -35,25 +34,35 @@
         <li>{$key}:{$prop}</li>
     {/foreach}
     </ul>
+</div>
+
 <div class="row">
      <div class="span12">
         <table class="table table-bordered table-condensed">
             <thead>
                 <tr>
-                    <th rowspan="1">T</th>
-                    <th colspan="{$tCount}">Properties[{$tCount}]</th>
+                    <th rowspan="1">T[{$tCount}]</th>
+                    <th colspan="{$tCount}">Properties</th>
  
                 </tr>
                 <tr>
                 </tr>
             </thead>
              <tbody>
-                 {foreach from=$ticks item=tick key=tickID}
+                 {foreach from=$ticks item=tick key=tickID name=bigass}
+                 {if $smarty.foreach.bigass.index % 10 == 0}
                  <tr>
-                     <td>$tickID</td>
-                    {foreach from=$ticks key=propertyK item=property}
-                    <td{$property}</td>
-                    {/foreach}
+                     <td>T[{$tickID}]</td>
+                        {foreach from=$tick item=param key=paramKey}
+                            <td><b>{$paramKey}</b></td>
+                        {/foreach}
+                 </tr>
+                 {/if}
+                 <tr>
+                     <td>{$tickID}</td>
+                        {foreach from=$tick item=param key=paramKey}
+                            <td>{$param}</td>
+                        {/foreach}
                  </tr>
                 {/foreach}
 
@@ -62,5 +71,5 @@
 
      </div>
 </div>
-
+<div>
 {/block}
