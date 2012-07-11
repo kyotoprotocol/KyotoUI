@@ -61,7 +61,7 @@
                 <a class="brand" href="index.php?" style="float: right;font-weight: bold; color: rgb(ad,ad,ad); text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.1), 0px 0px 30px rgba(255, 255, 255, 0.125);">
                 db:{$smarty.session.database}
                 {if (substr_count($smarty.server.SERVER_NAME,'buildr')>0) }
-                    [ise.buildr]
+                    [static copy]
                 {/if}
                 </a>
         </div>
